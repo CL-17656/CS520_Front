@@ -1,6 +1,7 @@
 <script setup>
 import { reactive } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
+import { useRouter } from "vue-router";
 
 const registerData = reactive(
     {
@@ -16,8 +17,14 @@ const errors = reactive(
         accountType: [],
         email: [],
         password: [],
-        passwardCon: [],
+        passwordCon: [],
         shouldSubmit: true,
+    }
+);
+
+const registerSuccess = reactive(
+    {
+        regScucess: false,
     }
 );
 
@@ -26,37 +33,48 @@ function resetErrors()
     errors.accountType = [];
     errors.email = [];
     errors.password = [];
-    errors.passwardCon = [];
+    errors.passwordCon = [];
     errors.shouldSubmit = true;
 }
-
+const router = useRouter();
 function submit()
 {
     resetErrors();
-    if(registerData.accountType == "") {
+    registerSuccess.regScucess = false;
+    if(registerData.accountType === "") {
         errors.accountType.push("must select an account type")
         errors.shouldSubmit = false;
     }
-    if(registerData.email == "") {
+    if(registerData.email === "") {
         errors.email.push("must enter an emial")
         errors.shouldSubmit = false;
     }
-    if(registerData.password == "") {
+    if(registerData.password === "") {
         errors.password.push("must enter password")
         errors.shouldSubmit = false;
     }
-    if(registerData.passwordCon == "") {
-        errors.passwardCon.push("must enter password conformation")
+    if(registerData.passwordCon === "") {
+        errors.passwordCon.push("must enter password conformation")
         errors.shouldSubmit = false;
     }
-    if(registerData.passwardCon != registerData.passward)
+    if(registerData.passwordCon !== registerData.password)
     {
-        errors.passwardCon.push("password confirmation does not match passward")
+        errors.passwordCon.push("password confirmation does not match passward")
         errors.shouldSubmit = false;
     }
     if(errors.shouldSubmit)
     {
         //post to server
+        //TEMPRORY
+        registerSuccess.regScucess = true; 
+        //TEMPRORY
+    }
+    //redirect to login page if success
+    //possibly need to move to another function as web request are async
+    console.log(registerSuccess.regScucess)
+    if(registerSuccess.regScucess)
+    {
+        router.push({ name: 'login'})
     }
     console.log(errors)
     console.log(registerData)
@@ -89,8 +107,8 @@ function submit()
     </div>
 
     <div>
-        <input type="password" placeholder="Confirm Password" v-model="registerData.passwardCon"/>
-        <h1 class="text-red-600" v-if="errors.passwardCon.length > 0">{{errors.passwardCon[0]}}</h1>
+        <input type="password" placeholder="Confirm Password" v-model="registerData.passwordCon"/>
+        <h1 class="text-red-600" v-if="errors.passwordCon.length > 0">{{errors.passwordCon[0]}}</h1>
     </div>
 
     <button class="primary-btn">Register</button>
