@@ -2,11 +2,11 @@
 import { ref } from 'vue';
 
 // Sample data for courses and tasks
-const courses = ref([
-  { id: 1, name: 'COMPSCI 123', description: 'Algorithm', studentCount: 35 },
-  { id: 2, name: 'COMPSCI 456', description: 'Artificial Intelligence', studentCount: 42 },
-  { id: 3, name: 'COMPSCI 789', description: 'Distributed Systems', studentCount: 28 },
-]);
+const courses = ref({
+   123:{ name: 'COMPSCI 123', description: 'Algorithm', studentCount: 35 },
+   456:{name: 'COMPSCI 456', description: 'Artificial Intelligence', studentCount: 42 },
+   789:{ name: 'COMPSCI 789', description: 'Distributed Systems', studentCount: 28 },
+});
 
 const upcomingTasks = ref([
   { id: 1, task: 'Grade Assignment 1', dueDate: 'Nov 18, 2024' },
@@ -33,11 +33,11 @@ function manageCourses() {
     <section class="courses-overview">
       <h2>Your Courses</h2>
       <div class="courses-list">
-        <div v-for="course in courses" :key="course.id" class="course-card">
-          <h3>{{ course.name }}</h3>
-          <p>{{ course.description }}</p>
-          <p>Enrolled Students: {{ course.studentCount }}</p>
-          <button @click="viewCourseDetails(course.id)">View Details</button>
+        <div v-for="[key, course] in Object.entries(courses)" :key="key" class="course-card">
+            <h3>{{ course.name }}</h3>
+            <p>{{ course.description }}</p>
+            <p>Enrolled Students: {{ course.studentCount }}</p>
+            <button @click="viewCourseDetails(key)">View Details</button>
         </div>
       </div>
       <button class="manage-courses-btn" @click="manageCourses">Manage Courses</button>
