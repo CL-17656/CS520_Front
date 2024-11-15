@@ -1,21 +1,24 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'; // Use `useRouter` for navigation
 
+const router = useRouter(); // Create an instance of `useRouter`
 // Data for the course list and semesters
-const courses = ref({
-  123: { name: 'COMPSCI 123', description: 'Algorithm', assignments: 5},
-  456: { name: 'COMPSCI 456', description: 'Artifical Intelligence', assignments: 9},
-  678: { name: 'COMPSCI 678', description: 'Operating System', assignments: 9},
-  789: { name: 'COMPSCI 789', description: 'Distributed System', assignments: 8},
-});
+const courses = ref([
+  {id:123, name: 'COMPSCI 123', description: 'Algorithm', assignments: 5},
+  {id:456, name: 'COMPSCI 456', description: 'Artifical Intelligence', assignments: 9},
+  {id:678, name: 'COMPSCI 678', description: 'Operating System', assignments: 9},
+  {id:789, name: 'COMPSCI 789', description: 'Distributed System', assignments: 8},
+]);
 
 const courseList = ref([]);
-const semesters = ref(['2025']);
+const semesters = ref(['Year of 2025']);
 
 // Modal control and input data
 const showModal = ref(false);
 const newCourseId = ref('');
 let error_message = ref('')
+
 function addCourse() {
   showModal.value = true;
 }
@@ -24,8 +27,17 @@ function submitCourse() {
 
   if (newCourseId.value.trim() !== ''  )  {
     const courseId = newCourseId.value.trim();
-    const currentCourse = courses.value[courseId];
 
+  
+    let currentCourse
+      for(const element of courses.value){
+        if(element.id == courseId) {
+          currentCourse = element;
+        }
+          
+    };
+
+    
     if (currentCourse) {
       // Add the course to the courseList
       courseList.value.push(currentCourse);
@@ -38,6 +50,9 @@ function submitCourse() {
     
   }
   
+}
+function viewAssignments(course){
+  router.push({ name: 'coursepage', params:{course:JSON.stringify(course)}});
 }
 
 function closeModal() {
@@ -52,10 +67,10 @@ function closeModal() {
     <div class="semester" v-for="semester in semesters" :key="semester">
       <h2>{{ semester }}</h2>
       <div class="courses-grid">
-          <div v-for="(course, index) in courseList" :key="index" class="course-card">
+          <div v-for="(course) in courseList" :key="index" class="course-card">
             <h3>{{ course.name }}</h3>
             <p>{{ course.description }}</p>
-            <div class="assignments">{{ course.assignments }} assignments</div>
+            <button @click="viewAssignments(course)" class="assignments">{{ course.assignments }} assignments</button>
           </div>
         <div class="course-card add-course">
           <button @click="addCourse">Add Course</button>

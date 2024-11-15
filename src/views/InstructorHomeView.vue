@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 // Sample data for courses and tasks
 const courses = ref({
    123:{ name: 'COMPSCI 123', description: 'Algorithm', studentCount: 35 },
