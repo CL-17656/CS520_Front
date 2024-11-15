@@ -8,7 +8,7 @@ const registerData = reactive(
         accountType: "",
         email: "",
         password: "",
-        passwardCon: "",
+        passwordCon: "",
     }
 );
 

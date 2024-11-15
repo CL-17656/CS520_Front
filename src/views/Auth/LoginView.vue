@@ -70,7 +70,7 @@ function submit()
 
 <template>
   <main>
-    <h1 class = "title"> Register a new account</h1>
+    <h1 class = "title"> Login into your account</h1>
   </main>
 
   <form @submit.prevent="submit" class="w-1/2 mx-auto space-y-6">
