@@ -8,12 +8,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/student',
       name: 'studenthome',
       component: StudentHomeView,
     },
     {
-      path: '/',
+      path: '/instructor',
       name: 'instructorhome',
       component: InstructorHomeView,
     },
@@ -21,13 +21,6 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView,
-      children: [
-        {
-          path: '/login',
-          name: 'login',
-          component: LoginView,
-        },
-      ],
     },
     {
       path: '/login',

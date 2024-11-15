@@ -42,24 +42,24 @@ function submit()
     resetErrors();
     registerSuccess.regScucess = false;
     if(registerData.accountType === "") {
-        errors.accountType.push("must select an account type")
+        errors.accountType.push("must select an account type");
         errors.shouldSubmit = false;
     }
     if(registerData.email === "") {
-        errors.email.push("must enter an emial")
+        errors.email.push("must enter an emial");
         errors.shouldSubmit = false;
     }
     if(registerData.password === "") {
-        errors.password.push("must enter password")
+        errors.password.push("must enter password");
         errors.shouldSubmit = false;
     }
     if(registerData.passwordCon === "") {
-        errors.passwordCon.push("must enter password conformation")
+        errors.passwordCon.push("must enter password conformation");
         errors.shouldSubmit = false;
     }
     if(registerData.passwordCon !== registerData.password)
     {
-        errors.passwordCon.push("password confirmation does not match passward")
+        errors.passwordCon.push("password confirmation does not match passward");
         errors.shouldSubmit = false;
     }
     if(errors.shouldSubmit)
@@ -71,13 +71,13 @@ function submit()
     }
     //redirect to login page if success
     //possibly need to move to another function as web request are async
-    console.log(registerSuccess.regScucess)
+    console.log(registerSuccess.regScucess);
     if(registerSuccess.regScucess)
     {
-        router.push({ name: 'login'})
+        router.push({ name: 'login'});
     }
-    console.log(errors)
-    console.log(registerData)
+    console.log(errors);
+    console.log(registerData);
 }
 </script>
 
