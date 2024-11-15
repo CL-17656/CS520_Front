@@ -22,7 +22,7 @@ const errors = reactive(
 
 const loginSuccess = reactive(
     {
-        logSuccess: false,
+        success: false,
     }
 );
 
@@ -33,44 +33,51 @@ function resetErrors()
     errors.password = [];
     errors.shouldSubmit = true;
 }
-
 const router = useRouter();
 function submit()
 {
     resetErrors();
-    loginSuccess.logSuccess = false;
+    loginSuccess.success = false;
     if(loginData.accountType === "") {
-        errors.accountType.push("must select an account type")
+        errors.accountType.push("must select an account type");
         errors.shouldSubmit = false;
     }
     if(loginData.email === "") {
-        errors.email.push("must enter an emial")
+        errors.email.push("must enter an emial");
         errors.shouldSubmit = false;
     }
     if(loginData.password === "") {
-        errors.password.push("must enter password")
-        errors.shouldSubmit = false;
-    }
-    if(loginData.passwordCon !== loginData.password)
-    {
-        errors.passwordCon.push("password confirmation does not match passward")
+        errors.password.push("must enter password");
         errors.shouldSubmit = false;
     }
     if(errors.shouldSubmit)
     {
         //post to server
         //TEMPRORY
-        loginSuccess.logSuccess = true; 
+        loginSuccess.success = true; 
         //TEMPRORY
     }
-    console.log(errors)
-    console.log(loginData)
+    //redirect to login page if success
+    //possibly need to move to another function as web request are async
+    console.log(loginSuccess.success);
+    if(loginSuccess.success)
+    {
+        if(loginData.accountType === "Instructor") {
+            router.push({ name: 'instructorhome'});
+        }
+        else if(loginData.accountType === "Student")
+        {
+            router.push({ name: 'studenthome'});
+        }
+    }
+    console.log(errors);
+    console.log(loginData);
 }
 </script>
 
 <template>
   <main>
-    <h1 class = "title"> Register a new account</h1>
+    <h1 class = "title"> Login into your account</h1>
   </main>
 
   <form @submit.prevent="submit" class="w-1/2 mx-auto space-y-6">
@@ -93,6 +100,6 @@ function submit()
         <h1 class="text-red-600" v-if="errors.password.length > 0">{{errors.password[0]}}</h1>
     </div>
 
-    <button class="primary-btn">Login</button>
+    <button class="primary-btn">Register</button>
   </form>
 </template>
