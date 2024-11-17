@@ -1,8 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter} from 'vue-router';
 
 const route = useRoute();
+const router = useRouter()
 const course = route.params.course; // Access the passed course from the route params
 
 // If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
@@ -16,6 +17,10 @@ const assignments = ref([
   { type: "test", name: "final preparation", grade: "", isGrade: false },
   { type: "quiz", name: "midterm preparation", grade: "61", isGrade: true },
 ]);
+
+function assignmentPage(temp){
+  router.push({name:'assignmentpage'})
+}
 </script>
 
 <template>
@@ -31,7 +36,7 @@ const assignments = ref([
       <div class="assignments-list">
         <h3>Assignments</h3>
         <ul>
-          <li v-for="(assignment, index) in assignments" :key="index">
+          <li v-for="(assignment, index) in assignments" :key="index" v-on:click="assignmentPage(index)">
             <p>Type: {{ assignment.type }}</p>
             <p>Name: {{ assignment.name }}</p>
             <p>Grade: {{ assignment.isGrade ? assignment.grade : 'Not Graded' }}</p>
