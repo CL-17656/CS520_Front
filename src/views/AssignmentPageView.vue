@@ -1,8 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 const course = route.params.course; // Access the passed course from the route params
 
 // If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
@@ -72,13 +73,14 @@ const assignmentDetail = ref(
 );
 
 function statisticpage(temp){
- console.log("hello!!")
+    router.push({name:'statisticpage'})
 }
 </script>
 
 <template>
     <div class="assignmentpage">
-        <div class="title">{{assignmentDetail.name}}</div>
+        <div class="assignmentbox">
+            <div class="title">{{assignmentDetail.name}}</div>
         <div class="display-bar">
             <div class="grade">Grade: {{ assignmentDetail.grade}}</div>
             <div class="statistic">
@@ -95,6 +97,8 @@ function statisticpage(temp){
                 </li>
             </div>
         </div>
+        </div>
+        
     </div>
 </template>
 
@@ -108,13 +112,25 @@ function statisticpage(temp){
     margin-bottom: 1.5rem;
     flex-shrink: 0;
 }
+.assignmentbox{
+    width:100%;
+    background-color: pink;
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;    
+    
+}
 .display-bar{
     width: 100%;
-    height:50px;
-    background-color:yellow;
-    flex-direction: row;
+    height: 50px;
+    background-color: yellow;
     display: flex;
-    margin: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Ensure proper spacing between elements */
+    padding: 0 1rem; /* Add some padding for better layout */
+    box-sizing: border-box; /* Include padding in the element's width */
 }
 
 .grade{
@@ -124,7 +140,7 @@ function statisticpage(temp){
 .question-box {
     border-color: 100px black;
     padding: 20px;
-    width: 1200px;
+    width: 100%;
     height: 1000px;
     background-color: rgb(218, 211, 211);
     margin: auto;
