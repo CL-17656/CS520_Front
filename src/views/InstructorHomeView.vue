@@ -19,6 +19,7 @@ const upcomingTasks = ref([
 // Function to navigate to course details
 function viewCourseDetails(courseId) {
   alert(`Navigating to details for course ID: ${courseId}`);
+  router.push({name: 'coursepage'});
 }
 
 // Function to manage courses
