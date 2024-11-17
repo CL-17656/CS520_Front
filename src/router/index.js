@@ -5,7 +5,8 @@ import RegisterView from '@/views/Auth/RegisterView.vue'
 import LoginView from '@/views/Auth/LoginView.vue'
 import CoursePageView from '../views/CoursePageView.vue'
 import StartView from '@/views/Auth/StartView.vue'
-
+import AssignmentPageView from '../views/AssignmentPageView.vue'
+import StatisticPageView from '../views/StatisticPageView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -27,6 +28,19 @@ const router = createRouter({
       component: CoursePageView,
       props: true
       
+    },    
+    {
+      path: '/statistic',
+      name: 'statisticpage',
+      component: StatisticPageView,
+      props: true
+      
+    },
+    {
+      path: '/assignmentpage',
+      name: 'assignmentpage',
+      component:AssignmentPageView,
+      props: true
     },
     {
       path: '/instructor',
