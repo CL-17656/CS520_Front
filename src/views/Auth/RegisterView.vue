@@ -74,6 +74,7 @@ function submit()
     console.log(registerSuccess.regScucess);
     if(registerSuccess.regScucess)
     {
+        alert(`Register Success, Navigating to Login`);
         router.push({ name: 'login'});
     }
     console.log(errors);
