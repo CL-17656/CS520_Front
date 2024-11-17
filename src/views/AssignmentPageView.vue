@@ -71,7 +71,7 @@ const assignmentDetail = ref(
   }]}
 );
 
-function assignmentPage(temp){
+function statisticpage(temp){
  console.log("hello!!")
 }
 </script>
@@ -79,7 +79,13 @@ function assignmentPage(temp){
 <template>
     <div class="assignmentpage">
         <div class="title">{{assignmentDetail.name}}</div>
-        <div class="grade">Grade: {{ assignmentDetail.grade}}</div>
+        <div class="display-bar">
+            <div class="grade">Grade: {{ assignmentDetail.grade}}</div>
+            <div class="statistic">
+            <button class="statistic-btn" @click="statisticpage">statistic</button>
+            </div>
+        </div>
+
         <div class="question-box">
             <div class="assignment-scroll-bar">
                 <li class="question-entry" v-for="(entry, index) in assignmentDetail.questions"
@@ -93,18 +99,27 @@ function assignmentPage(temp){
 </template>
 
 <style scoped>
-.course-page {
+.assignmentpage {
     padding: 2rem;
 }
 
 .title {
     font-size: 2rem;
     margin-bottom: 1.5rem;
+    flex-shrink: 0;
+}
+.display-bar{
+    width: 100%;
+    height:50px;
+    background-color:yellow;
+    flex-direction: row;
+    display: flex;
+    margin: auto;
 }
 
 .grade{
     font-size: 20px ;
-    margin-left: 60px;
+    margin-bottom: 0.5rem;
 }
 .question-box {
     border-color: 100px black;
