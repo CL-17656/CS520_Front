@@ -15,7 +15,7 @@ const gradeDistribution = ref([]);
 
 // If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
 const courseDetails = computed(() => {
-  return typeof course === 'string' ? JSON.parse(course) : course;
+  return typeof courseId === 'string' ? JSON.parse(courseId) : courseId;
 });
 
 // Here, we fetch test scores and grade distribution data from the backend
@@ -127,6 +127,34 @@ onMounted(() => {
       }
     }
   });
+
+  // Grade distribution bar chart
+  const grades = gradeDistribution.value.map(entry => entry.grade);
+  const gradeCounts = gradeDistribution.value.map(entry => entry.count);
+
+  const gradeCtx = document.getElementById('gradeDistributionChart').getContext('2d');
+  new Chart(gradeCtx, {
+    type: 'bar',
+    data: {
+      labels: grades,
+      datasets: [{
+        label: 'Grade Distribution',
+        data: gradeCounts,
+        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Number of Students' },
+        },
+      },
+    },
+  });
+}
 });
 </script>
 
