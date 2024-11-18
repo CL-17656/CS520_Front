@@ -138,7 +138,7 @@ onMounted(() => {
     data: {
       labels: grades,
       datasets: [{
-        label: 'Grade Distribution',
+        label: 'Number of Students per Grade',
         data: gradeCounts,
         backgroundColor: 'rgba(153, 102, 255, 0.2)',
         borderColor: 'rgba(153, 102, 255, 1)',
@@ -147,15 +147,30 @@ onMounted(() => {
     },
     options: {
       scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Grades',
+          },
+        },
         y: {
           beginAtZero: true,
-          title: { display: true, text: 'Number of Students' },
+          title: {
+            display: true,
+            text: 'Number of Students',
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
         },
       },
     },
   });
-}
 });
+  
 </script>
 
 <template>
