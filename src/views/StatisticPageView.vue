@@ -47,9 +47,9 @@ async function loadStatistics() {
 //   { date: "2024-11-27", score: 81, timespent: 61 }
 // ]);
 
-  
-// Function to initialize the charts when the component is mounted
-onMounted(() => {
+// Function to initialize the charts
+function initializeCharts() 
+{
   const dates = testEntryStatistics.value.map(entry => entry.date);
   const scores = testEntryStatistics.value.map(entry => entry.score);
   const timespent = testEntryStatistics.value.map(entry => entry.timespent);
@@ -169,6 +169,12 @@ onMounted(() => {
       },
     },
   });
+}
+
+  
+// Loading the statistics when the component is mounted
+onMounted(() => {
+  loadStatistics();
 });
   
 </script>
