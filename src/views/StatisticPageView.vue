@@ -181,15 +181,32 @@ onMounted(() => {
 
 <template>
   <div class="statisticpage">
-    <h1 class="title">Statistic</h1>
-    <div class="statistic-box">
+    <h1 class="title">Course Statistics</h1>
+
+    <div class="chart-container">
+      <h2>Test Scores Over Time</h2>
+      <canvas id="testScoresChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h2>Time Spent</h2>
+      <canvas id="timeSpentChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h2>Grade Distribution</h2>
+      <canvas id="gradeDistributionChart"></canvas>
+    </div>
+    
+    '''<div class="statistic-box">
       <div class="score-statistic">
         <canvas id="testScoresChart"></canvas>
       </div>
+      
       <div class="time-statistic">
         <canvas id="timeSpentChart"></canvas>
-      </div>
-    </div>
+      </div>'''
+
   </div>
 </template>
 
@@ -198,12 +215,16 @@ onMounted(() => {
   padding: 2rem;
 }
 
+.chart-container {
+  margin-bottom: 2rem;
+}
+
 .title {
   font-size: 2rem;
   margin-bottom: 1.5rem;
 }
 
-.statistic-box {
+/* .statistic-box {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -214,5 +235,5 @@ onMounted(() => {
   width: 100%;
   max-width: 800px;
   margin: auto;
-}
+} */
 </style>
