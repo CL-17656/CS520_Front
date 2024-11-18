@@ -7,27 +7,47 @@ import { fetchTestScores, fetchGradeDistribution } from '@/api/StatisticsApi'; /
 
 // Use Vue Router to get route parameters
 const route = useRoute();
-const course = route.params.course; // Access the passed course from the route params
+const courseId = route.params.courseId; // modified // Access the passed course from the route params
+
+// Reactive data for charts
+const testEntryStatistics = ref([]);
+const gradeDistribution = ref([]);
 
 // If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
 const courseDetails = computed(() => {
   return typeof course === 'string' ? JSON.parse(course) : course;
 });
 
-// Example test statistics data
-const testEntryStatistics = ref([
-  { date: "2024-08-01", score: 95, timespent: 80 },
-  { date: "2024-09-07", score: 88, timespent: 77 },
-  { date: "2024-09-15", score: 76, timespent: 68 },
-  { date: "2024-09-19", score: 84, timespent: 60 },
-  { date: "2024-10-01", score: 92, timespent: 63 },
-  { date: "2024-10-02", score: 78, timespent: 62 },
-  { date: "2024-10-23", score: 85, timespent: 65 },
-  { date: "2024-11-19", score: 90, timespent: 62 },
-  { date: "2024-11-21", score: 73, timespent: 63 },
-  { date: "2024-11-27", score: 81, timespent: 61 }
-]);
+// Here, we fetch test scores and grade distribution data from the backend
+async function loadStatistics() {
+  try {
+    const scoresData = await fetchTestScores(courseId);
+    testEntryStatistics.value = scoresData;
 
+    const gradesData = await fetchGradeDistribution(courseId);
+    gradeDistribution.value = gradesData;
+
+    initializeCharts();
+  } catch (error) {
+    console.error('Failed to load statistics:', error);
+  }
+}
+
+// Example test statistics data
+// const testEntryStatistics = ref([
+//   { date: "2024-08-01", score: 95, timespent: 80 },
+//   { date: "2024-09-07", score: 88, timespent: 77 },
+//   { date: "2024-09-15", score: 76, timespent: 68 },
+//   { date: "2024-09-19", score: 84, timespent: 60 },
+//   { date: "2024-10-01", score: 92, timespent: 63 },
+//   { date: "2024-10-02", score: 78, timespent: 62 },
+//   { date: "2024-10-23", score: 85, timespent: 65 },
+//   { date: "2024-11-19", score: 90, timespent: 62 },
+//   { date: "2024-11-21", score: 73, timespent: 63 },
+//   { date: "2024-11-27", score: 81, timespent: 61 }
+// ]);
+
+  
 // Function to initialize the charts when the component is mounted
 onMounted(() => {
   const dates = testEntryStatistics.value.map(entry => entry.date);
