@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
+import { fetchTestScores, fetchGradeDistribution } from '@/api/StatisticsApi'; // added
 
 // Use Vue Router to get route parameters
 const route = useRoute();
