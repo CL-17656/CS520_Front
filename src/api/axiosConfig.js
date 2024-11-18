@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-// Create an Axios instance with the base URL of the Spring Boot backend
+// Creating an Axios instance
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8080/api', // Change this if your backend is hosted elsewhere
+  baseURL: 'http://localhost:8080/api', // I hope this where the backend will be hosted as usually we host it on 8k
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Interceptor to include the token in every request
+// This is the Interceptor to include the token in every request
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('authToken');
   if (token) {
