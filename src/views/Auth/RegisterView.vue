@@ -36,50 +36,85 @@ function resetErrors()
     errors.passwordCon = [];
     errors.shouldSubmit = true;
 }
+    
 const router = useRouter();
-function submit()
-{
-    resetErrors();
-    registerSuccess.regScucess = false;
-    if(registerData.accountType === "") {
-        errors.accountType.push("must select an account type");
-        errors.shouldSubmit = false;
+    
+// function submit()
+// {
+//     resetErrors();
+//     registerSuccess.regScucess = false;
+//     if(registerData.accountType === "") {
+//         errors.accountType.push("must select an account type");
+//         errors.shouldSubmit = false;
+//     }
+//     if(registerData.email === "") {
+//         errors.email.push("must enter an emial");
+//         errors.shouldSubmit = false;
+//     }
+//     if(registerData.password === "") {
+//         errors.password.push("must enter password");
+//         errors.shouldSubmit = false;
+//     }
+//     if(registerData.passwordCon === "") {
+//         errors.passwordCon.push("must enter password conformation");
+//         errors.shouldSubmit = false;
+//     }
+//     if(registerData.passwordCon !== registerData.password)
+//     {
+//         errors.passwordCon.push("password confirmation does not match passward");
+//         errors.shouldSubmit = false;
+//     }
+//     if(errors.shouldSubmit)
+//     {
+//         //post to server
+//         //TEMPRORY
+//         registerSuccess.regScucess = true; 
+//         //TEMPRORY
+//     }
+//     //redirect to login page if success
+//     //possibly need to move to another function as web request are async
+//     console.log(registerSuccess.regScucess);
+//     if(registerSuccess.regScucess)
+//     {
+//         alert(`Register Success, Navigating to Login`);
+//         router.push({ name: 'login'});
+//     }
+//     console.log(errors);
+//     console.log(registerData);
+// }
+
+// modified submit function:
+async function submit() {
+  errors.shouldSubmit = true;
+
+  if (!registerData.accountType) {
+    errors.accountType.push('Must select an account type');
+    errors.shouldSubmit = false;
+  }
+  if (!registerData.email) {
+    errors.email.push('Must enter an email');
+    errors.shouldSubmit = false;
+  }
+  if (!registerData.password) {
+    errors.password.push('Must enter a password');
+    errors.shouldSubmit = false;
+  }
+  if (registerData.password !== registerData.passwordCon) {
+    errors.passwordCon.push('Passwords do not match');
+    errors.shouldSubmit = false;
+  }
+
+  if (errors.shouldSubmit) {
+    try {
+      await registerUser(registerData);
+      router.push({ name: 'login' });
+    } catch (error) {
+      console.error('Registration failed:', error);
+      errors.email.push('Registration failed. Please try again.');
     }
-    if(registerData.email === "") {
-        errors.email.push("must enter an emial");
-        errors.shouldSubmit = false;
-    }
-    if(registerData.password === "") {
-        errors.password.push("must enter password");
-        errors.shouldSubmit = false;
-    }
-    if(registerData.passwordCon === "") {
-        errors.passwordCon.push("must enter password conformation");
-        errors.shouldSubmit = false;
-    }
-    if(registerData.passwordCon !== registerData.password)
-    {
-        errors.passwordCon.push("password confirmation does not match passward");
-        errors.shouldSubmit = false;
-    }
-    if(errors.shouldSubmit)
-    {
-        //post to server
-        //TEMPRORY
-        registerSuccess.regScucess = true; 
-        //TEMPRORY
-    }
-    //redirect to login page if success
-    //possibly need to move to another function as web request are async
-    console.log(registerSuccess.regScucess);
-    if(registerSuccess.regScucess)
-    {
-        alert(`Register Success, Navigating to Login`);
-        router.push({ name: 'login'});
-    }
-    console.log(errors);
-    console.log(registerData);
+  }
 }
+
 </script>
 
 <template>
