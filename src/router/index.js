@@ -60,4 +60,16 @@ const router = createRouter({
   ],
 })
 
+// added a navigation guard. This is to ensure that only authenticated users can access protected routes.
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('authToken');
+
+  if ((to.name === 'studenthome' || to.name === 'instructorhome') && !isAuthenticated) {
+    next({ name: 'login' });
+  } else {
+    next();
+  }
+});
+
+
 export default router
