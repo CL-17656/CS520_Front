@@ -198,14 +198,14 @@ onMounted(() => {
       <canvas id="gradeDistributionChart"></canvas>
     </div>
     
-    '''<div class="statistic-box">
+    <!--<div class="statistic-box">
       <div class="score-statistic">
         <canvas id="testScoresChart"></canvas>
       </div>
       
       <div class="time-statistic">
         <canvas id="timeSpentChart"></canvas>
-      </div>'''
+      </div>-->
 
   </div>
 </template>
