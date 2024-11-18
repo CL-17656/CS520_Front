@@ -2,6 +2,7 @@
 import { reactive } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { useRouter } from "vue-router";
+import { loginUser } from '@/api/AuthApi'; // added
 
 const loginData = reactive(
     {
