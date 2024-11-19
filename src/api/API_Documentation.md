@@ -305,12 +305,7 @@ GET /api/statistics/grades?quizId=QUIZ456
 ## Notes
 
 - All endpoints that require authentication expect a valid JWT token in the `Authorization` header.
-- Dates are in `YYYY-MM-DD` format.
-- Ensure that the frontend includes proper error handling for the various status codes.
-- All times are in UTC unless specified otherwise.
+- The format for dates is `YYYY-MM-DD`.
+- Also, all times are in UTC unless specified otherwise.
 
 ---
-
-Feel free to add more endpoints to this document as you develop additional features. Remember to keep the documentation up-to-date to facilitate collaboration and maintenance.
-
-Let me know if you need any further assistance!
