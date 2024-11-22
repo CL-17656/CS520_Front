@@ -1,18 +1,33 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { fetchquestions, saveAnswers} from '@/api/AssignmentApi';
+import { fetchquestions, saveAnswers } from '@/api/AssignmentApi';
 
 const route = useRoute();
 const router = useRouter();
 const quizId = ref(route.params.quizId || '');
-const course = route.params.course;// Access the passed course from the route params
+const course = route.params.course;
 
-// If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
-const courseDetails = computed(() => {
-  return typeof course === 'string' ? JSON.parse(course) : course;
+// Timer setup for countdown
+const totalSeconds = ref(2 * 60 * 60); // 2 hours in seconds
+const timer = computed(() => {
+  const hours = Math.floor(totalSeconds.value / 3600);
+  const minutes = Math.floor((totalSeconds.value % 3600) / 60);
+  const seconds = totalSeconds.value % 60;
+  return `${hours}h ${minutes}m ${seconds}s`;
 });
 
+const startCountdown = () => {
+  const countdownInterval = setInterval(() => {
+    if (totalSeconds.value > 0) {
+      totalSeconds.value--;
+    } else {
+      clearInterval(countdownInterval);
+      alert('Time is up! Submitting your answers...');
+      saveAnswers();
+    }
+  }, 1000);
+};
 
 // Dynamically fetch questions from the backend
 const assignmentDetail = ref({
@@ -22,25 +37,35 @@ const assignmentDetail = ref({
   isGrade: false,
   questions: []
 });
-
+// Fetch questions and start countdown when component is mounted
 onMounted(() => {
   fetchquestions();
+  startCountdown();
 });
 
+// If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
+const courseDetails = computed(() => {
+  return typeof course === 'string' ? JSON.parse(course) : course;
+});
 
-function statisticpage(temp){
-    router.push({name:'statisticpage'})
+function statisticpage(temp) {
+  router.push({ name: 'statisticpage' });
 }
 </script>
+
 
 <template>
   <div class="assignmentpage">
     <div class="assignmentbox">
-      <div class="title">Assignment Page{{ assignmentDetail.name }}</div>
+      <div class="title">Assignment Page {{ assignmentDetail.name }}</div>
+
       <div class="display-bar">
         <div class="grade">Grade: {{ assignmentDetail.grade }}</div>
+        <div class="timer">
+        Time Remaining: <span>{{ timer }}</span>
+      </div>
         <div class="statistic">
-          <button class="statistic-btn" @click="statisticPage">Statistic</button>
+          <button class="statistic-btn" @click="statisticpage">Statistic</button>
         </div>
       </div>
 
@@ -64,6 +89,7 @@ function statisticpage(temp){
     </div>
   </div>
 </template>
+
 
 
 <style scoped>
@@ -133,4 +159,17 @@ input[type="text"] {
   width: 100%; /* Ensures the input takes the full width of the container */
   box-sizing: border-box; /* Ensures padding and border are included in the total width */
 }
+.timer {
+  position: fixed; /* Fix the timer to the corner */
+  top: 1rem; /* Distance from the top */
+  right: 1rem; /* Distance from the right */
+  background-color: #f0ad4e; /* Background color */
+  color: white; /* Text color */
+  padding: 0.5rem 1rem; /* Padding around the text */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1.2rem; /* Larger font size */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add some shadow */
+  z-index: 1000; /* Ensure it appears above all other elements */
+}
+
 </style>
