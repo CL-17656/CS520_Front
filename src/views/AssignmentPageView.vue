@@ -36,7 +36,7 @@ function statisticpage(temp){
 <template>
   <div class="assignmentpage">
     <div class="assignmentbox">
-      <div class="title">{{ assignmentDetail.name }}</div>
+      <div class="title">Assignment Page{{ assignmentDetail.name }}</div>
       <div class="display-bar">
         <div class="grade">Grade: {{ assignmentDetail.grade }}</div>
         <div class="statistic">
