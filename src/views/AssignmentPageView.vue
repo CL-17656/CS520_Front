@@ -78,7 +78,7 @@ function statisticpage(temp){
 }
 .assignmentbox{
     width:100%;
-    background-color: pink;
+    background-color: rgb(42, 148, 39);
     display: flex; 
     flex-direction: column;
     align-items: center; 
