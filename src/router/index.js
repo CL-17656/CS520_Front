@@ -7,6 +7,7 @@ import CoursePageView from '../views/CoursePageView.vue'
 import StartView from '@/views/Auth/StartView.vue'
 import AssignmentPageView from '../views/AssignmentPageView.vue'
 import StatisticPageView from '../views/StatisticPageView.vue'
+import CreateAssignmentView from '@/views/CreateAssignmentView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -40,6 +41,12 @@ const router = createRouter({
       path: '/assignmentpage',
       name: 'assignmentpage',
       component:AssignmentPageView,
+      props: true
+    },
+    {
+      path: '/createassignment',
+      name: 'createassignment',
+      component:CreateAssignmentView,
       props: true
     },
     {
