@@ -62,9 +62,9 @@ function submit()
                 <li class="question-entry" v-for="(entry, index) in assignmentDetail.questions"
             :key="index">
                     <div class="question">Enter Question:</div>
-                    <input type="text" placeholder="Enter Question" v-model="entry.question"/>
+                    <textarea type="text" placeholder="Enter Question" v-model="entry.question"></textarea>
                     <div class="question">Enter Answer: </div>
-                    <input type="text" placeholder="Enter Answer" v-model="entry.sampleResponse"/>
+                    <textarea type="text" placeholder="Enter Answer" v-model="entry.sampleResponse"></textarea>
                     <button class="questionBtn" @click="removeQuestion(index)">Delete This Question</button>
                 </li>
                 <div>
@@ -150,11 +150,14 @@ li {
   list-style: none;
 }
 
-input[type="text"] {
+input textarea[type="text"] {
   padding: 0; /* Removes extra space inside the input */
   margin: 0;  /* Removes extra space outside the input */
   height: 80px;
   width: 100%; /* Ensures the input takes the full width of the container */
   box-sizing: border-box; /* Ensures padding and border are included in the total width */
 }
+
+
+
 </style>

@@ -38,7 +38,7 @@ const router = createRouter({
       
     },
     {
-      path: '/assignmentpage',
+      path: '/assignment',
       name: 'assignmentpage',
       component:AssignmentPageView,
       props: true
