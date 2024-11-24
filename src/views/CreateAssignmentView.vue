@@ -15,20 +15,20 @@ const courseDetails = computed(() => {
 // Example questions data
 const assignmentDetail = reactive(
   {
-    type: "test",
+    status: "quiz",
     name: "Midterm Preparation",
     grade: "100",
     isGrade: true,
-    questions:[{question: "Explain the concept of Big O notation and give an example.",
+    questions:[{questionType: "1", question: "Explain the concept of Big O notation and give an example.",
     sampleResponse:
       "Big O notation is used to describe the performance or complexity of an algorithm. It gives an upper bound on the time or space complexity in terms of the input size. For example, if an algorithm has a time complexity of O(n), it means the runtime grows linearly with the input size."
-  },]}
+  , choices: [{choice: "", isCorrect: false}]},]}
 );
 
 //Add a new question
 function addNewQueston()
 {
-    assignmentDetail.questions.push({question: "", sampleResponse: "",});
+    assignmentDetail.questions.push({questionType: "1", question: "", sampleResponse: "", choices: []});
     console.log(assignmentDetail.questions);
 }
 
@@ -37,6 +37,18 @@ function removeQuestion(key)
 {
     assignmentDetail.questions.splice(key, 1);
     console.log(assignmentDetail.questions[key])
+}
+
+//add a choice for multiple choice questions
+function addChoice(key)
+{
+    assignmentDetail.questions[key].choices.push({choice: "", isCorrect: false});
+}
+
+//remove choice for multipke choice questions
+function removeChoice(questionKey, choiceKey)
+{
+    assignmentDetail.questions[questionKey].choices.splice(choiceKey, 1);
 }
 
 //Save and submit the data using api, currently not implemented
@@ -57,14 +69,36 @@ function submit()
 
         <div class="question-box">
             <div class="question">Enter Assignement Type: </div>
-            <input type="title" placeholder="Enter Assignment Type" v-model="assignmentDetail.type"/>
+            <select id="assignmentType" class="register" v-model="assignmentDetail.status">
+                <option value="questionaire">Questionaire</option>
+                <option value="quiz">Quiz</option>
+            </select>
             <div class="assignment-scroll-bar">
                 <li class="question-entry" v-for="(entry, index) in assignmentDetail.questions"
             :key="index">
+                    <div class="question">Select Question Type:</div>
+                    <select id="assignmentType" class="register" v-model="entry.questionType">
+                        <option value="1">Single Choice</option>
+                        <option value="2">Multiple Choice</option>
+                        <option value="3">Fill in The Blank</option>
+                    </select>
                     <div class="question">Enter Question:</div>
                     <input type="text" placeholder="Enter Question" v-model="entry.question"/>
-                    <div class="question">Enter Answer: </div>
-                    <input type="text" placeholder="Enter Answer" v-model="entry.sampleResponse">
+
+                    <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2">Create Choices: </div>
+                    <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2" v-for="(choice, id) in entry.choices":key="id">
+                        <input type="text" placeholder="Enter Choice" v-model="choice.choice"/>
+                        <select id="isCorrect" class="register" v-model="choice.isCorrect">
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                        <button class="removeChoiceBtn" v-if="entry.questionType == 1 || entry.questionType == 2" @click="removeChoice(index, id)">Remove Choice</button>
+                    </div>
+                    <button class="questionBtn" v-if="entry.questionType == 1 || entry.questionType == 2" @click="addChoice(index)">Add Choice</button>
+
+                    <div class="question" v-if="entry.questionType == 3">Enter Answer: </div>
+                    <input type="text" placeholder="Enter Answer" v-if="entry.questionType == 3" v-model="entry.sampleResponse">
+
                     <button class="questionBtn" @click="removeQuestion(index)">Delete This Question</button>
                 </li>
                 <div>
@@ -137,6 +171,14 @@ button {
   margin-left: 2rem;
   padding: 1rem 2rem;
   margin-top: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.removeChoiceBtn {
+  margin-left: 0.2rem;
+  padding: 0.2rem 0.2rem;
+  margin-top: 0.2rem;
   font-weight: bold;
   font-size: 1rem;
 }
