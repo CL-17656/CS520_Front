@@ -62,9 +62,9 @@ function submit()
                 <li class="question-entry" v-for="(entry, index) in assignmentDetail.questions"
             :key="index">
                     <div class="question">Enter Question:</div>
-                    <textarea type="text" placeholder="Enter Question" v-model="entry.question"></textarea>
+                    <input type="text" placeholder="Enter Question" v-model="entry.question"/>
                     <div class="question">Enter Answer: </div>
-                    <textarea type="text" placeholder="Enter Answer" v-model="entry.sampleResponse"></textarea>
+                    <input type="text" placeholder="Enter Answer" v-model="entry.sampleResponse">
                     <button class="questionBtn" @click="removeQuestion(index)">Delete This Question</button>
                 </li>
                 <div>
