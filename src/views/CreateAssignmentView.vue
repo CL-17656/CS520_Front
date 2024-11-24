@@ -28,7 +28,7 @@ const assignmentDetail = reactive(
 //Add a new question
 function addNewQueston()
 {
-    assignmentDetail.questions.push({questionType: "1", question: "", sampleResponse: "", choices: []});
+    assignmentDetail.questions.push({questionType: "1", question: "", sampleResponse: "", choices: [{choice: "", isCorrect: false}]});
     console.log(assignmentDetail.questions);
 }
 
@@ -52,6 +52,7 @@ function removeChoice(questionKey, choiceKey)
 }
 
 //Save and submit the data using api, currently not implemented
+//Also used to change datastructure to form acceptable by backend
 function submit()
 {
     console.log(assignmentDetail)
