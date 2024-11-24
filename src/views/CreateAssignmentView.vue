@@ -69,6 +69,7 @@ function submit()
         </div>
 
         <div class="question-box">
+            <!-- Section: select assignment type -->
             <div class="question">Enter Assignement Type: </div>
             <select id="assignmentType" class="register" v-model="assignmentDetail.status">
                 <option value="questionaire">Questionaire</option>
@@ -77,15 +78,19 @@ function submit()
             <div class="assignment-scroll-bar">
                 <li class="question-entry" v-for="(entry, index) in assignmentDetail.questions"
             :key="index">
+                    <!-- Section: select question type, this controls diplay of future sections -->
                     <div class="question">Select Question Type:</div>
                     <select id="assignmentType" class="register" v-model="entry.questionType">
                         <option value="1">Single Choice</option>
                         <option value="2">Multiple Choice</option>
                         <option value="3">Fill in The Blank</option>
                     </select>
+
+                    <!-- Section: Enter question -->
                     <div class="question">Enter Question:</div>
                     <input type="text" placeholder="Enter Question" v-model="entry.question"/>
-
+                    
+                    <!-- Section: multiple choice section -->
                     <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2">Create Choices: </div>
                     <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2" v-for="(choice, id) in entry.choices":key="id">
                         <input type="text" placeholder="Enter Choice" v-model="choice.choice"/>
@@ -97,12 +102,15 @@ function submit()
                     </div>
                     <button class="questionBtn" v-if="entry.questionType == 1 || entry.questionType == 2" @click="addChoice(index)">Add Choice</button>
 
+                    <!-- Section: short answer section -->
                     <div class="question" v-if="entry.questionType == 3">Enter Answer: </div>
                     <input type="text" placeholder="Enter Answer" v-if="entry.questionType == 3" v-model="entry.sampleResponse">
 
+                    <!-- Section: delete question button -->
                     <button class="questionBtn" @click="removeQuestion(index)">Delete This Question</button>
                 </li>
                 <div>
+                    <!-- Section: add question button -->
                     <button class="questionBtn" @click="addNewQueston">Add New Question</button>
                 </div>    
             </div>
