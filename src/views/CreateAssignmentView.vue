@@ -15,7 +15,7 @@ const courseDetails = computed(() => {
 // Example questions data
 const assignmentDetail = reactive(
   {
-    status: "2", // Default to Quiz
+    status: "2", // Default to Quiz (1 for questionaire, 2 for quiz)
     name: "New Quiz",
     grade: "100",
     isGrade: true,
@@ -29,20 +29,18 @@ const assignmentDetail = reactive(
 function addNewQueston()
 {
     assignmentDetail.questions.push({questionType: "1", question: "", sampleResponse: "", choices: [{choice: "", isCorrect: false}]});
-    console.log(assignmentDetail.questions);
 }
 
 //This button appears below each question, clicking it deletes the question
 function removeQuestion(index)
 {
     assignmentDetail.questions.splice(index, 1);
-    console.log(assignmentDetail.questions[index])
 }
 
 //add a choice for multiple choice questions
 function addChoice(index)
 {
-    assignmentDetail.questions[in].choices.push({choice: "", isCorrect: false});
+    assignmentDetail.questions[index].choices.push({choice: "", isCorrect: false});
 }
 
 //remove choice for multipke choice questions
@@ -80,6 +78,7 @@ function formatDataForBackend() {
 
 // Submit data to the backend
 async function submit() {
+  console.log(assignmentDetail);
   const payload = formatDataForBackend();
   try {
     const response = await axios.post("/admin/questions", payload);
@@ -96,7 +95,9 @@ async function submit() {
 
 <template>
     <div class="assignmentpage">
-        <form @submit.prevent="submit" class="w-1/1 mx-auto space-y-6">
+        <!-- submit.prevent="" to prevent submission of form on click of any button. The form should only submit when save and submit is clicked -->
+        <form @submit.prevent="" class="w-1/1 mx-auto space-y-6">
+        <!-- Section: Eneter Title -->
         <div class="assignmentbox">
             <div class="question">Enter Assignement Title: </div>
             <input type="title" placeholder="Enter Assignment Title:" v-model="assignmentDetail.name"/>
@@ -104,12 +105,24 @@ async function submit() {
         </div>
 
         <div class="question-box">
-            <!-- Section: select assignment type -->
+            <!-- Section: select whether assignment is for grade -->
+            <div class="question">Select whether assigment is for grade:</div>
+            <select id="assignmentType" class="register" v-model="assignmentDetail.isGrade">
+                <option value="true">For Grade</option>
+                <option value="false">Not For GRade</option>
+            </select>
+
+            <!-- Section: Enter total grade -->
+            <div class="question">Enter total grade:</div>
+            <input type="text" placeholder="Enter Total Grade" v-model="assignmentDetail.grade"/>
+
+            <!-- Section: select assignment status -->
             <div class="question">Enter Assignement Type: </div>
             <select id="assignmentType" class="register" v-model="assignmentDetail.status">
-                <option value="questionaire">Questionaire</option>
-                <option value="quiz">Quiz</option>
+                <option value="1">Questionaire</option>
+                <option value="2">Quiz</option>
             </select>
+
             <div class="assignment-scroll-bar">
                 <li class="question-entry" v-for="(entry, index) in assignmentDetail.questions"
             :key="index">
@@ -127,7 +140,7 @@ async function submit() {
                     
                     <!-- Section: multiple choice section -->
                     <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2">Create Choices: </div>
-                    <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2" v-for="(choice, id) in entry.choices":key="id">
+                    <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2" v-for="(choice, id) in entry.choices" :key="id">
                         <input type="text" placeholder="Enter Choice" v-model="choice.choice"/>
                         <select id="isCorrect" class="register" v-model="choice.isCorrect">
                             <option value="true">True</option>
@@ -150,8 +163,9 @@ async function submit() {
                 </div>    
             </div>
         </div>
-        </div>   
-        <button class="questionBtn">Save and Submit</button>
+        </div>
+        <!-- Section: submit form button -->
+        <button class="questionBtn"  @click="submit">Save and Submit</button>
         </form>
     </div>
 </template>
