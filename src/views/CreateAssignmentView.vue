@@ -15,7 +15,7 @@ const courseDetails = computed(() => {
 // Example questions data
 const assignmentDetail = reactive(
   {
-    status: "2", // Default to Quiz
+    status: "2", // Default to Quiz (1 for questionaire, 2 for quiz)
     name: "New Quiz",
     grade: "100",
     isGrade: true,
@@ -95,8 +95,9 @@ async function submit() {
 
 <template>
     <div class="assignmentpage">
-        <!-- Section: Eneter Title -->
+        <!-- submit.prevent="" to prevent submission of form on click of any button. The form should only submit when save and submit is clicked -->
         <form @submit.prevent="" class="w-1/1 mx-auto space-y-6">
+        <!-- Section: Eneter Title -->
         <div class="assignmentbox">
             <div class="question">Enter Assignement Title: </div>
             <input type="title" placeholder="Enter Assignment Title:" v-model="assignmentDetail.name"/>
@@ -115,7 +116,7 @@ async function submit() {
             <div class="question">Enter total grade:</div>
             <input type="text" placeholder="Enter Total Grade" v-model="assignmentDetail.grade"/>
 
-            <!-- Section: select assignment type -->
+            <!-- Section: select assignment status -->
             <div class="question">Enter Assignement Type: </div>
             <select id="assignmentType" class="register" v-model="assignmentDetail.status">
                 <option value="1">Questionaire</option>
@@ -162,7 +163,8 @@ async function submit() {
                 </div>    
             </div>
         </div>
-        </div>   
+        </div>
+        <!-- Section: submit form button -->
         <button class="questionBtn"  @click="submit">Save and Submit</button>
         </form>
     </div>
