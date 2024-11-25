@@ -1,7 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { reactive } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -15,8 +15,8 @@ const courseDetails = computed(() => {
 // Example questions data
 const assignmentDetail = reactive(
   {
-    status: "quiz",
-    name: "Midterm Preparation",
+    status: "2", // Default to Quiz
+    name: "New Quiz",
     grade: "100",
     isGrade: true,
     questions:[{questionType: "1", question: "Explain the concept of Big O notation and give an example.",
@@ -33,30 +33,65 @@ function addNewQueston()
 }
 
 //This button appears below each question, clicking it deletes the question
-function removeQuestion(key)
+function removeQuestion(index)
 {
-    assignmentDetail.questions.splice(key, 1);
-    console.log(assignmentDetail.questions[key])
+    assignmentDetail.questions.splice(index, 1);
+    console.log(assignmentDetail.questions[index])
 }
 
 //add a choice for multiple choice questions
-function addChoice(key)
+function addChoice(index)
 {
-    assignmentDetail.questions[key].choices.push({choice: "", isCorrect: false});
+    assignmentDetail.questions[in].choices.push({choice: "", isCorrect: false});
 }
 
 //remove choice for multipke choice questions
-function removeChoice(questionKey, choiceKey)
+function removeChoice(questionIndex, choiceIndex)
 {
-    assignmentDetail.questions[questionKey].choices.splice(choiceKey, 1);
+    assignmentDetail.questions[questionIndex].choices.splice(choiceIndex, 1);
 }
 
 //Save and submit the data using api, currently not implemented
 //Also used to change datastructure to form acceptable by backend
-function submit()
-{
-    console.log(assignmentDetail)
+  
+// Format data to match backend requirements
+function formatDataForBackend() {
+  return {
+    title: assignmentDetail.name,
+    type: parseInt(assignmentDetail.status), // Quiz or Questionnaire
+    isGrade: assignmentDetail.isGrade, // Whether this is graded
+    grade: assignmentDetail.grade, // Total grade
+    questions: assignmentDetail.questions.map((q) => ({
+      questionTitle: q.question,
+      type: parseInt(q.questionType),
+      possibleAnswers:
+        q.questionType === "1" || q.questionType === "2"
+          ? JSON.stringify(q.choices.map((choice) => choice.choice))
+          : null,
+      correctAnswers:
+        q.questionType === "1" || q.questionType === "2"
+          ? JSON.stringify(
+              q.choices.filter((choice) => choice.isCorrect).map((choice) => choice.choice)
+            )
+          : q.sampleResponse,
+    })),
+  };
 }
+
+// Submit data to the backend
+async function submit() {
+  const payload = formatDataForBackend();
+  try {
+    const response = await axios.post("/admin/questions", payload);
+    alert("Quiz created successfully!");
+    console.log("Response:", response.data);
+    router.push("/instructor"); // Redirect to instructor home
+  } catch (error) {
+    console.error("Error creating quiz:", error);
+    alert("Failed to create the quiz. Please try again.");
+  }
+}
+  
 </script>
 
 <template>
@@ -69,6 +104,7 @@ function submit()
         </div>
 
         <div class="question-box">
+            <!-- Section: select assignment type -->
             <div class="question">Enter Assignement Type: </div>
             <select id="assignmentType" class="register" v-model="assignmentDetail.status">
                 <option value="questionaire">Questionaire</option>
@@ -77,15 +113,19 @@ function submit()
             <div class="assignment-scroll-bar">
                 <li class="question-entry" v-for="(entry, index) in assignmentDetail.questions"
             :key="index">
+                    <!-- Section: select question type, this controls diplay of future sections -->
                     <div class="question">Select Question Type:</div>
                     <select id="assignmentType" class="register" v-model="entry.questionType">
                         <option value="1">Single Choice</option>
                         <option value="2">Multiple Choice</option>
                         <option value="3">Fill in The Blank</option>
                     </select>
+
+                    <!-- Section: Enter question -->
                     <div class="question">Enter Question:</div>
                     <input type="text" placeholder="Enter Question" v-model="entry.question"/>
-
+                    
+                    <!-- Section: multiple choice section -->
                     <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2">Create Choices: </div>
                     <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2" v-for="(choice, id) in entry.choices":key="id">
                         <input type="text" placeholder="Enter Choice" v-model="choice.choice"/>
@@ -97,18 +137,21 @@ function submit()
                     </div>
                     <button class="questionBtn" v-if="entry.questionType == 1 || entry.questionType == 2" @click="addChoice(index)">Add Choice</button>
 
+                    <!-- Section: Answer for Fill in the Blank -->
                     <div class="question" v-if="entry.questionType == 3">Enter Answer: </div>
                     <input type="text" placeholder="Enter Answer" v-if="entry.questionType == 3" v-model="entry.sampleResponse">
 
+                    <!-- Section: delete question button -->
                     <button class="questionBtn" @click="removeQuestion(index)">Delete This Question</button>
                 </li>
                 <div>
+                    <!-- Section: add question button -->
                     <button class="questionBtn" @click="addNewQueston">Add New Question</button>
                 </div>    
             </div>
         </div>
         </div>   
-        <button class="questionBtn">Save adn Submit</button>
+        <button class="questionBtn">Save and Submit</button>
         </form>
     </div>
 </template>
