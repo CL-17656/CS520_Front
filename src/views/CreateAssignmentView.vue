@@ -95,6 +95,7 @@ async function submit() {
 
 <template>
     <div class="assignmentpage">
+        <!-- Section: Eneter Title -->
         <form @submit.prevent="" class="w-1/1 mx-auto space-y-6">
         <div class="assignmentbox">
             <div class="question">Enter Assignement Title: </div>
@@ -103,12 +104,24 @@ async function submit() {
         </div>
 
         <div class="question-box">
+            <!-- Section: select whether assignment is for grade -->
+            <div class="question">Select whether assigment is for grade:</div>
+            <select id="assignmentType" class="register" v-model="assignmentDetail.isGrade">
+                <option value="true">For Grade</option>
+                <option value="false">Not For GRade</option>
+            </select>
+
+            <!-- Section: Enter total grade -->
+            <div class="question">Enter total grade:</div>
+            <input type="text" placeholder="Enter Total Grade" v-model="assignmentDetail.grade"/>
+
             <!-- Section: select assignment type -->
             <div class="question">Enter Assignement Type: </div>
             <select id="assignmentType" class="register" v-model="assignmentDetail.status">
-                <option value="questionaire">Questionaire</option>
-                <option value="quiz">Quiz</option>
+                <option value="1">Questionaire</option>
+                <option value="2">Quiz</option>
             </select>
+
             <div class="assignment-scroll-bar">
                 <li class="question-entry" v-for="(entry, index) in assignmentDetail.questions"
             :key="index">
