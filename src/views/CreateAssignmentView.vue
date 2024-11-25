@@ -140,7 +140,7 @@ async function submit() {
                     
                     <!-- Section: multiple choice section -->
                     <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2">Create Choices: </div>
-                    <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2" v-for="(choice, id) in entry.choices":key="id">
+                    <div class="question" v-if="entry.questionType == 1 || entry.questionType == 2" v-for="(choice, id) in entry.choices" :key="id">
                         <input type="text" placeholder="Enter Choice" v-model="choice.choice"/>
                         <select id="isCorrect" class="register" v-model="choice.isCorrect">
                             <option value="true">True</option>
