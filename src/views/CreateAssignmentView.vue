@@ -29,20 +29,18 @@ const assignmentDetail = reactive(
 function addNewQueston()
 {
     assignmentDetail.questions.push({questionType: "1", question: "", sampleResponse: "", choices: [{choice: "", isCorrect: false}]});
-    console.log(assignmentDetail.questions);
 }
 
 //This button appears below each question, clicking it deletes the question
 function removeQuestion(index)
 {
     assignmentDetail.questions.splice(index, 1);
-    console.log(assignmentDetail.questions[index])
 }
 
 //add a choice for multiple choice questions
 function addChoice(index)
 {
-    assignmentDetail.questions[in].choices.push({choice: "", isCorrect: false});
+    assignmentDetail.questions[index].choices.push({choice: "", isCorrect: false});
 }
 
 //remove choice for multipke choice questions
@@ -80,6 +78,7 @@ function formatDataForBackend() {
 
 // Submit data to the backend
 async function submit() {
+  console.log(assignmentDetail);
   const payload = formatDataForBackend();
   try {
     const response = await axios.post("/admin/questions", payload);
@@ -96,7 +95,7 @@ async function submit() {
 
 <template>
     <div class="assignmentpage">
-        <form @submit.prevent="submit" class="w-1/1 mx-auto space-y-6">
+        <form @submit.prevent="" class="w-1/1 mx-auto space-y-6">
         <div class="assignmentbox">
             <div class="question">Enter Assignement Title: </div>
             <input type="title" placeholder="Enter Assignment Title:" v-model="assignmentDetail.name"/>
@@ -151,7 +150,7 @@ async function submit() {
             </div>
         </div>
         </div>   
-        <button class="questionBtn">Save and Submit</button>
+        <button class="questionBtn"  @click="submit">Save and Submit</button>
         </form>
     </div>
 </template>
