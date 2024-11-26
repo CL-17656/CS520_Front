@@ -68,7 +68,7 @@ function closeModal() {
 
 <template>
   <main>
-    <h1 class="title">Your Courses</h1>
+    <h1 class="title">Your Assignment</h1>
 
     <div class="semester" v-for="semester in semesters" :key="semester">
       <h2>{{ semester }}</h2>
