@@ -7,7 +7,7 @@ import { loginUser } from '@/api/AuthApi'; // added
 const loginData = reactive(
     {
         accountType: "",
-        email: "",
+        username: "",
         password: "",
     }
 );

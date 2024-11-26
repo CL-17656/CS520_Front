@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { fetchquestions, saveAnswers } from '@/api/AssignmentApi';
+//import { fetchquestions, saveAnswers } from '@/api/AssignmentApi';
 
 const route = useRoute();
 const router = useRouter();
@@ -39,7 +39,7 @@ const assignmentDetail = ref({
 });
 // Fetch questions and start countdown when component is mounted
 onMounted(() => {
-  fetchquestions();
+  //fetchquestions();
   startCountdown();
 });
 
