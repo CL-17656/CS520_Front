@@ -91,8 +91,8 @@ async function submit() {
     errors.accountType.push('Must select an account type');
     errors.shouldSubmit = false;
   }
-  if (!registerData.email) {
-    errors.username.push('Must enter an email');
+  if (!registerData.username) {
+    errors.username.push('Must enter an username');
     errors.shouldSubmit = false;
   }
   if (!registerData.password) {
