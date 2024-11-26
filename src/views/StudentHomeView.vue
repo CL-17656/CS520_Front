@@ -1,22 +1,22 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'; // Use `useRouter` for navigation
-
+import {validateAssignmentId} from '@/api/StudentHomeApi'
 const router = useRouter(); // Create an instance of `useRouter`
 // Data for the course list and semesters
-const courses = ref([
-  {id:123, name: 'COMPSCI 123', description: 'Algorithm', assignments: 5},
-  {id:456, name: 'COMPSCI 456', description: 'Artifical Intelligence', assignments: 9},
-  {id:678, name: 'COMPSCI 678', description: 'Operating System', assignments: 9},
-  {id:789, name: 'COMPSCI 789', description: 'Distributed System', assignments: 8},
+const assignment = ref([
+  {id:123, name: 'midterm preparation', instructor: 'Thomas Carr', isGraded: false,grade: 0},
+  {id:456, name: 'quiz 1', instructor: 'Mark French', isGraded: false,grade: 0},
+  {id:678, name: 'peer report questionnare', instructor: 'Charles Dickinson', isGraded: false,grade: 0},
+  {id:789, name: 'quiz 2', instructor: 'Frank Lee', isGraded: false,grade: 0},
 ]);
 
-const courseList = ref([]);
+const assignmentList = ref([]);
 const semesters = ref(['Year of 2025']);
 
 // Modal control and input data
 const showModal = ref(false);
-const newCourseId = ref('');
+const newAssignmentId = ref('');
 let error_message = ref('')
 
 function addCourse() {
@@ -24,35 +24,36 @@ function addCourse() {
 }
 
 function submitCourse() {
+  console.log(newAssignmentId.value.trim())
+  if (newAssignmentId.value.trim() !== ''  )  {
+    const assignmentId = newAssignmentId.value.trim();
 
-  if (newCourseId.value.trim() !== ''  )  {
-    const courseId = newCourseId.value.trim();
-
-  
-    let currentCourse
-      for(const element of courses.value){
-        if(element.id == courseId) {
-          currentCourse = element;
-        }
-          
-    };
-
+    // let isVerifyOK = validateAssignmentId(assignmentId);
     
-    if (currentCourse) {
-      // Add the course to the courseList
-      courseList.value.push(currentCourse);
-      showModal.value = false;
-    } else {
-      error_message.value = 'Course ID not found';
+
+    console.log(assignment.value)
+    for( const entry of assignment.value){
+      if(entry.id == assignmentId){
+        assignmentList.value.push(entry);
+        showModal.value = false;
+      }
     }
 
-    newCourseId.value = ''; // Clear the input field
+    // if (isVerifyOK) {
+    //   // Add the course to the assignmentList
+    //   assignmentList.value.push(not read yet);
+    //   showModal.value = false;
+    // } else {
+    //   error_message.value = 'Course ID not found';
+    // }
+
+    newAssignmentId.value = ''; // Clear the input field
     
   }
   
 }
 function viewAssignments(course){
-  router.push({ name: 'coursepage', params:{course:JSON.stringify(course)}});
+  router.push({ name: 'assignmentpage', params:{course:JSON.stringify(course)}});
 }
 
 function closeModal() {
@@ -67,24 +68,25 @@ function closeModal() {
     <div class="semester" v-for="semester in semesters" :key="semester">
       <h2>{{ semester }}</h2>
       <div class="courses-grid">
-          <div v-for="(course) in courseList" :key="index" class="course-card">
-            <h3>{{ course.name }}</h3>
-            <p>{{ course.description }}</p>
-            <button @click="viewAssignments(course)" class="assignments">{{ course.assignments }} assignments</button>
+          <div v-for="(assignment) in assignmentList" :key="index" class="course-card">
+            <h3>{{ assignment.name }}</h3>
+            <p>{{ assignment.instructor }}</p>
+            <div v-if="assignment.isGraded">
+            {{ assignment.grade }}</div>
+            <button @click="viewAssignments(course)" class="assignments">Take the Assignment</button>
           </div>
         <div class="course-card add-course">
-          <button @click="addCourse">Add Course</button>
+          <button @click="addCourse">Add Assignment</button>
         </div>
       </div>
     </div>
-    <a href="#" class="see-older-courses">See older courses</a>
 
     <!-- Modal for entering course ID -->
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
-        <h3>Enter Course ID</h3>
+        <h3>Enter Assignment ID</h3>
         <h4 class="error_message" v-if="error_message">{{ error_message }}</h4>
-        <input v-model="newCourseId" type="text" placeholder="Course ID" />
+        <input v-model="newAssignmentId" type="text" placeholder="Assignment ID" />
         <div class="modal-buttons">
           <button @click="submitCourse">Submit</button>
           <button @click="closeModal">Cancel</button>
@@ -93,6 +95,7 @@ function closeModal() {
     </div>
   </main>
 </template>
+
 
 <style scoped>
 .title {
