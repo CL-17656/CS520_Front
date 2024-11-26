@@ -15,7 +15,7 @@ const loginData = reactive(
 const errors = reactive(
     {
         accountType: [],
-        email: [],
+        username: [],
         password: [],
         shouldSubmit: true,
     }
@@ -30,7 +30,7 @@ const loginSuccess = reactive(
 function resetErrors()
 {
     errors.accountType = [];
-    errors.email = [];
+    errors.username = [];
     errors.password = [];
     errors.shouldSubmit = true;
 }
@@ -89,9 +89,9 @@ async function submit()
         errors.accountType.push('Must select an account type');
         errors.shouldSubmit = false;
     }
-    if (!loginData.email) 
+    if (!loginData.username) 
     {
-        errors.email.push('Must enter an email');
+        errors.username.push('Must enter an username');
         errors.shouldSubmit = false;
     }
     if (!loginData.password) 
@@ -118,7 +118,7 @@ async function submit()
             }
         } catch (error) {
             console.error('Login failed:', error);
-            errors.email.push('Login failed. Please check your credentials.');
+            errors.username.push('Login failed. Please check your credentials.');
         }
     }
 }
@@ -141,8 +141,8 @@ async function submit()
     </div>
 
     <div>
-        <input type="text" placeholder="Enter Email" v-model="loginData.email"/>
-        <h1 class="text-red-600" v-if="errors.email.length > 0">{{errors.email[0]}}</h1>
+        <input type="text" placeholder="Enter Username" v-model="loginData.username"/>
+        <h1 class="text-red-600" v-if="errors.username.length > 0">{{errors.username[0]}}</h1>
     </div>
 
     <div>
