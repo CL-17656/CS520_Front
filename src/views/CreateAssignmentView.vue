@@ -18,7 +18,7 @@ const assignmentDetail = reactive(
     status: "2", // Default to Quiz (1 for questionaire, 2 for quiz)
     name: "New Quiz",
     grade: "100",
-    isGrade: true,
+    isGrade: false,
     questions:[{questionType: "1", question: "Explain the concept of Big O notation and give an example.",
     sampleResponse:
       "Big O notation is used to describe the performance or complexity of an algorithm. It gives an upper bound on the time or space complexity in terms of the input size. For example, if an algorithm has a time complexity of O(n), it means the runtime grows linearly with the input size."

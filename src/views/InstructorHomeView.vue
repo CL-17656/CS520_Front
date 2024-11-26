@@ -1,30 +1,62 @@
 <script setup>
 import { ref } from 'vue';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-// Sample data for courses and tasks
-const courses = ref({
-   123:{ name: 'COMPSCI 123', description: 'Algorithm', studentCount: 35 },
-   456:{name: 'COMPSCI 456', description: 'Artificial Intelligence', studentCount: 42 },
-   789:{ name: 'COMPSCI 789', description: 'Distributed Systems', studentCount: 28 },
-});
 
-const upcomingTasks = ref([
-  { id: 1, task: 'Grade Assignment 1', dueDate: 'Nov 18, 2024' },
-  { id: 2, task: 'Prepare Lecture on Sorting Algorithms', dueDate: 'Nov 20, 2024' },
-  { id: 3, task: 'Review Project Proposals', dueDate: 'Nov 22, 2024' },
-]);
+//Front end data structure with sample data
+const quizeData = reactive(
+    {
+        allQuizIds: [1, 200, 500],
+        quizes: [
+          { quizId: 1, 
+            studentId: 3,
+            status: "2",
+            name: "New Quiz 1",
+            grade: "100",
+            isGrade: false,
+          },
+          { quizId: 1, 
+            studentId: 5,
+            status: "2",
+            name: "New Quiz 2",
+            grade: "100",
+            isGrade: true,
+          },
+          { quizId: 200, 
+            studentId: 7,
+            status: "2",
+            name: "New Quiz 3",
+            grade: "100",
+            isGrade: false,
+          },
+          { quizId: 500, 
+            studentId: 9,
+            status: "1",
+            name: "New Quiz 4",
+            grade: "100",
+            isGrade: true,
+          },
+        ]
+    }
+);
 
-// Function to navigate to course details
-function viewCourseDetails(courseId) {
-  alert(`Navigating to details for course ID: ${courseId}`);
-  router.push({name: 'coursepage'});
+//fetch data from backend and prepare it to be like the sample data
+function fetchAndPrepareData()
+{
+
 }
 
-// Function to manage courses
-function manageCourses() {
-  alert('Navigating to manage courses...');
+// Function to grade given quiz id for given student id
+function gradeQuiz(quizId, studentId) {
+  alert("grading quiz " + quizId + " for student " + studentId);
+}
+
+// Function navigating to statistic page for given quiz id
+function viewQuizStats(quizId)
+{
+  alert("view stats for quiz " + quizId);
 }
 </script>
 
@@ -32,28 +64,21 @@ function manageCourses() {
   <main class="instructor-home">
     <h1 class="title">Instructor Home Page</h1>
 
-    <!-- Section: Courses Overview -->
-    <section class="courses-overview">
-      <h2>Your Courses</h2>
-      <div class="courses-list">
-        <div v-for="[key, course] in Object.entries(courses)" :key="key" class="course-card">
-            <h3>{{ course.name }}</h3>
-            <p>{{ course.description }}</p>
-            <p>Enrolled Students: {{ course.studentCount }}</p>
-            <button @click="viewCourseDetails(key)">View Details</button>
+    <!-- For each quiz display following -->
+    <section v-for="[arrIndex, quizIndex] in Object.entries(quizeData.allQuizIds)" :key="index" class="quiz-overview">
+      <h2>Quiz ID: {{ quizIndex }}</h2>
+      <div class="quiz-list">
+        <!-- For each submission display following -->
+        <div v-for="[key, quiz] in Object.entries(quizeData.quizes.filter(val => val.quizId == quizIndex))" :key="key" class="quiz-card">
+            <h3>Quiz Name: {{ quiz.name }}</h3>
+            <p>Student ID: {{ quiz.studentId }} </p>
+            <p v-if="quiz.status == 2" >Quiz</p>
+            <p v-if="quiz.status == 1" >Questionaire</p>
+            <p v-if="quiz.isGrade == true">Quiz Grade: {{ quiz.grade }}</p>
+            <button v-if="quiz.isGrade == false" @click="gradeQuiz(quiz.quizId, quiz.studentId)">Grade Quiz</button>
         </div>
       </div>
-      <button class="manage-courses-btn" @click="manageCourses">Manage Courses</button>
-    </section>
-
-    <!-- Section: Upcoming Tasks -->
-    <section class="upcoming-tasks">
-      <h2>Upcoming Tasks</h2>
-      <ul>
-        <li v-for="task in upcomingTasks" :key="task.id">
-          <p>{{ task.task }} - <span class="due-date">{{ task.dueDate }}</span></p>
-        </li>
-      </ul>
+      <button class="view-stat-btn" @click="viewQuizStats(quizIndex)">View Quiz Statistics</button>
     </section>
   </main>
 </template>
@@ -69,17 +94,17 @@ function manageCourses() {
   margin-bottom: 1.5rem;
 }
 
-.courses-overview, .upcoming-tasks {
+.quiz-overview{
   margin-bottom: 2rem;
 }
 
-.courses-list {
+.quiz-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
-.course-card {
+.quiz-card {
   background-color: #f5f5f5;
   border-radius: 8px;
   padding: 1rem;
@@ -88,15 +113,15 @@ function manageCourses() {
   transition: box-shadow 0.3s;
 }
 
-.course-card:hover {
+.quiz-card:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.course-card h3 {
+.quiz-card h3 {
   margin: 0 0 0.5rem;
 }
 
-.course-card p {
+.quiz-card p {
   margin: 0.2rem 0;
 }
 
@@ -114,25 +139,8 @@ button:hover {
   background-color: #006666;
 }
 
-.manage-courses-btn {
+.view-stat-btn {
   margin-top: 1rem;
-  font-weight: bold;
-}
-
-.upcoming-tasks ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.upcoming-tasks li {
-  background-color: #e8f5f5;
-  border-radius: 4px;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-}
-
-.due-date {
-  color: #007777;
   font-weight: bold;
 }
 </style>
