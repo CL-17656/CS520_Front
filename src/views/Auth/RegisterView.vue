@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 const registerData = reactive(
     {
         accountType: "",
-        email: "",
+        username: "",
         password: "",
         passwordCon: "",
     }
@@ -15,7 +15,7 @@ const registerData = reactive(
 const errors = reactive(
     {
         accountType: [],
-        email: [],
+        username: [],
         password: [],
         passwordCon: [],
         shouldSubmit: true,
@@ -31,7 +31,7 @@ const registerSuccess = reactive(
 function resetErrors()
 {
     errors.accountType = [];
-    errors.email = [];
+    errors.username = [];
     errors.password = [];
     errors.passwordCon = [];
     errors.shouldSubmit = true;
@@ -92,7 +92,7 @@ async function submit() {
     errors.shouldSubmit = false;
   }
   if (!registerData.email) {
-    errors.email.push('Must enter an email');
+    errors.username.push('Must enter an email');
     errors.shouldSubmit = false;
   }
   if (!registerData.password) {
@@ -110,7 +110,7 @@ async function submit() {
       router.push({ name: 'login' });
     } catch (error) {
       console.error('Registration failed:', error);
-      errors.email.push('Registration failed. Please try again.');
+      errors.username.push('Registration failed. Please try again.');
     }
   }
 }
@@ -133,8 +133,8 @@ async function submit() {
     </div>
 
     <div>
-        <input type="text" placeholder="Enter Email" v-model="registerData.email"/>
-        <h1 class="text-red-600" v-if="errors.email.length > 0">{{errors.email[0]}}</h1>
+        <input type="text" placeholder="Enter Username" v-model="registerData.username"/>
+        <h1 class="text-red-600" v-if="errors.username.length > 0">{{errors.username[0]}}</h1>
     </div>
 
     <div>
