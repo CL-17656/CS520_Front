@@ -32,11 +32,16 @@ function submitCourse() {
     
 
     console.log(assignment.value)
+    let temp = false
     for( const entry of assignment.value){
       if(entry.id == assignmentId){
         assignmentList.value.push(entry);
         showModal.value = false;
+        temp = true
       }
+    }
+    if(!temp){
+      error_message.value = 'Course ID not found';
     }
 
     // if (isVerifyOK) {
