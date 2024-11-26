@@ -103,18 +103,25 @@ async function submit()
     // If all fields are valid, proceed with login
     if (errors.shouldSubmit) {
         try {
+            console.log(loginData);
             // Call the login API
             const response = await loginUser(loginData);
 
-            // Store the token in Pinia and localStorage
-            store.token = response.token;
-            localStorage.setItem('authToken', response.token);
+            if(response.flag == false) {
+                console.error('Login failed:', response);
+                errors.username.push('Login failed. Please check your credentials.');
+            }
+            else {
+                // Store the token in Pinia and localStorage
+                store.token = response.token;
+                localStorage.setItem('authToken', response.token);
 
-            // Redirect based on account type (Student or Instructor)
-            if (loginData.accountType === 'Instructor') {
-                router.push({ name: 'instructorhome' });
-            } else if (loginData.accountType === 'Student') {
-                router.push({ name: 'studenthome' });
+                // Redirect based on account type (Student or Instructor)
+                if (loginData.accountType === 'Instructor') {
+                    router.push({ name: 'instructorhome' });
+                } else if (loginData.accountType === 'Student') {
+                    router.push({ name: 'studenthome' });
+                }
             }
         } catch (error) {
             console.error('Login failed:', error);

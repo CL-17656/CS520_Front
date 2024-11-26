@@ -12,6 +12,8 @@
   "dependencies": {
     "@cubejs-client/core": "^0.31.0",
     "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.6",
     "chartjs-adapter-date-fns": "^3.0.0",
     "pinia": "^2.2.6",

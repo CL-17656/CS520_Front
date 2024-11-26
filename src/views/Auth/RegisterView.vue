@@ -120,8 +120,14 @@ async function submit() {
     console.log(registerSubmitData);
 
     try {
-      await registerUser(registerSubmitData);
-      router.push({ name: 'login' });
+      const response =await registerUser(registerSubmitData);
+      if(response.flag == true) {
+        router.push({ name: 'login' });
+      }
+      else {
+        console.error('Registration failed:', response);
+        errors.username.push('Registration failed. Please try again.');
+      }
     } catch (error) {
       console.error('Registration failed:', error);
       errors.username.push('Registration failed. Please try again.');
