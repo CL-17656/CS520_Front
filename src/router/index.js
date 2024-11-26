@@ -73,10 +73,10 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = !!localStorage.getItem('authToken');
 
   if ((to.name === 'studenthome' || to.name === 'instructorhome') && !isAuthenticated) {
-    //next({ name: 'login' });
-    next();
-  } else {
-    next();
+    next({ name: 'login' }); // Redirect to login if not authenticated
+  } 
+  else {
+    next(); // Allow navigation otherwise
   }
 });
 
