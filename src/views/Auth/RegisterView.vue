@@ -2,6 +2,7 @@
 import { reactive } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { useRouter } from "vue-router";
+import { registerUser } from '@/api/AuthApi'; // added
 
 const registerData = reactive(
     {
@@ -9,6 +10,14 @@ const registerData = reactive(
         username: "",
         password: "",
         passwordCon: "",
+    }
+);
+
+const registerSubmitData = reactive(
+    {
+        invitationCode: "",
+        username: "",
+        password: "",
     }
 );
 
@@ -105,8 +114,13 @@ async function submit() {
   }
 
   if (errors.shouldSubmit) {
+    registerSubmitData.invitationCode = "123456"
+    registerSubmitData.username = registerData.username;
+    registerSubmitData.password = registerData.password;
+    console.log(registerSubmitData);
+
     try {
-      await registerUser(registerData);
+      await registerUser(registerSubmitData);
       router.push({ name: 'login' });
     } catch (error) {
       console.error('Registration failed:', error);
