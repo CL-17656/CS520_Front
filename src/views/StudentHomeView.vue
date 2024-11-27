@@ -23,7 +23,7 @@ async function logout()
 
     if(response.flag == true) {
       store.logout();
-      console.log(store.isAuthenticated);
+      console.log(store.userName);
       router.push({ name: 'start' });
     }
   } catch (error){
