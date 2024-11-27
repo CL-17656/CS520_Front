@@ -153,23 +153,23 @@ li {
 }
 
 input[type="text"] {
-  padding: 0; /* Removes extra space inside the input */
-  margin: 0;  /* Removes extra space outside the input */
+  padding: 0;
+  margin: 0;  
   height: 1000px;
-  width: 100%; /* Ensures the input takes the full width of the container */
-  box-sizing: border-box; /* Ensures padding and border are included in the total width */
+  width: 100%; 
+  box-sizing: border-box; 
 }
 .timer {
-  position: fixed; /* Fix the timer to the corner */
-  top: 1rem; /* Distance from the top */
-  right: 1rem; /* Distance from the right */
-  background-color: #f0ad4e; /* Background color */
-  color: white; /* Text color */
-  padding: 0.5rem 1rem; /* Padding around the text */
-  border-radius: 5px; /* Rounded corners */
-  font-size: 1.2rem; /* Larger font size */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add some shadow */
-  z-index: 1000; /* Ensure it appears above all other elements */
+  position: fixed;
+  top: 1rem; 
+  right: 1rem; 
+  background-color: #f0ad4e; 
+  color: white; 
+  padding: 0.5rem 1rem; 
+  border-radius: 5px; 
+  font-size: 1.2rem; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  z-index: 1000; 
 }
 
 </style>
