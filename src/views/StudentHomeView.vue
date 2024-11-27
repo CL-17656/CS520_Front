@@ -2,6 +2,35 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'; // Use `useRouter` for navigation
 import {validateAssignmentId} from '@/api/StudentHomeApi'
+import { reactive } from 'vue';
+import { useAuthenticationStore } from '@/stores/Auth';
+import { logoutUser } from '@/api/AuthApi';
+
+const store = useAuthenticationStore();
+
+const logoutData = reactive(
+  {
+    username: "",
+  }
+);
+
+async function logout()
+{
+  logoutData.username = store.userName;
+  try {
+    const response = await logoutUser(logoutData);
+    console.log(response);
+
+    if(response.flag == true) {
+      store.logout();
+      console.log(store.isAuthenticated);
+      router.push({ name: 'start' });
+    }
+  } catch (error){
+    console.error(error);
+  }
+}
+
 const router = useRouter(); // Create an instance of `useRouter`
 // Data for the course list and semesters
 const assignment = ref([
@@ -69,6 +98,7 @@ function closeModal() {
 <template>
   <main>
     <h1 class="title">Your Assignment</h1>
+    <button class="logout-btn" @click="logout()">Logout</button>
 
     <div class="semester" v-for="semester in semesters" :key="semester">
       <h2>{{ semester }}</h2>
@@ -152,6 +182,12 @@ button {
 
 button:hover {
   background-color: #006666;
+}
+
+.logout-btn {
+  margin-left: 50rem;
+  margin-top: 1rem;
+  font-weight: bold;
 }
 
 .see-older-courses {

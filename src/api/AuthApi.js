@@ -21,3 +21,13 @@ export const loginUser = async (loginData) => {
     throw error;
   }
 };
+
+export const logoutUser = async (logoutData) => {
+    try {
+        const response = await apiLoginClient.post('/logout', logoutData);
+        return response.data;
+    } catch (error) {
+        console.error('Login Error:', error.response.data);
+        throw error;
+    }
+};

@@ -5,11 +5,13 @@ export const useAuthenticationStore = defineStore("AuthenticationStore", {
     state: () => ({
         isAuthenticated: false,
         userId: "",
+        userName: "",
     }),
     actions: {
-        login(loginId) {
+        login(loginId, loginUsername) {
             this.isAuthenticated = true;
             this.userId = loginId;
+            this.userName = loginUsername;
         },
         logout() {
             this.isAuthenticated = false;

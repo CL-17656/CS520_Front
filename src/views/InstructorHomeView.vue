@@ -2,8 +2,17 @@
 import { ref } from 'vue';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuthenticationStore } from '@/stores/Auth';
+import { logoutUser } from '@/api/AuthApi';
 
+const store = useAuthenticationStore();
 const router = useRouter();
+
+const logoutData = reactive(
+  {
+    username: "",
+  }
+);
 
 //Front end data structure with sample data
 const quizeData = reactive(
@@ -58,12 +67,29 @@ function viewQuizStats(quizId)
 {
   alert("view stats for quiz " + quizId);
 }
+
+async function logout()
+{
+  logoutData.username = store.userName;
+  try {
+    const response = await logoutUser(logoutData);
+    console.log(response);
+
+    if(response.flag == true) {
+      store.logout();
+      console.log(store.isAuthenticated);
+      router.push({ name: 'start' });
+    }
+  } catch (error){
+    console.error(error);
+  }
+}
 </script>
 
 <template>
   <main class="instructor-home">
     <h1 class="title">Instructor Home Page</h1>
-
+    <button class="logout-btn" @click="logout()">Logout</button>
     <!-- For each quiz display following -->
     <section v-for="[arrIndex, quizIndex] in Object.entries(quizeData.allQuizIds)" :key="index" class="quiz-overview">
       <h2>Quiz ID: {{ quizIndex }}</h2>
@@ -140,6 +166,12 @@ button:hover {
 }
 
 .view-stat-btn {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.logout-btn {
+  margin-left: 50rem;
   margin-top: 1rem;
   font-weight: bold;
 }

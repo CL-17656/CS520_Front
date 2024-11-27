@@ -21,12 +21,6 @@ const errors = reactive(
     }
 );
 
-const loginSuccess = reactive(
-    {
-        success: false,
-    }
-);
-
 function resetErrors()
 {
     errors.accountType = [];
@@ -74,7 +68,7 @@ async function submit()
             else {
                 console.log(response);
                 //Store userinfo in local storage
-                store.login(response.data.userInfoId);
+                store.login(response.data.userInfoId, response.data.userName);
 
                 // Redirect based on account type (Student or Instructor)
                 if (loginData.accountType === 'Instructor') {
@@ -117,6 +111,6 @@ async function submit()
         <h1 class="text-red-600" v-if="errors.password.length > 0">{{errors.password[0]}}</h1>
     </div>
 
-    <button class="primary-btn">Register</button>
+    <button class="primary-btn">Login</button>
   </form>
 </template>
