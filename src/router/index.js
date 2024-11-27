@@ -9,6 +9,8 @@ import AssignmentPageView from '../views/AssignmentPageView.vue'
 import StatisticPageView from '../views/StatisticPageView.vue'
 import CreateAssignmentView from '@/views/CreateAssignmentView.vue'
 import GradingPageView from '@/views/GradingPageView.vue'
+import { useAuthenticationStore } from '@/stores/Auth';
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -76,9 +78,9 @@ const router = createRouter({
 // added a navigation guard. This is to ensure that only authenticated users can access protected routes(e.g., /student, /instructor)
 // if the user is not authenticated (i.e., there is no token in localStorage), we redirect them to the login page.
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('authToken');
 
-  if ((to.name === 'studenthome' || to.name === 'instructorhome') && !isAuthenticated) {
+  const store = useAuthenticationStore();
+  if ((to.name === 'studenthome' || to.name === 'instructorhome') && !store.isAuthenticated) {
     next({ name: 'login' }); // Redirect to login if not authenticated
   } 
   else {

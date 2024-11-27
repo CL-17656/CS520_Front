@@ -6,17 +6,20 @@ export const useAuthenticationStore = defineStore("AuthenticationStore", {
         isAuthenticated: false,
         userId: "",
         userName: "",
+        userType: "",
     }),
     actions: {
-        login(loginId, loginUsername) {
+        login(loginId, loginUsername, loginUserType) {
             this.isAuthenticated = true;
             this.userId = loginId;
             this.userName = loginUsername;
+            this.userType = loginUserType;
         },
         logout() {
             this.isAuthenticated = false;
             this.userId = "";
             this.userName = "";
+            this.userType = "";
         }
     }
 });
