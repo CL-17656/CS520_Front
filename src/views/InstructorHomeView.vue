@@ -4,6 +4,8 @@ import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { logoutUser } from '@/api/AuthApi';
+import { onMounted } from 'vue';
+import {getAssignmentsByInstructorId} from '@/api/InstructorHomeApi'
 
 const store = useAuthenticationStore();
 const router = useRouter();
@@ -51,11 +53,17 @@ const quizeData = reactive(
     }
 );
 
-//fetch data from backend and prepare it to be like the sample data
-function fetchAndPrepareData()
-{
-
-}
+const initialize = async () => {
+  console.log(store.userId);
+  try {
+    const pageData = await getAssignmentsByInstructorId(store.userId);
+    console.log(pageData);
+  }
+  catch(error) {
+    console.log(error);
+  }
+};
+onMounted(() => initialize());
 
 // Function to grade given quiz id for given student id
 function gradeQuiz(quizId, studentId) {
@@ -91,7 +99,7 @@ async function logout()
     <h1 class="title">Instructor Home Page</h1>
     <button class="logout-btn" @click="logout()">Logout</button>
     <!-- For each quiz display following -->
-    <section v-for="[arrIndex, quizIndex] in Object.entries(quizeData.allQuizIds)" :key="index" class="quiz-overview">
+    <section v-for="[arrIndex, quizIndex] in Object.entries(quizeData.allQuizIds)" :key="arrIndex" class="quiz-overview">
       <h2>Quiz ID: {{ quizIndex }}</h2>
       <div class="quiz-list">
         <!-- For each submission display following -->
