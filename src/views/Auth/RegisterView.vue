@@ -10,6 +10,7 @@ const registerData = reactive(
         username: "",
         password: "",
         passwordCon: "",
+        invitationCode: "",
     }
 );
 
@@ -23,6 +24,7 @@ const registerSubmitData = reactive(
 
 const errors = reactive(
     {
+        invitationCode: [],
         accountType: [],
         username: [],
         password: [],
@@ -39,6 +41,7 @@ const registerSuccess = reactive(
 
 function resetErrors()
 {
+    errors.invitationCode = [];
     errors.accountType = [];
     errors.username = [];
     errors.password = [];
@@ -95,9 +98,12 @@ const router = useRouter();
 // modified submit function:
 async function submit() {
   errors.shouldSubmit = true;
-
   if (!registerData.accountType) {
     errors.accountType.push('Must select an account type');
+    errors.shouldSubmit = false;
+  }
+  if (!registerData.invitationCode) {
+    errors.invitationCode.push('Must Enter an invitation code');
     errors.shouldSubmit = false;
   }
   if (!registerData.username) {
@@ -114,14 +120,21 @@ async function submit() {
   }
 
   if (errors.shouldSubmit) {
-    registerSubmitData.invitationCode = "123456"
+    registerSubmitData.invitationCode = registerData.invitationCode;
     registerSubmitData.username = registerData.username;
     registerSubmitData.password = registerData.password;
     console.log(registerSubmitData);
 
     try {
-      await registerUser(registerSubmitData);
-      router.push({ name: 'login' });
+      const response =await registerUser(registerSubmitData);
+      if(response.flag == true) {
+        alert("Succesfully registered, going to login")
+        router.push({ name: 'login' });
+      }
+      else {
+        console.error('Registration failed:', response);
+        errors.username.push('Registration failed. Please try again.');
+      }
     } catch (error) {
       console.error('Registration failed:', error);
       errors.username.push('Registration failed. Please try again.');
@@ -144,6 +157,11 @@ async function submit() {
             <option value="Instructor">Instructor</option>
         </select>
         <h1 class="text-red-600" v-if="errors.accountType.length > 0">{{errors.accountType[0]}}</h1>
+    </div>
+
+    <div>
+        <input type="text" placeholder="Enter invitationCode" v-model="registerData.invitationCode"/>
+        <h1 class="text-red-600" v-if="errors.invitationCode.length > 0">{{errors.invitationCode[0]}}</h1>
     </div>
 
     <div>
