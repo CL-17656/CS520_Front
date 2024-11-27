@@ -83,8 +83,11 @@ router.beforeEach((to, from, next) => {
   if ((to.name === 'studenthome' || to.name === 'instructorhome') && !store.isAuthenticated) {
     next({ name: 'login' }); // Redirect to login if not authenticated
   } 
+  else if((to.name === 'studenthome' && store.userType == 'prof') || (to.name == 'instructorhome' && store.userType == 'stu')) {
+    //do nothing
+  }
   else {
-    next(); // Allow navigation otherwise
+    next();
   }
 });
 
