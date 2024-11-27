@@ -18,6 +18,7 @@ const registerSubmitData = reactive(
     {
         invitationCode: "",
         username: "",
+        role: "",
         password: "",
     }
 );
@@ -80,6 +81,7 @@ async function submit() {
     //create data structure for back end
     registerSubmitData.invitationCode = registerData.invitationCode;
     registerSubmitData.username = registerData.username;
+    registerSubmitData.role = registerData.accountType;
     registerSubmitData.password = registerData.password;
     console.log(registerSubmitData);
 
@@ -111,8 +113,8 @@ async function submit() {
     <div>
         <label for="accountType" class="register">Select Account Type</label>
         <select id="accountType" class="register" v-model="registerData.accountType">
-            <option value="Student">Student</option>
-            <option value="Instructor">Instructor</option>
+            <option value="student">Student</option>
+            <option value="instructor">Instructor</option>
         </select>
         <h1 class="text-red-600" v-if="errors.accountType.length > 0">{{errors.accountType[0]}}</h1>
     </div>
