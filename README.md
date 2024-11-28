@@ -13,4 +13,6 @@ axios:
 ***npm install --save axios vue-axios***
 tailwind(possibly not needed):
 ***npm install -D tailwindcss@latest postcss@latest autoprefixer@latest***
+Pinia persisted local storage
+***npm install pinia-plugin-persistedstate***
 
