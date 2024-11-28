@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'; // Use `useRouter` for navigation
-import {validateAssignmentId} from '@/api/StudentHomeApi'
+//import {validateAssignmentId} from '@/api/StudentHomeApi'
 import { reactive } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { logoutUser } from '@/api/AuthApi';
+import { onMounted } from 'vue';
+import { getAssignmentsStudentTaken } from '@/api/StudentHomeApi';
 
 const store = useAuthenticationStore();
 
@@ -30,6 +32,33 @@ async function logout()
     console.error(error);
   }
 }
+
+//This function is called when page opens, fetches all data needed for this page
+const initialize = async () => {
+  console.log(store.userId)
+  try {
+    const pageData = await getAssignmentsStudentTaken(store.userId);
+    console.log(pageData);
+    if(pageData.data.count != "") {
+      for(let i = 0; i < pageData.data.count; ++i) {
+        assignId = pageData.data.recordList[i].id
+        //TODO:
+        //Get assignementData using assignmentId
+        assignmentList.value.push({
+          id:assignId, 
+          name: 'midterm preparation', 
+          instructor: 'Thomas Carr', 
+          isGraded: false,
+          grade: 0
+        });
+      }
+    }
+  }
+  catch(error) {
+    console.log(error);
+  }
+}
+onMounted(() => initialize());
 
 const router = useRouter(); // Create an instance of `useRouter`
 // Data for the course list and semesters
@@ -103,7 +132,7 @@ function closeModal() {
     <div class="semester" v-for="semester in semesters" :key="semester">
       <h2>{{ semester }}</h2>
       <div class="courses-grid">
-          <div v-for="(assignment) in assignmentList" :key="index" class="course-card">
+          <div v-for="[index, assignment] in Object.entries(assignmentList)" :key="index" class="course-card">
             <h3>{{ assignment.name }}</h3>
             <p>{{ assignment.instructor }}</p>
             <div v-if="assignment.isGraded">

@@ -67,24 +67,26 @@ const initialize = async () => {
   console.log(store.userId);
   try {
     //currently use 1 only for debugging purpose
-    const pageData = await getAssignmentsByInstructorId(1);
+    const pageData = await getAssignmentsByInstructorId(store.userId);
     console.log(pageData);
-    for(let i = 0; i < pageData.data.count; ++i) {
-      quizeData.allQuizInform.push({quizId: pageData.data.recordList[i].id, quizName: pageData.data.recordList[i].name});
-      const studentTakenQuiz = await getStudentByAssignmentId(pageData.data.recordList[i].id);
-      console.log(studentTakenQuiz)
-      if(studentTakenQuiz.data.count == "") {
-        continue;
-      }
-      for(let j = 0; j < studentTakenQuiz.data.count; ++j) {
-        quizeData.quizes.push(
-        {
-          studentId: 2,
-          status: pageData.data.recordList[i].status,
-          grade: "",
-          isGrade: false,
+    if(pageData.data.count != "") {
+      for(let i = 0; i < pageData.data.count; ++i) {
+        quizeData.allQuizInform.push({quizId: pageData.data.recordList[i].id, quizName: pageData.data.recordList[i].name});
+        const studentTakenQuiz = await getStudentByAssignmentId(pageData.data.recordList[i].id);
+        console.log(studentTakenQuiz)
+        if(studentTakenQuiz.data.count == "") {
+          continue;
         }
-      )
+        for(let j = 0; j < studentTakenQuiz.data.count; ++j) {
+          quizeData.quizes.push(
+          {
+            studentId: studentTakenQuiz.data.recordList[j].userId,
+            status: pageData.data.recordList[i].status,
+            grade: "",
+            isGrade: false,
+          }
+        )
+        }
       }
     }
     console.log(quizeData);

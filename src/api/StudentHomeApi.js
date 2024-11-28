@@ -1,5 +1,7 @@
 import apiClient from './axiosConfig';
+import apiLoginClient from './axiosConfigLogin';
 
+/*
 const validateAssignmentId = async(assignmentId) =>{
     try {
         const res = await apiClient.get(`/assignmentquestion/quizId=${assignmentId}`);
@@ -8,7 +10,7 @@ const validateAssignmentId = async(assignmentId) =>{
         console.error('Error fetching questions:', error);
         throw error;
       }
-}
+}*/
 
 // const saveAnswers = async (quizId,answers) => {
 //     try {
@@ -20,4 +22,14 @@ const validateAssignmentId = async(assignmentId) =>{
 //     }
 // };
 
-export{validateAssignmentId}
+const getAssignmentsStudentTaken = async(studentId) =>{
+  try {
+      const res = await apiLoginClient.get(`/admin/posts?isDelete=0&userId=${studentId}`);
+      return res.data;
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+      throw error;
+    }
+}
+
+export{getAssignmentsStudentTaken}
