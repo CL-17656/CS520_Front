@@ -8,6 +8,7 @@ export const useAuthenticationStore = defineStore("AuthenticationStore", {
         userName: "",
         userType: "",
     }),
+    persist: true,
     actions: {
         login(loginId, loginUsername, loginUserType) {
             this.isAuthenticated = true;

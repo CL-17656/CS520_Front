@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { logoutUser } from '@/api/AuthApi';
 import { onMounted } from 'vue';
-import {getAssignmentsByInstructorId} from '@/api/InstructorHomeApi'
+import {getAssignmentsByInstructorId, getStudentByAssignmentId} from '@/api/InstructorHomeApi'
 
 const store = useAuthenticationStore();
 const router = useRouter();
@@ -17,6 +17,7 @@ const logoutData = reactive(
 );
 
 //Front end data structure with sample data
+/*
 const quizeData = reactive(
     {
         allQuizIds: [1, 200, 500],
@@ -51,13 +52,42 @@ const quizeData = reactive(
           },
         ]
     }
+);*/
+const quizeData = reactive(
+    {
+        allQuizInform: [],
+        quizes: [
+
+        ]
+    }
 );
 
+//fetch data when page opens
 const initialize = async () => {
   console.log(store.userId);
   try {
-    const pageData = await getAssignmentsByInstructorId(store.userId);
+    //currently use 1 only for debugging purpose
+    const pageData = await getAssignmentsByInstructorId(1);
     console.log(pageData);
+    for(let i = 0; i < pageData.data.count; ++i) {
+      quizeData.allQuizInform.push({quizId: pageData.data.recordList[i].id, quizName: pageData.data.recordList[i].name});
+      const studentTakenQuiz = await getStudentByAssignmentId(pageData.data.recordList[i].id);
+      console.log(studentTakenQuiz)
+      if(studentTakenQuiz.data.count == "") {
+        continue;
+      }
+      for(let j = 0; j < studentTakenQuiz.data.count; ++j) {
+        quizeData.quizes.push(
+        {
+          studentId: 2,
+          status: pageData.data.recordList[i].status,
+          grade: "",
+          isGrade: false,
+        }
+      )
+      }
+    }
+    console.log(quizeData);
   }
   catch(error) {
     console.log(error);
@@ -76,6 +106,13 @@ function viewQuizStats(quizId)
   alert("view stats for quiz " + quizId);
 }
 
+//function for creating quiz
+function createAssignment()
+{
+
+}
+
+//function for logging out
 async function logout()
 {
   logoutData.username = store.userName;
@@ -97,14 +134,17 @@ async function logout()
 <template>
   <main class="instructor-home">
     <h1 class="title">Instructor Home Page</h1>
-    <button class="logout-btn" @click="logout()">Logout</button>
+    <div>
+      <button class="logout-btn" @click="logout()">Logout</button>
+      <button class="create-quiz-btn" @click="createAssignment()">Create Assignment</button> 
+    </div>
     <!-- For each quiz display following -->
-    <section v-for="[arrIndex, quizIndex] in Object.entries(quizeData.allQuizIds)" :key="arrIndex" class="quiz-overview">
-      <h2>Quiz ID: {{ quizIndex }}</h2>
+    <section v-for="[arrIndex, quizInform] in Object.entries(quizeData.allQuizInform)" :key="arrIndex" class="quiz-overview">
+      <h2>Quiz ID: {{ quizInform.quizId }}</h2>
+      <h2>Quiz Name: {{ quizInform.quizName }}</h2>
       <div class="quiz-list">
         <!-- For each submission display following -->
         <div v-for="[key, quiz] in Object.entries(quizeData.quizes.filter(val => val.quizId == quizIndex))" :key="key" class="quiz-card">
-            <h3>Quiz Name: {{ quiz.name }}</h3>
             <p>Student ID: {{ quiz.studentId }} </p>
             <p v-if="quiz.status == 2" >Quiz</p>
             <p v-if="quiz.status == 1" >Questionaire</p>
@@ -180,6 +220,12 @@ button:hover {
 
 .logout-btn {
   margin-left: 50rem;
+  margin-top: 0rem;
+  font-weight: bold;
+}
+
+.create-quiz-btn {
+  margin-left: 45rem;
   margin-top: 1rem;
   font-weight: bold;
 }
