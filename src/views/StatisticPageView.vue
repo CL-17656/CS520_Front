@@ -1,9 +1,7 @@
 <script setup>
-// import { ref, computed, onMounted } from 'vue';
-// import { useRoute } from 'vue-router';
+
 // import Chart from 'chart.js/auto';
 // import 'chartjs-adapter-date-fns';
-// import { fetchTestScores, fetchGradeDistribution } from '@/api/StatisticsApi'; // added
 
 // // Use Vue Router to get route parameters
 // const route = useRoute();
@@ -177,7 +175,7 @@
 //   loadStatistics();
 // });
 
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchStudentResults } from '@/api/StatisticsApi';
 import { Bar, Pie } from 'vue-chartjs';
