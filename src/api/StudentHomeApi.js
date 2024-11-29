@@ -32,4 +32,15 @@ const getAssignmentsStudentTaken = async(studentId) =>{
     }
 }
 
+const getAssignmentByProjectId = async(projectId) =>{
+  try {
+      const res = await apiLoginClient.get(`/admin/project/${projectId}/info`);
+      return res.data;
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+      throw error;
+    }
+}
+
 export{getAssignmentsStudentTaken}
+export{getAssignmentByProjectId}

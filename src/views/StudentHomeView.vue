@@ -6,7 +6,8 @@ import { reactive } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { logoutUser } from '@/api/AuthApi';
 import { onMounted } from 'vue';
-import { getAssignmentsStudentTaken } from '@/api/StudentHomeApi';
+import { getAssignmentsStudentTaken, getAssignmentByProjectId } from '@/api/StudentHomeApi';
+import moment from 'moment';
 
 const store = useAuthenticationStore();
 
@@ -42,14 +43,14 @@ const initialize = async () => {
     if(pageData.data.count != "") {
       for(let i = 0; i < pageData.data.count; ++i) {
         assignId = pageData.data.recordList[i].id
-        //TODO:
-        //Get assignementData using assignmentId
+        const assignmentData = await getAssignmentByProjectId(assignId);
+
         assignmentList.value.push({
           id:assignId, 
-          name: 'midterm preparation', 
-          instructor: 'Thomas Carr', 
-          isGraded: false,
-          grade: 0
+          name: assignmentData.data.name, 
+          instructor: assignmentData.data.userId, 
+          isGraded: pageData.data.hasGraded,
+          grade: pageData.data.scores,
         });
       }
     }
@@ -81,7 +82,7 @@ function addCourse() {
   showModal.value = true;
 }
 
-function submitCourse() {
+async function submitCourse() {
   console.log(newAssignmentId.value.trim())
   if (newAssignmentId.value.trim() !== ''  )  {
     const assignmentId = newAssignmentId.value.trim();
@@ -89,18 +90,18 @@ function submitCourse() {
     // let isVerifyOK = validateAssignmentId(assignmentId);
     
 
-    console.log(assignment.value)
-    let temp = false
-    for( const entry of assignment.value){
-      if(entry.id == assignmentId){
-        assignmentList.value.push(entry);
-        showModal.value = false;
-        temp = true
-      }
-    }
-    if(!temp){
-      error_message.value = 'Course ID not found';
-    }
+    ///console.log(assignment.value)
+    //let temp = false
+    //for( const entry of assignment.value){
+    //  if(entry.id == assignmentId){
+    //   assignmentList.value.push(entry);
+    //    showModal.value = false;
+    //    temp = true
+    //  }
+    //}
+    //if(!temp){
+      //error_message.value = 'Course ID not found';
+    //}
 
     // if (isVerifyOK) {
     //   // Add the course to the assignmentList
@@ -109,6 +110,36 @@ function submitCourse() {
     // } else {
     //   error_message.value = 'Course ID not found';
     // }
+
+    //Seach assignmentData
+    const assignmentData = await getAssignmentByProjectId(newAssignmentId.value);
+    console.log(assignmentData)
+    if(assignmentData.data.endTime != null) {
+      let endT = moment(assignmentData.data.endTime).format('YYYY-MM-DD HH:mm:ss');
+      let now = moment().format('YYYY-MM-DD HH:mm:ss');
+      if(now > endT) {
+        error_message.value = 'Assignment has ended';
+      }
+    }
+    else if(assignmentData.data.startTime != null) {
+      let startT = moment(assignmentData.data.startTime).format('YYYY-MM-DD HH:mm:ss');
+      let now = moment().format('YYYY-MM-DD HH:mm:ss');
+      if(now < startT) {
+        error_message.value = 'Assignment has not started';
+      }
+    }
+    else {
+      error_message.value = '';
+      assignmentList.value.push({
+        id:assignmentData.data.projectId, 
+        name: assignmentData.data.name, 
+        instructor: assignmentData.data.userId, 
+        isGraded: false,
+        grade: 0,
+      });
+      //TODO:
+      //route to take quiz using this quizdata
+    }
 
     newAssignmentId.value = ''; // Clear the input field
     
