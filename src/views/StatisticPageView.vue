@@ -176,9 +176,53 @@
 // onMounted(() => {
 //   loadStatistics();
 // });
+
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { fetchStudentResults } from '@/api/StatisticsApi';
+import { Bar, Pie } from 'vue-chartjs';
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  ArcElement,
+} from 'chart.js';
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement);
+
+const route = useRoute();
+const router = useRouter();
+const quizId = ref(route.params.quizId || '');
+
+const grades = ref([]);
+const questions = ref([]);
+const quizTitle = ref('');
+const loading = ref(true);
+const error = ref(null);
+
+// Computed statistics
+const averageScore = ref(0);
+const questionStats = ref([]); // Array of { correct: number, incorrect: number } for each question
+
+onMounted(async () => {
+  try {
+    // fetching the results from backend
+    const response = await fetchStudentResults(quizId.value);
+    grades.value = response.data;
+    if (grades.value.length > 0) {
+      quizTitle.value = 'Quiz Statistics'; // || grades.value[0].questionTitle
+      totalscores = grades.value.reduce()
+      // under progress
+
+
   
 </script>
 
+<!--
 <template>
   <div class="statisticpage">
     <h1 class="title">Course Statistics</h1>
@@ -198,14 +242,14 @@
       <canvas id="gradeDistributionChart"></canvas>
     </div>
     
-    <!--<div class="statistic-box">
+    <div class="statistic-box">
       <div class="score-statistic">
         <canvas id="testScoresChart"></canvas>
       </div>
       
       <div class="time-statistic">
         <canvas id="timeSpentChart"></canvas>
-      </div>-->
+      </div>
 
   </div>
 </template>
@@ -237,3 +281,4 @@
   margin: auto;
 } */
 </style>
+-->
