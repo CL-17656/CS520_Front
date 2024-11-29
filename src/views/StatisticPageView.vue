@@ -175,22 +175,11 @@
 //   loadStatistics();
 // });
 
-import { ref, computed, onMounted } from 'vue';
+
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchStudentResults } from '@/api/StatisticsApi';
-import { Bar, Pie } from 'vue-chartjs';
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  ArcElement,
-} from 'chart.js';
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement);
+import Chart from 'chart.js/auto'; // run : npm install chart.js : in your terminals please before starting the frontend
 
 const route = useRoute();
 const router = useRouter();
@@ -206,19 +195,191 @@ const error = ref(null);
 const averageScore = ref(0);
 const questionStats = ref([]); // Array of { correct: number, incorrect: number } for each question
 
+// Chart references
+let barChart = null;
+let pieChart = null;
+
 onMounted(async () => {
   try {
-    // fetching the results from backend
+    // Fetch results from backend
     const response = await fetchStudentResults(quizId.value);
     grades.value = response.data;
     if (grades.value.length > 0) {
-      quizTitle.value = 'Quiz Statistics'; // || grades.value[0].questionTitle
-      totalscores = grades.value.reduce()
-      // under progress
+      quizTitle.value = grades.value[0].questionTitle || 'Quiz Statistics';
 
+      // Compute average score
+      const totalScores = grades.value.reduce((sum, grade) => sum + (grade.answerDTO.isCorrect ? 1 : 0), 0); // I am assuming that each question weighs 1 point
+      averageScore.value = (totalScores / grades.value.length).toFixed(2);
 
-  
+      // Compute correct/incorrect counts per question
+      questionStats.value = grades.value.reduce((stats, grade) => {
+        const questionIndex = questions.value.findIndex((q) => q.id === grade.id);
+        if (questionIndex === -1) {
+          stats.push({
+            question: grade.questionTitle,
+            correct: grade.answerDTO.isCorrect ? 1 : 0,
+            incorrect: grade.answerDTO.isCorrect ? 0 : 1,
+          });
+        } else {
+          if (grade.answerDTO.isCorrect) {
+            stats[questionIndex].correct += 1;
+          } else {
+            stats[questionIndex].incorrect += 1;
+          }
+        }
+        return stats;
+      }, []);
+
+      // Rendering the charts
+      renderBarChart();
+      renderPieChart();
+    }
+  } catch (err) {
+    error.value = err.message || 'Failed to load statistics.';
+  } finally {
+    loading.value = false;
+  }
+});
+
+// Render bar chart
+function renderBarChart() {
+  const ctx = document.getElementById('barChart').getContext('2d');
+  if (barChart) {
+    barChart.destroy(); // Destroy the previous chart instance if it exists
+  }
+  barChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: questionStats.value.map((stat) => stat.question),
+      datasets: [
+        {
+          label: 'Correct',
+          data: questionStats.value.map((stat) => stat.correct),
+          backgroundColor: 'green',
+        },
+        {
+          label: 'Incorrect',
+          data: questionStats.value.map((stat) => stat.incorrect),
+          backgroundColor: 'red',
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' },
+        title: { display: true, text: 'Correct vs Incorrect Responses' },
+      },
+    },
+  });
+}
+
+// Render pie chart
+function renderPieChart() {
+  const ctx = document.getElementById('pieChart').getContext('2d');
+  if (pieChart) {
+    pieChart.destroy(); // Destroy the previous chart instance if it exists
+  }
+  pieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Correct', 'Incorrect'],
+      datasets: [
+        {
+          data: [
+            questionStats.value.reduce((sum, stat) => sum + stat.correct, 0),
+            questionStats.value.reduce((sum, stat) => sum + stat.incorrect, 0),
+          ],
+          backgroundColor: ['green', 'red'],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' },
+        title: { display: true, text: 'Overall Distribution' },
+      },
+    },
+  });
+}
+
+// Navigate back to the homepage
+function goHome() {
+  router.push({ name: 'InstructorHomepage' });
+}
 </script>
+
+<template>
+  <div class="statistics-view">
+    <div class="header">
+      <h1>{{ quizTitle }}</h1>
+      <button class="home-btn" @click="goHome">Home</button>
+    </div>
+
+    <div v-if="loading" class="loading">Loading statistics...</div>
+    <div v-if="error" class="error">{{ error }}</div>
+
+    <div v-if="grades.length" class="statistics-container">
+      <!-- Average Score -->
+      <div class="average-score">
+        <h2>Average Score: {{ averageScore }}</h2>
+      </div>
+
+      <!-- Bar Chart: Correct vs Incorrect for Each Question -->
+      <div class="chart-container">
+        <canvas id="barChart"></canvas>
+      </div>
+
+      <!-- Pie Chart: Overall Correct vs Incorrect -->
+      <div class="chart-container">
+        <canvas id="pieChart"></canvas>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.statistics-view {
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.home-btn {
+  padding: 0.5rem 1rem;
+  background-color: #004d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.error {
+  font-size: 1.2rem;
+  color: red;
+}
+
+.average-score {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.chart-container {
+  margin-bottom: 3rem;
+}
+</style>
 
 <!--
 <template>
