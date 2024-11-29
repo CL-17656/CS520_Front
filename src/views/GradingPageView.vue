@@ -1,4 +1,3 @@
-<!-- src/components/InstructorGradingPage.vue -->
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -10,7 +9,7 @@ const router = useRouter();
 const quizId = ref(route.params.quizId || '');
 
 // State to hold assignments and grading data
-const assignments = ref([
+const assignment = ref(
   {
     name: "Midterm preparation",
     studentId: 12345678,
@@ -42,7 +41,7 @@ const assignments = ref([
     feedback: ""
   },
   
-]);
+);
 const loading = ref(false);
 const error = ref(null);
 
@@ -68,6 +67,22 @@ const handleSaveGrade = async (assignmentId, grade, feedback) => {
     console.error(err);
   }
 };
+
+const autograde = async() => {
+    let checkQuestionType = true;
+    let assigment_temp = assignment.value;
+    for (const quest of assigment_temp.questions){
+        if(quest.type !== "multiplechoice"){
+            checkQuestionType = false;
+        }
+    }
+
+    if(checkQuestionType){
+        // TODO connect with backend to auto grade
+    }else{
+        alert('Auto Grade is not availble! it only supports T/F and Multiple Choice questions')
+    }
+}
 </script>
 
 <template>
@@ -77,7 +92,7 @@ const handleSaveGrade = async (assignmentId, grade, feedback) => {
     <div v-if="loading">Loading assignments...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <div v-for="assignment in assignments" :key="assignment.name" class="assignment-card">
+      <div  class="assignment-card">
         <h2>Student: {{ assignment.studentName }}</h2>
         <p>Submitted At: {{ new Date(assignment.submittedAt).toLocaleString() }}</p>
         
@@ -107,9 +122,12 @@ const handleSaveGrade = async (assignmentId, grade, feedback) => {
         </div>
         
         <div class="grading-controls">
+          <button @click="autograde()">
+            Auto Grade
+          </button>
           <label>
             Grade:
-            <input type="number" v-model.number="assignment.grade" min="0" max="100" />
+            <input type="number" class="grade-input" v-model.number="assignment.grade" min="0" max="100" />
           </label>
           
           <label>
@@ -159,6 +177,7 @@ const handleSaveGrade = async (assignmentId, grade, feedback) => {
 .grading-controls label {
   display: block;
   margin-bottom: 0.5rem;
+
 }
 
 .grading-controls input,
@@ -167,6 +186,7 @@ const handleSaveGrade = async (assignmentId, grade, feedback) => {
   padding: 0.5rem;
   margin-top: 0.25rem;
   box-sizing: border-box;
+  background-color: rgb(216, 227, 157);
 }
 
 .grading-controls button {
@@ -183,3 +203,4 @@ const handleSaveGrade = async (assignmentId, grade, feedback) => {
   background-color: #369870;
 }
 </style>
+
