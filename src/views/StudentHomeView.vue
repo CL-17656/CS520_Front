@@ -42,15 +42,15 @@ const initialize = async () => {
     console.log(pageData);
     if(pageData.data.count != "") {
       for(let i = 0; i < pageData.data.count; ++i) {
-        assignId = pageData.data.recordList[i].id
+        assignId = pageData.data.recordList[i].projectId
         const assignmentData = await getAssignmentByProjectId(assignId);
 
         assignmentList.value.push({
           id:assignId, 
           name: assignmentData.data.name, 
           instructor: assignmentData.data.userId, 
-          isGraded: pageData.data.hasGraded,
-          grade: pageData.data.scores,
+          isGraded: pageData.data.recordList[i].hasGraded,
+          grade: pageData.data.recordList[i].scores,
         });
       }
     }

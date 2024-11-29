@@ -82,8 +82,8 @@ const initialize = async () => {
           {
             studentId: studentTakenQuiz.data.recordList[j].userId,
             status: pageData.data.recordList[i].status,
-            grade: "",
-            isGrade: false,
+            grade: pageData.data.recordList[i].scores,
+            isGrade: pageData.data.recordList[i].hasGraded,
           }
         )
         }
