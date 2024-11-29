@@ -1,57 +1,198 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+// import { ref, computed, onMounted } from 'vue';
+// import { useRoute, useRouter } from 'vue-router';
+// //import { fetchquestions, saveAnswers } from '@/api/AssignmentApi';
+
+// const route = useRoute();
+// const router = useRouter();
+// const quizId = ref(route.params.quizId || '');
+// const course = route.params.course;
+
+// // Timer setup for countdown
+// const totalSeconds = ref(2 * 60 * 60); // 2 hours in seconds
+// const timer = computed(() => {
+//   const hours = Math.floor(totalSeconds.value / 3600);
+//   const minutes = Math.floor((totalSeconds.value % 3600) / 60);
+//   const seconds = totalSeconds.value % 60;
+//   return `${hours}h ${minutes}m ${seconds}s`;
+// });
+
+// const startCountdown = () => {
+//   const countdownInterval = setInterval(() => {
+//     if (totalSeconds.value > 0) {
+//       totalSeconds.value--;
+//     } else {
+//       clearInterval(countdownInterval);
+//       alert('Time is up! Submitting your answers...');
+//       saveAnswers();
+//     }
+//   }, 1000);
+// };
+
+// // Dynamically fetch questions from the backend
+// const assignmentDetail = ref({
+//   type: '',
+//   name: '',
+//   grade: '',
+//   isGrade: false,
+//   questions: []
+// });
+// // Fetch questions and start countdown when component is mounted
+// onMounted(() => {
+//   //fetchquestions();
+//   startCountdown();
+// });
+
+// // If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
+// const courseDetails = computed(() => {
+//   return typeof course === 'string' ? JSON.parse(course) : course;
+// });
+
+// function statisticpage(temp) {
+//   router.push({ name: 'statisticpage' });
+// }
+
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-//import { fetchquestions, saveAnswers } from '@/api/AssignmentApi';
+import { fetchQuizDetails, submitQuizAnswers } from '@/api/AssignmentApi';
 
 const route = useRoute();
 const router = useRouter();
-const quizId = ref(route.params.quizId || '');
-const course = route.params.course;
 
-// Timer setup for countdown
-const totalSeconds = ref(2 * 60 * 60); // 2 hours in seconds
-const timer = computed(() => {
-  const hours = Math.floor(totalSeconds.value / 3600);
-  const minutes = Math.floor((totalSeconds.value % 3600) / 60);
-  const seconds = totalSeconds.value % 60;
-  return `${hours}h ${minutes}m ${seconds}s`;
-});
+const quizId = route.params.quizId;
+const quizDetails = ref(null);
+const userAnswers = ref({});
+const isLoading = ref(true); // added this to prevent user from interacting with the UI when the quiz is being fetched
 
-const startCountdown = () => {
-  const countdownInterval = setInterval(() => {
-    if (totalSeconds.value > 0) {
-      totalSeconds.value--;
-    } else {
-      clearInterval(countdownInterval);
-      alert('Time is up! Submitting your answers...');
-      saveAnswers();
-    }
-  }, 1000);
+// Fetch quiz details
+const loadQuizDetails = async () => {
+  try {
+    const response = await fetchQuizDetails(quizId);
+    quizDetails.value = response.data;
+
+    // Initialize userAnswers with empty arrays/strings based on question type
+    quizDetails.value.questionDTOs.forEach((question) => { // quizDetails.value.questionDTOs contains an array of question objects fetched from the backend ( id and type)
+      userAnswers.value[question.id] = question.type === 1 || question.type === 2 ? [] : '';
+    });
+    isLoading.value = false;
+  } catch (error) {
+    console.error('Error fetching quiz details:', error);
+    alert('Failed to load quiz. Please try again.');
+    isLoading.value = false;
+  }
 };
 
-// Dynamically fetch questions from the backend
-const assignmentDetail = ref({
-  type: '',
-  name: '',
-  grade: '',
-  isGrade: false,
-  questions: []
-});
-// Fetch questions and start countdown when component is mounted
+// Submit answers
+const submitAnswers = async () => {
+  try {
+    const postVO = {
+      projectId: quizId,
+      answer: JSON.stringify(userAnswers.value),
+      isDelete: false,
+    };
+    await submitQuizAnswers(postVO);
+    alert('Quiz submitted successfully!');
+    router.push('/home'); // Redirect to home or results page
+  } catch (error) {
+    console.error('Error submitting quiz:', error);
+    alert('Failed to submit quiz. Please try again.');
+  }
+};
+
 onMounted(() => {
-  //fetchquestions();
-  startCountdown();
+  loadQuizDetails();
 });
-
-// If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
-const courseDetails = computed(() => {
-  return typeof course === 'string' ? JSON.parse(course) : course;
-});
-
-function statisticpage(temp) {
-  router.push({ name: 'statisticpage' });
-}
+  
 </script>
+
+
+<template>
+  <div v-if="isLoading" class="loading">Loading quiz...</div>
+  <div v-else class="take-quiz">
+    <h1>{{ quizDetails.name }}</h1>
+    <p>{{ quizDetails.description }}</p>
+
+    <div v-for="(question, index) in quizDetails.questionDTOs" :key="index" class="question">
+      <h3>{{ question.questionTitle }}</h3>
+      <p>{{ question.questionDescription }}</p>
+
+      <!-- Single/Multiple Choice -->
+      <div v-if="question.type === 1 || question.type === 2">
+        <div
+          v-for="(option, optIndex) in question.possibleAnswerList"
+          :key="optIndex"
+        >
+          <input
+            type="checkbox"
+            v-if="question.type === 2"
+            :id="'q' + question.id + 'opt' + optIndex"
+            :value="option"
+            v-model="userAnswers[question.id]"
+          />
+          <input
+            type="radio"
+            v-else
+            :id="'q' + question.id + 'opt' + optIndex"
+            :value="option"
+            v-model="userAnswers[question.id]"
+          />
+          <label :for="'q' + question.id + 'opt' + optIndex">{{ option }}</label>
+        </div>
+      </div>
+
+      <!-- Fill-in-the-Blank or Essay -->
+      <textarea
+        v-else
+        v-model="userAnswers[question.id]"
+        :placeholder="'Enter your answer here...'"
+      ></textarea>
+    </div>
+
+    <button @click="submitAnswers">Submit</button>
+  </div>
+</template>
+
+<style scoped>
+.take-quiz {
+  padding: 20px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 50px;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <template>
@@ -173,3 +314,7 @@ input[type="text"] {
 }
 
 </style>
+
+
+
+
