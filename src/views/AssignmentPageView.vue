@@ -1,5 +1,55 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+
+// const route = useRoute();
+// const router = useRouter();
+// const quizId = ref(route.params.quizId || '');
+// const course = route.params.course;
+
+// // Timer setup for countdown
+// const totalSeconds = ref(2 * 60 * 60); // 2 hours in seconds
+// const timer = computed(() => {
+//   const hours = Math.floor(totalSeconds.value / 3600);
+//   const minutes = Math.floor((totalSeconds.value % 3600) / 60);
+//   const seconds = totalSeconds.value % 60;
+//   return `${hours}h ${minutes}m ${seconds}s`;
+// });
+
+// const startCountdown = () => {
+//   const countdownInterval = setInterval(() => {
+//     if (totalSeconds.value > 0) {
+//       totalSeconds.value--;
+//     } else {
+//       clearInterval(countdownInterval);
+//       alert('Time is up! Submitting your answers...');
+//       saveAnswers();
+//     }
+//   }, 1000);
+// };
+
+// // Dynamically fetch questions from the backend
+// const assignmentDetail = ref({
+//   type: '',
+//   name: '',
+//   grade: '',
+//   isGrade: false,
+//   questions: []
+// });
+// // Fetch questions and start countdown when component is mounted
+// onMounted(() => {
+//   //fetchquestions();
+//   startCountdown();
+// });
+
+// // If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
+// const courseDetails = computed(() => {
+//   return typeof course === 'string' ? JSON.parse(course) : course;
+// });
+
+// function statisticpage(temp) {
+//   router.push({ name: 'statisticpage' });
+// }
+
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchQuizDetails, submitQuizAnswers } from '@/api/AssignmentApi';
 
@@ -132,58 +182,7 @@ button:hover {
 
 
 
-// import { ref, computed, onMounted } from 'vue';
-// import { useRoute, useRouter } from 'vue-router';
-// //import { fetchquestions, saveAnswers } from '@/api/AssignmentApi';
 
-// const route = useRoute();
-// const router = useRouter();
-// const quizId = ref(route.params.quizId || '');
-// const course = route.params.course;
-
-// // Timer setup for countdown
-// const totalSeconds = ref(2 * 60 * 60); // 2 hours in seconds
-// const timer = computed(() => {
-//   const hours = Math.floor(totalSeconds.value / 3600);
-//   const minutes = Math.floor((totalSeconds.value % 3600) / 60);
-//   const seconds = totalSeconds.value % 60;
-//   return `${hours}h ${minutes}m ${seconds}s`;
-// });
-
-// const startCountdown = () => {
-//   const countdownInterval = setInterval(() => {
-//     if (totalSeconds.value > 0) {
-//       totalSeconds.value--;
-//     } else {
-//       clearInterval(countdownInterval);
-//       alert('Time is up! Submitting your answers...');
-//       saveAnswers();
-//     }
-//   }, 1000);
-// };
-
-// // Dynamically fetch questions from the backend
-// const assignmentDetail = ref({
-//   type: '',
-//   name: '',
-//   grade: '',
-//   isGrade: false,
-//   questions: []
-// });
-// // Fetch questions and start countdown when component is mounted
-// onMounted(() => {
-//   //fetchquestions();
-//   startCountdown();
-// });
-
-// // If the course parameter is an object passed via `props`, you may need to convert it into a usable format.
-// const courseDetails = computed(() => {
-//   return typeof course === 'string' ? JSON.parse(course) : course;
-// });
-
-// function statisticpage(temp) {
-//   router.push({ name: 'statisticpage' });
-// }
 
 
 <!--
