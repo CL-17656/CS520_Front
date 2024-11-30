@@ -1,18 +1,23 @@
 # CS520_Front
  
-in order to see statistic please install chart.js 
-***npm install chart.js***
-and 
-***npm install chartjs-adapter-date-fns***
+in order to see statistic please install chart.js< br / >
+***npm install chart.js***< br / >
+and< br / >
+***npm install chartjs-adapter-date-fns***< br / >
+< br / >
+recording some dependencies:< br / >
+chart:< br / >
+***npm install chart.js***< br / >
+***npm install chartjs-adapter-date-fns***< br / >
+< br / >
+axios:< br / >
+***npm install --save axios vue-axios***< br / >
+< br / >
+tailwind(possibly not needed):< br / >
+***npm install -D tailwindcss@latest postcss@latest autoprefixer@latest***< br / >
 
-recording some dependencies:
-chart:
-***npm install chart.js***
-***npm install chartjs-adapter-date-fns***
-axios:
-***npm install --save axios vue-axios***
-tailwind(possibly not needed):
-***npm install -D tailwindcss@latest postcss@latest autoprefixer@latest***
-Pinia persisted local storage
-***npm install pinia-plugin-persistedstate***
+Pinia persisted local storage< br / >
+***npm install pinia-plugin-persistedstate***< br / >
 
+Vue Moment< br / >
+***npm install moment vue-moment***< br / >
