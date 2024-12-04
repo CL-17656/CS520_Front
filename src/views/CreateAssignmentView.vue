@@ -17,8 +17,10 @@ const assignmentDetail = reactive(
   {
     status: "2", // Default to Quiz (1 for questionaire, 2 for quiz)
     name: "New Quiz",
-    grade: "100",
-    isGrade: false,
+    //grade: "100",
+    //isGrade: false,
+    startTime: "",
+    endTime: "",
     questions:[{questionType: "1", question: "Explain the concept of Big O notation and give an example.",
     sampleResponse:
       "Big O notation is used to describe the performance or complexity of an algorithm. It gives an upper bound on the time or space complexity in terms of the input size. For example, if an algorithm has a time complexity of O(n), it means the runtime grows linearly with the input size."
@@ -57,8 +59,8 @@ function formatDataForBackend() {
   return {
     title: assignmentDetail.name,
     type: parseInt(assignmentDetail.status), // Quiz or Questionnaire
-    isGrade: assignmentDetail.isGrade, // Whether this is graded
-    grade: assignmentDetail.grade, // Total grade
+    //isGrade: assignmentDetail.isGrade, // Whether this is graded
+    //grade: assignmentDetail.grade, // Total grade
     questions: assignmentDetail.questions.map((q) => ({
       questionTitle: q.question,
       type: parseInt(q.questionType),
@@ -105,16 +107,7 @@ async function submit() {
         </div>
 
         <div class="question-box">
-            <!-- Section: select whether assignment is for grade -->
-            <div class="question">Select whether assigment is for grade:</div>
-            <select id="assignmentType" class="register" v-model="assignmentDetail.isGrade">
-                <option value="true">For Grade</option>
-                <option value="false">Not For GRade</option>
-            </select>
-
-            <!-- Section: Enter total grade -->
-            <div class="question">Enter total grade:</div>
-            <input type="text" placeholder="Enter Total Grade" v-model="assignmentDetail.grade"/>
+            
 
             <!-- Section: select assignment status -->
             <div class="question">Enter Assignement Type: </div>

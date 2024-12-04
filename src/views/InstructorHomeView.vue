@@ -78,12 +78,14 @@ const initialize = async () => {
           continue;
         }
         for(let j = 0; j < studentTakenQuiz.data.count; ++j) {
+          //console.log(studentTakenQuiz.data.recordList[j].hasGraded)
           quizeData.quizes.push(
           {
+            quizId: studentTakenQuiz.data.recordList[j].projectId,
             studentId: studentTakenQuiz.data.recordList[j].userId,
-            status: pageData.data.recordList[i].status,
-            grade: pageData.data.recordList[i].scores,
-            isGrade: pageData.data.recordList[i].hasGraded,
+            status: studentTakenQuiz.data.recordList[j].status,
+            grade: studentTakenQuiz.data.recordList[j].scores,
+            isGrade: studentTakenQuiz.data.recordList[j].hasGraded,
           }
         )
         }
@@ -146,15 +148,15 @@ async function logout()
       <h2>Quiz Name: {{ quizInform.quizName }}</h2>
       <div class="quiz-list">
         <!-- For each submission display following -->
-        <div v-for="[key, quiz] in Object.entries(quizeData.quizes.filter(val => val.quizId == quizIndex))" :key="key" class="quiz-card">
+        <div v-for="[key, quiz] in Object.entries(quizeData.quizes.filter(val => val.quizId == quizInform.quizId))" :key="key" class="quiz-card">
             <p>Student ID: {{ quiz.studentId }} </p>
             <p v-if="quiz.status == 2" >Quiz</p>
             <p v-if="quiz.status == 1" >Questionaire</p>
-            <p v-if="quiz.isGrade == true">Quiz Grade: {{ quiz.grade }}</p>
-            <button v-if="quiz.isGrade == false" @click="gradeQuiz(quiz.quizId, quiz.studentId)">Grade Quiz</button>
+            <p v-if="quiz.isGrade == 1">Quiz Grade: {{ quiz.grade }}</p>
+            <button v-if="quiz.isGrade == 0" @click="gradeQuiz(quiz.quizId, quiz.studentId)">Grade Quiz</button>
         </div>
       </div>
-      <button class="view-stat-btn" @click="viewQuizStats(quizIndex)">View Quiz Statistics</button>
+      <button class="view-stat-btn" @click="viewQuizStats(quizInform.quizId)">View Quiz Statistics</button>
     </section>
   </main>
 </template>
