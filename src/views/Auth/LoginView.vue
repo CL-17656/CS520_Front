@@ -14,7 +14,6 @@ const loginData = reactive(
 
 const errors = reactive(
     {
-        accountType: [],
         username: [],
         password: [],
         shouldSubmit: true,
@@ -23,7 +22,6 @@ const errors = reactive(
 
 function resetErrors()
 {
-    errors.accountType = [];
     errors.username = [];
     errors.password = [];
     errors.shouldSubmit = true;
@@ -36,13 +34,6 @@ const router = useRouter();
 async function submit() 
 {
     resetErrors();
-
-    // Validating the input fields
-    if (!loginData.accountType) 
-    {
-        errors.accountType.push('Must select an account type');
-        errors.shouldSubmit = false;
-    }
     if (!loginData.username) 
     {
         errors.username.push('Must enter an username');
@@ -72,9 +63,9 @@ async function submit()
                 console.log(store.userType);
 
                 // Redirect based on account type (Student or Instructor)
-                if (loginData.accountType === 'Instructor') {
+                if (store.userType === 'prof') {
                     router.push({ name: 'instructorhome' });
-                } else if (loginData.accountType === 'Student') {
+                } else if (store.userType === 'stu') {
                     router.push({ name: 'studenthome' });
                 }
             }
@@ -93,14 +84,6 @@ async function submit()
   </main>
 
   <form @submit.prevent="submit" class="w-1/2 mx-auto space-y-6">
-    <div>
-        <label for="accountType" class="register">Select Account Type</label>
-        <select id="accountType" class="register" v-model="loginData.accountType">
-            <option value="Student">Student</option>
-            <option value="Instructor">Instructor</option>
-        </select>
-        <h1 class="text-red-600" v-if="errors.accountType.length > 0">{{errors.accountType[0]}}</h1>
-    </div>
 
     <div>
         <input type="text" placeholder="Enter Username" v-model="loginData.username"/>
