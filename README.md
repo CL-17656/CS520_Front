@@ -22,8 +22,8 @@ Pinia persisted local storage<br/>
 Vue Moment<br/>
 ***npm install moment vue-moment***<br/>
 <br/>
-tough-cookie
-**npm install tough-cookie**
+tough-cookie<br/>
+**npm install tough-cookie**<br/>
 <br/>
 axios-cookiejar-support<br/>
 **npm install axios tough-cookie axios-cookiejar-support**<br/>
