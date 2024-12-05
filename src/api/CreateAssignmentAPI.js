@@ -11,6 +11,16 @@ const createQuestion = async(questionData) =>{
       }
 }
 
+const createQuestionAnswers = async(answerData) =>{
+  try {
+      const res = await apiClient.post('/admin/answers', answerData);
+      return res.data;
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+      throw error;
+    }
+}
+
 const createAssignmentAndAddQuestion = async(AssignmentData) =>{
     try {
         const res = await apiClient.post('/admin/projects', AssignmentData);
@@ -21,16 +31,6 @@ const createAssignmentAndAddQuestion = async(AssignmentData) =>{
       }
 }
 
-const messageTest = async(messageData) =>{
-  try {
-      const res =  await apiUrlEncodeClient.get(`/messages`);
-      return res.data;
-    } catch (error) {
-      console.error('Error fetching questions:', error);
-      throw error;
-    }
-}
-
 export{createQuestion};
+export{createQuestionAnswers};
 export{createAssignmentAndAddQuestion};
-export{messageTest};

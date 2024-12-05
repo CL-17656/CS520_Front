@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { createQuestion, messageTest } from '@/api/CreateAssignmentAPI';
+import { createQuestion, createQuestionAnswers, createAssignmentAndAddQuestion} from '@/api/CreateAssignmentAPI';
 import axios from "axios";
 
 const route = useRoute();
@@ -22,10 +22,16 @@ const assignmentDetail = reactive(
     //isGrade: false,
     startTime: "",
     endTime: "",
-    questions:[{questionType: "1", question: "Explain the concept of Big O notation and give an example.",
+    questions:[{questionType: "3", question: "Explain the concept of Big O notation and give an example.",
     sampleResponse:
       "Big O notation is used to describe the performance or complexity of an algorithm. It gives an upper bound on the time or space complexity in terms of the input size. For example, if an algorithm has a time complexity of O(n), it means the runtime grows linearly with the input size."
   , choices: [{choice: "", isCorrect: false}]},]}
+);
+
+const createdQuestionsData = reactive (
+  {
+    questionIds: [],
+  }
 );
 
 //Add a new question
@@ -86,17 +92,54 @@ async function submit() {
   console.log(assignmentDetail.questions.length)
   try {
     for(let i = 0; i < assignmentDetail.questions.length; ++i) {
-      /*
       const addQuestionResponse = await createQuestion({
         "questionDescription": assignmentDetail.questions[i].question,
         "questionTitle": assignmentDetail.questions[i].question,
-        "status": 2,
+        "status": assignmentDetail.status,
         "type": assignmentDetail.questions[i].questionType,
-      });*/
-      //console.log(addQuestionResponse);
+      });
+      console.log(addQuestionResponse);
+      createdQuestionsData.questionIds.push(addQuestionResponse.data);
     }
-    const res = await messageTest({});
-    console.log(res);
+    /*
+    for(let i = 0; i < assignmentDetail.questions.length; ++i)
+    {
+      let answerDat = {
+        "id": createdQuestionsData.questionIds[i],
+        "questionAnalysis": assignmentDetail.questions[i].sampleResponse,
+        "status": assignmentDetail.status,
+        "type": assignmentDetail.questions[i].questionType,
+      };
+      console.log(answerDat.id);
+      const addAnswerResponse = await createQuestionAnswers(answerDat);
+      console.log(addAnswerResponse);
+    }*/
+    let assignmentData = {
+      "answerAnalysis": true,
+      "answerSheetVisible": true,
+      "autoSave": true,
+      "copyEnabled": false,
+      "cover": "t",
+      "description": "t",
+      "enableUpdate": true,
+      "endTime": "",
+      "isActive": true,
+      "isDelete": false,
+      "isPassword": false,
+      "isRandom": false,
+      "name": "hi",
+      "password": "",
+      "progressBar": true,
+      "questionNum": createdQuestionsData.questionIds.length,
+      "questionNumber": true,
+      "questions": JSON.stringify(createdQuestionsData.questionIds),
+      "startTime": "",
+      "status": createdQuestionsData.status,
+      "tagIds": "",
+      "types": 2
+    };
+    const createAssignRes = await createAssignmentAndAddQuestion(assignmentData);
+    console.log(createAssignRes)
 
     alert("Quiz created successfully!");
     router.push("/instructor"); // Redirect to instructor home
