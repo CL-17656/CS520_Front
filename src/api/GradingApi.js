@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import apiClient from './axiosConfig';
 // Fetch assignments that need grading for a specific quiz
 export const fetchAssignmentsForGrading = async (projectId) => {
   try {

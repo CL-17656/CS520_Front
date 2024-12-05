@@ -9,16 +9,18 @@ const assignment = ref(null); // Initialize with null
 const loading = ref(false);
 const error = ref(null);
 let feedback = ref("");
-let totalscore = ref(Array(assignment.value.length).fill(0))
-let correctArr = ref(Array(assignment.value.length).fill(false))
+let totalscore = ref()
+let correctArr = ref()
 
 // Fetch assignments on component mount
 onMounted(async () => {
   try {
     loading.value = true;
     const response = await fetchAssignmentsForGrading(quizId.value);
+    print(response.data)
     assignment.value = response.data;
-
+    totalscore.value = Array(assignment.value.length).fill(0)
+    correctArr.value = Array(assignment.value.length).fill(false)
   } catch (err) {
     error.value = 'Failed to load assignments.';
     console.error(err);
