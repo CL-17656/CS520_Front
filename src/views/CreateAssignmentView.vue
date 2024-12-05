@@ -66,8 +66,6 @@ function formatDataForBackend() {
   return {
     title: assignmentDetail.name,
     type: parseInt(assignmentDetail.status), // Quiz or Questionnaire
-    //isGrade: assignmentDetail.isGrade, // Whether this is graded
-    //grade: assignmentDetail.grade, // Total grade
     questions: assignmentDetail.questions.map((q) => ({
       questionTitle: q.question,
       type: parseInt(q.questionType),
@@ -101,25 +99,31 @@ async function submit() {
       console.log(addQuestionResponse);
       createdQuestionsData.questionIds.push(addQuestionResponse.data);
     }
+
+    //TODO: Fix create answers below
     /*
-    for(let i = 0; i < assignmentDetail.questions.length; ++i)
+    for(let i = 0; i < createdQuestionsData.questionIds.length; ++i)
     {
       let answerDat = {
         "id": createdQuestionsData.questionIds[i],
         "questionAnalysis": assignmentDetail.questions[i].sampleResponse,
+        "correctAnswers": "[a]",
+        "possibleAnswers": "[a,b,c]",
         "status": assignmentDetail.status,
-        "type": assignmentDetail.questions[i].questionType,
+        "images": null,
+        "isDelete": null,
       };
-      console.log(answerDat.id);
+      console.log(answerDat);
       const addAnswerResponse = await createQuestionAnswers(answerDat);
       console.log(addAnswerResponse);
     }*/
+
     let assignmentData = {
       "answerAnalysis": true,
       "answerSheetVisible": true,
       "autoSave": true,
       "copyEnabled": false,
-      "cover": "t",
+      "cover": "",
       "description": "t",
       "enableUpdate": true,
       "endTime": "",
@@ -127,19 +131,19 @@ async function submit() {
       "isDelete": false,
       "isPassword": false,
       "isRandom": false,
-      "name": "hi",
+      "name": assignmentDetail.name,
       "password": "",
       "progressBar": true,
       "questionNum": createdQuestionsData.questionIds.length,
       "questionNumber": true,
       "questions": JSON.stringify(createdQuestionsData.questionIds),
       "startTime": "",
-      "status": createdQuestionsData.status,
+      "status": assignmentDetail.status,
       "tagIds": "",
       "types": 2
     };
     const createAssignRes = await createAssignmentAndAddQuestion(assignmentData);
-    console.log(createAssignRes)
+    console.log(createAssignRes);
 
     alert("Quiz created successfully!");
     router.push("/instructor"); // Redirect to instructor home
