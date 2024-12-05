@@ -7,9 +7,9 @@ import { fetchAssignmentsForGrading, saveGrade } from '@/api/GradingApi';
 const route = useRoute();
 const router = useRouter();
 const quizId = ref(route.params.quizId || '');
-
+const assignment = ref([]);
 // State to hold assignments and grading data
-const assignment = ref(
+const assignment_test = ref(
   {
     name: "Midterm preparation",
     studentId: 12345678,
@@ -47,14 +47,15 @@ const error = ref(null);
 
 // Fetch assignments on component mount
 onMounted(async () => {
-//   try {
-//     assignments.value = await fetchAssignmentsForGrading(quizId.value);
-//   } catch (err) {
-//     error.value = 'Failed to load assignments.';
-//     console.error(err);
-//   } finally {
-//     loading.value = false;
-//   }
+  try {
+    assignment.value = await fetchAssignmentsForGrading(quizId.value);
+    
+  } catch (err) {
+    error.value = 'Failed to load assignments.';
+    console.error(err);
+  } finally {
+    loading.value = false;
+  }
 });
 
 // Function to handle grade submission
@@ -83,6 +84,8 @@ const autograde = async() => {
         alert('Auto Grade is not availble! it only supports T/F and Multiple Choice questions')
     }
 }
+
+
 </script>
 
 <template>
@@ -94,29 +97,16 @@ const autograde = async() => {
     <div v-else>
       <div  class="assignment-card">
         <h2>Student: {{ assignment.studentName }}</h2>
-        <p>Submitted At: {{ new Date(assignment.submittedAt).toLocaleString() }}</p>
+        <!-- <p>Submitted At: {{ new Date(assignment.submittedAt).toLocaleString() }}</p> -->
         
         <div class="questions">
-          <div v-for="(question, index) in assignment.questions" :key="index" class="question">
-            <p><strong>Q{{ index + 1 }}: {{ question.text }}</strong></p>
-            
-            <!-- Display different question types -->
-            <div v-if="question.type === 'truefalse'">
-              <p>Answer: {{ question.userResponse ? 'True' : 'False' }}</p>
-            </div>
-            
-            <div v-else-if="question.type === 'multiplechoice'">
-              <p>Answer: {{ question.userResponse }}</p>
-            </div>
-            
-            <div v-else-if="question.type === 'shortanswer'">
-              <p>Answer: {{ question.userResponse }}</p>
-            </div>
-            
-            <div v-else-if="question.type === 'fillblank'">
-              <p>Answer: {{ question.userResponse }}</p>
-            </div>
-            
+          <div v-for="(question, index) in assignment" :key="index" class="question">
+            <p><strong>Question{{ index + 1 }}: {{ question.questionTitle }}</strong></p>
+            <p><strong>Your Answer:</strong> {{ assignment.answerDTO.myAnswers.join(', ') || 'No answer provided' }}</p>
+            <label>
+            Grade:
+            <input type="number" class="grade-input" v-model.number="assignment.grade" min="0" max="100" />
+            </label>
             <!-- Add more types as needed -->
           </div>
         </div>
@@ -126,7 +116,7 @@ const autograde = async() => {
             Auto Grade
           </button>
           <label>
-            Grade:
+            Total Grade:
             <input type="number" class="grade-input" v-model.number="assignment.grade" min="0" max="100" />
           </label>
           
@@ -143,6 +133,7 @@ const autograde = async() => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .grading-page {
