@@ -5,22 +5,19 @@ import { fetchAssignmentsForGrading, saveGrade } from '@/api/GradingApi';
 
 const route = useRoute();
 const quizId = ref(route.params.quizId || '');
-const assignment = ref(); // Initialize with null
+const assignment = ref(null); // Initialize with null
 const loading = ref(false);
 const error = ref(null);
-const test_assignement = []
+let feedback = "";
+let totalscore = ref(Array(assignment.value.length).fill(0))
+let correctArr = ref(Array(assignment.value.length).fill(false))
 // Fetch assignments on component mount
 onMounted(async () => {
   try {
     loading.value = true;
     const response = await fetchAssignmentsForGrading(quizId.value);
     assignment.value = response.data;
-    // Initialize grade and correctness for each question
-    assignment.value.questions = assignment.value.questions.map((q) => ({
-      ...q,
-      grade: null, // Default grade
-      isCorrect: false, // Default correctness
-    }));
+
   } catch (err) {
     error.value = 'Failed to load assignments.';
     console.error(err);
@@ -28,25 +25,19 @@ onMounted(async () => {
     loading.value = false;
   }
 });
-let feedback = "";
-let totalscore = []
+
+
 // Function to handle grade submission
 const handleSaveGrade = async () => {
   try {
     // Prepare data for the backend
-    const correctArr = []
-    const totalSocres = 0
-    assignment.forEach((question) => {
-      correctArr.push(question.isCorrect)
-      totalSocres += question.scores
-    });
     
     const postVO = {
       projectId: quizId.value,
       isDelete: false,
       hasGraded: 1, // Mark as graded
       update_correctness: correctArr, // Collect correctness
-      scores: totalscore.reduce((sum, score) => sum + score, 0), // Total score
+      scores: totalscore.value.reduce((sum, score) => sum + score, 0), // Total score
       comments: feedback,
     };
 
@@ -116,7 +107,7 @@ const autograde = async () => {
               <label>
                 <input
                   type="checkbox"
-                  v-model="question.isCorrect"
+                  v-model="correctArr[index]"
                 />
                 Mark as Correct
               </label>
