@@ -113,7 +113,7 @@ function viewQuizStats(quizId)
 //function for creating quiz
 function createAssignment()
 {
-
+  router.push({name: "createassignment"})
 }
 
 //function for logging out

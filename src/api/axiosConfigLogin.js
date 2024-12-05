@@ -1,20 +1,20 @@
 import axios from 'axios';
+import { wrapper } from 'axios-cookiejar-support';
+import { CookieJar } from 'tough-cookie';
 
-const apiLoginClient = axios.create({
-  baseURL: 'http://localhost:8898', // I hope this where the backend will be hosted as usually we host it on 8k
-  headers: {
+const jar = new CookieJar();
+const apiUrlEncodeClient = wrapper(axios.create({ jar }));
+apiUrlEncodeClient.interceptors.request.use((config) => {
+  config.withCredentials = true;
+  config.baseURL = 'http://localhost:8898';
+  config.headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
-  },
-});
-
-apiLoginClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  };
+  config.jar = jar;
   return config;
 }, (error) => {
   return Promise.reject(error);
 });
 
-export default apiLoginClient;
+
+export default apiUrlEncodeClient;

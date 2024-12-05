@@ -1,6 +1,6 @@
 // including the login and register API calls
 import apiClient from './axiosConfig';
-import apiLoginClient from './axiosConfigLogin';
+import apiUrlEncodeClient from './axiosConfigLogin';
 
 export const registerUser = async (userData) => {
   try {
@@ -14,7 +14,9 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (loginData) => {
   try {
-    const response = await apiLoginClient.post('/login', loginData);
+    const response = await apiUrlEncodeClient.post('/login', loginData)
+    //const jsessionId = response.headers['set-cookie'][0].split(';')[0].split('=')[1];
+    console.log(response.headers);
     return response.data;
   } catch (error) {
     console.error('Login Error:', error.response.data);
@@ -24,7 +26,7 @@ export const loginUser = async (loginData) => {
 
 export const logoutUser = async (logoutData) => {
     try {
-        const response = await apiLoginClient.post('/logout', logoutData);
+        const response = await apiUrlEncodeClient.post('/logout', logoutData);
         return response.data;
     } catch (error) {
         console.error('Login Error:', error.response.data);

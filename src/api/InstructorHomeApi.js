@@ -1,8 +1,8 @@
-import apiLoginClient from './axiosConfigLogin';
+import apiUrlEncodeClient from './axiosConfigLogin';
 
 const getAssignmentsByInstructorId = async(instructorId) =>{
     try {
-        const res = await apiLoginClient.get(`/admin/projects?isDelete=0&userInfoId=${instructorId}`);
+        const res = await apiUrlEncodeClient.get(`/admin/projects?isDelete=0&userInfoId=${instructorId}`);
         return res.data;
       } catch (error) {
         console.error('Error fetching questions:', error);
@@ -12,7 +12,7 @@ const getAssignmentsByInstructorId = async(instructorId) =>{
 
 const getStudentByAssignmentId = async(assignmentId) =>{
     try {
-        const res = await apiLoginClient.get(`/admin/posts?projectId=${assignmentId}`);
+        const res = await apiUrlEncodeClient.get(`/admin/posts?projectId=${assignmentId}`);
         return res.data;
       } catch (error) {
         console.error('Error fetching questions:', error);

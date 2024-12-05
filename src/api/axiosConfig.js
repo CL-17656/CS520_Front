@@ -1,19 +1,17 @@
 import axios from 'axios';
 
-// Creating an Axios instance
-const apiClient = axios.create({
-  baseURL: 'http://localhost:8898', // I hope this where the backend will be hosted as usually we host it on 8k
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import { wrapper } from 'axios-cookiejar-support';
+import { CookieJar } from 'tough-cookie';
 
-// This is the Interceptor to include the token in every request
+const jar = new CookieJar();
+const apiClient = wrapper(axios.create({ jar }));
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  config.withCredentials = true;
+  config.baseURL = 'http://localhost:8898';
+  config.headers = {
+    'Content-Type': 'application/json',
+  };
+  config.jar = jar;
   return config;
 }, (error) => {
   return Promise.reject(error);

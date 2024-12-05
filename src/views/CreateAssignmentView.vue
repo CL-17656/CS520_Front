@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { createQuestion, messageTest } from '@/api/CreateAssignmentAPI';
 import axios from "axios";
 
 const route = useRoute();
@@ -81,11 +82,23 @@ function formatDataForBackend() {
 // Submit data to the backend
 async function submit() {
   console.log(assignmentDetail);
-  const payload = formatDataForBackend();
+  //const payload = formatDataForBackend();
+  console.log(assignmentDetail.questions.length)
   try {
-    const response = await axios.post("/admin/questions", payload);
+    for(let i = 0; i < assignmentDetail.questions.length; ++i) {
+      /*
+      const addQuestionResponse = await createQuestion({
+        "questionDescription": assignmentDetail.questions[i].question,
+        "questionTitle": assignmentDetail.questions[i].question,
+        "status": 2,
+        "type": assignmentDetail.questions[i].questionType,
+      });*/
+      //console.log(addQuestionResponse);
+    }
+    const res = await messageTest({});
+    console.log(res);
+
     alert("Quiz created successfully!");
-    console.log("Response:", response.data);
     router.push("/instructor"); // Redirect to instructor home
   } catch (error) {
     console.error("Error creating quiz:", error);
