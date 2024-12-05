@@ -5,62 +5,16 @@ import { fetchAssignmentsForGrading, saveGrade } from '@/api/GradingApi';
 
 const route = useRoute();
 const quizId = ref(route.params.quizId || '');
-const assignment = ref({
-  name: "Midterm Exam - Computer Science",
-  studentId: 98765432,
-  studentName: "Jane Smith",
-  submittedAt: "2024-12-01T15:00:00Z",
-  questions: [
-    {
-      id: 1,
-      type: "multiplechoice",
-      text: "What is the time complexity of Quick Sort in the average case?",
-      userResponse: "O(N^2)",
-      expectedAnswer: "O(N log N)",
-      grade: null,
-      isCorrect: null
-    },
-    {
-      id: 2,
-      type: "truefalse",
-      text: "Depth-first search uses a queue to traverse nodes.",
-      userResponse: false,
-      expectedAnswer: false,
-      grade: null,
-      isCorrect: null
-    },
-    {
-      id: 3,
-      type: "shortanswer",
-      text: "Explain the concept of memoization in dynamic programming.",
-      userResponse: "Memoization is about storing partial results to optimize recursive calls.",
-      expectedAnswer: "Memoization involves storing previously computed results to avoid redundant calculations in recursive solutions.",
-      grade: null,
-      isCorrect: null
-    },
-    {
-      id: 4,
-      type: "fillblank",
-      text: "The binary search algorithm works on __ arrays.",
-      userResponse: "sorted",
-      expectedAnswer: "sorted",
-      grade: null,
-      isCorrect: null
-    }
-  ],
-  grade: null,
-  feedback: ""
-}
-); // Initialize with null
+const assignment = ref(); // Initialize with null
 const loading = ref(false);
 const error = ref(null);
-
+const test_assignement = []
 // Fetch assignments on component mount
 onMounted(async () => {
   try {
     loading.value = true;
-    // const response = await fetchAssignmentsForGrading(quizId.value);
-    // assignment.value = response.data;
+    const response = await fetchAssignmentsForGrading(quizId.value);
+    assignment.value = response.data;
     // Initialize grade and correctness for each question
     assignment.value.questions = assignment.value.questions.map((q) => ({
       ...q,
@@ -74,25 +28,26 @@ onMounted(async () => {
     loading.value = false;
   }
 });
-
+let feedback = "";
+let totalscore = []
 // Function to handle grade submission
 const handleSaveGrade = async () => {
   try {
     // Prepare data for the backend
+    const correctArr = []
+    const totalSocres = 0
+    assignment.forEach((question) => {
+      correctArr.push(question.isCorrect)
+      totalSocres += question.scores
+    });
+    
     const postVO = {
-      id: assignment.value.quizId, //  assignment ID
       projectId: quizId.value,
-      answer: JSON.stringify(
-        assignment.value.questions.reduce((acc, q) => {
-          acc[q.id] = q.userResponse; // Collect question answers
-          return acc;
-        }, {})
-      ),
       isDelete: false,
       hasGraded: 1, // Mark as graded
-      update_correctness: assignment.value.questions.map((q) => q.isCorrect), // Collect correctness
-      scores: assignment.value.questions.reduce((total, q) => total + (q.grade || 0), 0), // Total score
-      comments: assignment.value.feedback,
+      update_correctness: correctArr, // Collect correctness
+      scores: totalscore.reduce((sum, score) => sum + score, 0), // Total score
+      comments: feedback,
     };
 
     // Send to backend
@@ -130,23 +85,20 @@ const autograde = async () => {
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <div class="assignment-card">
-        <h2>Student: {{ assignment.studentName }}</h2>
-        <p>Submitted At: {{ new Date(assignment.submittedAt).toLocaleString() }}</p>
 
         <!-- Questions as Box Layout -->
         <div class="questions">
           <div
-            v-for="(question, index) in assignment.questions"
+            v-for="(question, index) in assignment"
             :key="index"
             class="question-box"
           >
             <p class="question-number">Question {{ index + 1 }}</p>
-            <p class="question-text">{{ question.text }}</p>
+            <p class="question-text">{{ question.questionTitle }}</p>
             <p class="user-response">
-              <strong>Your Answer:</strong> {{ question.userResponse || 'No answer provided' }}
+              <strong>Student Answer:</strong> {{ question.answerDTO.myAnswers.join(', ') || 'No answer provided' }}
             </p>
-            <p v-if="question.expectedAnswer">
-              <strong>Correct Answer:</strong> {{ question.expectedAnswer }}
+             <p> <strong>Correct Answer:</strong> {{ question.answerDTO.correctAnswerList.join(', ') }}
             </p>
 
             <!-- Grade Input -->
@@ -155,7 +107,7 @@ const autograde = async () => {
                 Grade:
                 <input
                   type="number"
-                  v-model.number="question.grade"
+                  v-model.number="totalscore[index]"
                   class="grade-input"
                   min="0"
                   max="100"
@@ -179,7 +131,7 @@ const autograde = async () => {
           <label>
             Feedback:
             <textarea
-              v-model="assignment.feedback"
+              v-model="feedback"
               class="feedback-textarea"
               placeholder="Provide feedback..."
             ></textarea>
