@@ -63,35 +63,13 @@ function removeChoice(questionIndex, choiceIndex)
 
 //Save and submit the data using api, currently not implemented
 //Also used to change datastructure to form acceptable by backend
-  
-// Format data to match backend requirements
-function formatDataForBackend() {
-  return {
-    title: assignmentDetail.name,
-    type: parseInt(assignmentDetail.status), // Quiz or Questionnaire
-    questions: assignmentDetail.questions.map((q) => ({
-      questionTitle: q.question,
-      type: parseInt(q.questionType),
-      possibleAnswers:
-        q.questionType === "1" || q.questionType === "2"
-          ? JSON.stringify(q.choices.map((choice) => choice.choice))
-          : null,
-      correctAnswers:
-        q.questionType === "1" || q.questionType === "2"
-          ? JSON.stringify(
-              q.choices.filter((choice) => choice.isCorrect).map((choice) => choice.choice)
-            )
-          : q.sampleResponse,
-    })),
-  };
-}
 
 // Submit data to the backend
 async function submit() {
   console.log(assignmentDetail);
-  //const payload = formatDataForBackend();
   console.log(assignmentDetail.questions.length)
   try {
+    //create questions in backend
     for(let i = 0; i < assignmentDetail.questions.length; ++i) {
       const addQuestionResponse = await createQuestion({
         "questionDescription": assignmentDetail.questions[i].question,
@@ -103,24 +81,49 @@ async function submit() {
       createdQuestionsData.questionIds.push(addQuestionResponse.data);
     }
 
+    //create answers in backend for questions created above
     //TODO: Fix create answers below, the answer data below is only for short answer quetsions
     for(let i = 0; i < createdQuestionsData.questionIds.length; ++i)
-    {
-      let answerDat = {
-        "id": createdQuestionsData.questionIds[i], 
-        "questionAnalysis": assignmentDetail.questions[i].question,
-        "status": assignmentDetail.status, 
-        "type": assignmentDetail.questions[i].questionType, 
-        //"possibleAnswers": JSON.stringify([assignmentDetail.questions[i].sampleResponse]),  
-        "correctAnswers": JSON.stringify([assignmentDetail.questions[i].sampleResponse]),
-        "images": null, 
-        "isDelete": null
-      };
+    { 
+      let answerDat = {}
+      if(assignmentDetail.questions[i].questionType == "3") {
+        answerDat = {
+          "id": createdQuestionsData.questionIds[i], 
+          "questionAnalysis": assignmentDetail.questions[i].question,
+          "status": assignmentDetail.status, 
+          "type": assignmentDetail.questions[i].questionType, 
+          //"possibleAnswers": JSON.stringify([assignmentDetail.questions[i].sampleResponse]),  
+          "correctAnswers": JSON.stringify([assignmentDetail.questions[i].sampleResponse]),
+          "images": null, 
+          "isDelete": null
+        };
+      }
+      else {
+        possibAnswer = [];
+        correctAnswer = [];
+        for(let j = 0; j < assignmentDetail.questions[i].choices.length; ++j) {
+          possibAnswer.push(assignmentDetail.questions[i].choices[j].choice);
+          if(assignmentDetail.questions[i].choices[j].isCorrect == true) {
+            correctAnswer.push(assignmentDetail.questions[i].choices[j].choice);
+          }
+        }
+        answerDat = {
+          "id": createdQuestionsData.questionIds[i], 
+          "questionAnalysis": assignmentDetail.questions[i].question,
+          "status": assignmentDetail.status, 
+          "type": assignmentDetail.questions[i].questionType, 
+          "possibleAnswers": JSON.stringify(possibAnswer),
+          "correctAnswers": JSON.stringify(correctAnswer),
+          "images": null, 
+          "isDelete": null
+        };
+      }
       console.log(answerDat);
       const addAnswerResponse = await createQuestionAnswers(answerDat);
       console.log(addAnswerResponse);
     }
 
+    //create a project that conatins all questions created above
     let assignmentData = {
       "answerAnalysis": true,
       "answerSheetVisible": true,
