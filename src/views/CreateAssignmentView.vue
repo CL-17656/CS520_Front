@@ -22,10 +22,13 @@ const assignmentDetail = reactive(
     //isGrade: false,
     startTime: "",
     endTime: "",
-    questions:[{questionType: "3", question: "Explain the concept of Big O notation and give an example.",
-    sampleResponse:
-      "Big O notation is used to describe the performance or complexity of an algorithm. It gives an upper bound on the time or space complexity in terms of the input size. For example, if an algorithm has a time complexity of O(n), it means the runtime grows linearly with the input size."
-  , choices: [{choice: "", isCorrect: false}]},]}
+    questions:[{
+      questionType: "3", 
+      question: "Explain the concept of Big O notation and give an example.",
+      sampleResponse: "Big O notation is used to describe the performance or complexity of an algorithm. It gives an upper bound on the time or space complexity in terms of the input size. For example, if an algorithm has a time complexity of O(n), it means the runtime grows linearly with the input size.", 
+      choices: [{choice: "", isCorrect: false}]
+    },]
+  }
 );
 
 const createdQuestionsData = reactive (
@@ -100,23 +103,23 @@ async function submit() {
       createdQuestionsData.questionIds.push(addQuestionResponse.data);
     }
 
-    //TODO: Fix create answers below
-    /*
+    //TODO: Fix create answers below, the answer data below is only for short answer quetsions
     for(let i = 0; i < createdQuestionsData.questionIds.length; ++i)
     {
       let answerDat = {
-        "id": createdQuestionsData.questionIds[i],
-        "questionAnalysis": assignmentDetail.questions[i].sampleResponse,
-        "correctAnswers": "[a]",
-        "possibleAnswers": "[a,b,c]",
-        "status": assignmentDetail.status,
-        "images": null,
-        "isDelete": null,
+        "id": createdQuestionsData.questionIds[i], 
+        "questionAnalysis": assignmentDetail.questions[i].question,
+        "status": assignmentDetail.status, 
+        "type": assignmentDetail.questions[i].questionType, 
+        //"possibleAnswers": JSON.stringify([assignmentDetail.questions[i].sampleResponse]),  
+        "correctAnswers": JSON.stringify([assignmentDetail.questions[i].sampleResponse]),
+        "images": null, 
+        "isDelete": null
       };
       console.log(answerDat);
       const addAnswerResponse = await createQuestionAnswers(answerDat);
       console.log(addAnswerResponse);
-    }*/
+    }
 
     let assignmentData = {
       "answerAnalysis": true,
