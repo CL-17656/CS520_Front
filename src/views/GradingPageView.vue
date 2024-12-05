@@ -8,9 +8,10 @@ const quizId = ref(route.params.quizId || '');
 const assignment = ref(null); // Initialize with null
 const loading = ref(false);
 const error = ref(null);
-let feedback = "";
+let feedback = ref("");
 let totalscore = ref(Array(assignment.value.length).fill(0))
 let correctArr = ref(Array(assignment.value.length).fill(false))
+
 // Fetch assignments on component mount
 onMounted(async () => {
   try {
@@ -36,9 +37,9 @@ const handleSaveGrade = async () => {
       projectId: quizId.value,
       isDelete: false,
       hasGraded: 1, // Mark as graded
-      update_correctness: correctArr, // Collect correctness
+      update_correctness: correctArr.value, // Collect correctness
       scores: totalscore.value.reduce((sum, score) => sum + score, 0), // Total score
-      comments: feedback,
+      comments: feedback.value,
     };
 
     // Send to backend
