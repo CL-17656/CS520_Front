@@ -147,7 +147,6 @@ async function submitCourse() {
   
 }
 function viewAssignments(quizId){
-  // let quizId = newAssignmentId.value
   router.push({ name: 'assignmentpage', params:{quizId}});
 }
 

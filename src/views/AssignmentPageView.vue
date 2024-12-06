@@ -88,11 +88,23 @@ const loadQuizDetails = async () => {
 // Submit answers
 const submitAnswers = async () => {
   try {
+    // const postVO = {
+    //   projectId: quizId.value,
+    //   answer: JSON.stringify(userAnswers.value),
+    //   isDelete: false,
+    // };
+    console.log(userAnswers.value)
     const postVO = {
-      projectId: quizId.value,
-      answer: JSON.stringify(userAnswers.value),
-      isDelete: false,
+      projectId: parseInt(quizId.value), // projectId from the schema
+      answer: JSON.stringify(userAnswers.value), // answer in string format
+      isDelete: false, // isDelete field from the schema
+      id: 0, // answer ID
+      comments: "", // optional: comments, empty by default
+      hasGraded: 0, // optional: hasGraded, set to 0 by default
+      scores: "", // optional: scores, empty by default
+      update_correctness: [], // optional: update_correctness, empty array by default
     };
+    console.log(JSON.stringify(postVO))
     await submitQuizAnswers(postVO);
     alert('Quiz submitted successfully!');
     router.push('/home'); // Redirect to home or results page
@@ -276,129 +288,5 @@ onMounted(() => {
   background-color: #0056b3;
 }
 </style>
-
-
-<!-- <template>
-  <div class="assignmentpage">
-    <div class="assignmentbox">
-      <div class="title">Assignment Page {{ assignmentDetail.name }}</div>
-
-      <div class="display-bar">
-        <div class="grade">Grade: {{ assignmentDetail.grade }}</div>
-        <div class="timer">
-        Time Remaining: <span>{{ timer }}</span>
-      </div>
-        <div class="statistic">
-          <button class="statistic-btn" @click="statisticpage">Statistic</button>
-        </div>
-      </div>
-
-      <div class="question-box">
-        <div class="assignment-scroll-bar">
-          <li
-            class="question-entry"
-            v-for="(entry, index) in assignmentDetail.questions"
-            :key="index"
-          >
-            <div class="question">{{ entry.question }}</div>
-            <textarea
-              v-model="entry.userResponse"
-              :placeholder="entry.sampleResponse"
-            ></textarea>
-          </li>
-        </div>
-      </div>
-
-      <button class="save-btn" @click="saveAnswers">Save</button>
-    </div>
-  </div>
-</template>
-
-
-
-<style scoped>
-.assignmentpage {
-    padding: 2rem;
-}
-
-.title {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    flex-shrink: 0;
-}
-.assignmentbox{
-    width:100%;
-    background-color: rgb(42, 148, 39);
-    display: flex; 
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center;    
-    
-}
-.display-bar{
-    width: 100%;
-    height: 50px;
-    background-color: yellow;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between; /* Ensure proper spacing between elements */
-    padding: 0 1rem; /* Add some padding for better layout */
-    box-sizing: border-box; /* Include padding in the element's width */
-}
-
-.grade{
-    font-size: 20px ;
-    margin-bottom: 0.5rem;
-}
-.question-box {
-    border-color: 100px black;
-    padding: 20px;
-    width: 100%;
-    height: 1000px;
-    background-color: rgb(218, 211, 211);
-    margin: auto;
-    overflow: scroll;
-    scrollbar-color: yellow;
-    scrollbar-width: thin;
-}
-
-/* .assignment-scroll-bar{
-
-} */
-
-li {
-  background-color: #99f0da;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-  list-style: none;
-}
-
-input[type="text"] {
-  padding: 0;
-  margin: 0;  
-  height: 1000px;
-  width: 100%; 
-  box-sizing: border-box; 
-}
-.timer {
-  position: fixed;
-  top: 1rem; 
-  right: 1rem; 
-  background-color: #f0ad4e; 
-  color: white; 
-  padding: 0.5rem 1rem; 
-  border-radius: 5px; 
-  font-size: 1.2rem; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  z-index: 1000; 
-}
-
-</style> -->
-
-
-
 
 
