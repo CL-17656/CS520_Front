@@ -2,10 +2,11 @@ import apiClient from './axiosConfig';
 
 // Fetch project and question details
 export const fetchQuizDetails = (quizId) => {
+  console.log(quizId)
   return apiClient.get(`/project/${quizId}/info`);
 };
 
 // Submit the answers we get from the user
 export const submitQuizAnswers = (postVO) => {
-  return apiClient.post(`/projects/post`, postVO);
+  return apiClient.post(`/project/post`, postVO);
 };

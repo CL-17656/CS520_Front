@@ -56,7 +56,8 @@ import { fetchQuizDetails, submitQuizAnswers } from '@/api/AssignmentApi';
 const route = useRoute();
 const router = useRouter();
 
-const quizId = route.params.quizId;
+// const quizId = route.params.quizId;
+const quizId = ref(route.params.quizId);
 const quizDetails = ref(null);
 const userAnswers = ref({});
 const isLoading = ref(true); // added this to prevent user from interacting with the UI when the quiz is being fetched
@@ -64,9 +65,14 @@ const isLoading = ref(true); // added this to prevent user from interacting with
 // Fetch quiz details
 const loadQuizDetails = async () => {
   try {
-    const response = await fetchQuizDetails(quizId);
-    quizDetails.value = response.data;
-
+    console.log(quizId.value)
+    const response = await fetchQuizDetails(quizId.value);
+    quizDetails.value = response.data.data;
+    if (response.status !== 200) {
+      throw new Error(`Unexpected response status: ${response.status}`);
+    }
+    console.log("ttt" + quizDetails.value)
+    console.log(quizDetails.value.questionDTOs)
     // Initialize userAnswers with empty arrays/strings based on question type
     quizDetails.value.questionDTOs.forEach((question) => { // quizDetails.value.questionDTOs contains an array of question objects fetched from the backend ( id and type)
       userAnswers.value[question.id] = question.type === 1 || question.type === 2 ? [] : '';
@@ -83,7 +89,7 @@ const loadQuizDetails = async () => {
 const submitAnswers = async () => {
   try {
     const postVO = {
-      projectId: quizId,
+      projectId: quizId.value,
       answer: JSON.stringify(userAnswers.value),
       isDelete: false,
     };
@@ -101,92 +107,178 @@ onMounted(() => {
 });
   
 </script>
-
-
 <template>
   <div v-if="isLoading" class="loading">Loading quiz...</div>
-  <div v-else class="take-quiz">
-    <h1>{{ quizDetails.name }}</h1>
-    <p>{{ quizDetails.description }}</p>
-
-    <div v-for="(question, index) in quizDetails.questionDTOs" :key="index" class="question">
-      <h3>{{ question.questionTitle }}</h3>
-      <p>{{ question.questionDescription }}</p>
-
-      <!-- Single/Multiple Choice -->
-      <div v-if="question.type === 1 || question.type === 2">
-        <div
-          v-for="(option, optIndex) in question.possibleAnswerList"
-          :key="optIndex"
-        >
-          <input
-            type="checkbox"
-            v-if="question.type === 2"
-            :id="'q' + question.id + 'opt' + optIndex"
-            :value="option"
-            v-model="userAnswers[question.id]"
-          />
-          <input
-            type="radio"
-            v-else
-            :id="'q' + question.id + 'opt' + optIndex"
-            :value="option"
-            v-model="userAnswers[question.id]"
-          />
-          <label :for="'q' + question.id + 'opt' + optIndex">{{ option }}</label>
-        </div>
-      </div>
-
-      <!-- Fill-in-the-Blank or Essay -->
-      <textarea
-        v-else
-        v-model="userAnswers[question.id]"
-        :placeholder="'Enter your answer here...'"
-      ></textarea>
+  <div v-else class="quiz-container">
+    <div class="quiz-header">
+      <h1>{{ quizDetails.name }}</h1>
+      <p>{{ quizDetails.description }}</p>
     </div>
 
-    <button @click="submitAnswers">Submit</button>
+    <div
+      v-for="(question, index) in quizDetails.questionDTOs"
+      :key="index"
+      class="quiz-question"
+    >
+      <div class="question-card">
+        <h3 class="question-title">{{ question.questionTitle }}</h3>
+        <p class="question-description">{{ question.questionDescription }}</p>
+
+        <!-- Single/Multiple Choice -->
+        <div v-if="question.type === 1 || question.type === 2" class="options">
+          <div
+            v-for="(option, optIndex) in question.possibleAnswerList"
+            :key="optIndex"
+            class="option"
+          >
+            <input
+              type="checkbox"
+              v-if="question.type === 2"
+              :id="'q' + question.id + 'opt' + optIndex"
+              :value="option"
+              v-model="userAnswers[question.id]"
+            />
+            <input
+              type="radio"
+              v-else
+              :id="'q' + question.id + 'opt' + optIndex"
+              :value="option"
+              v-model="userAnswers[question.id]"
+            />
+            <label
+              class="option-label"
+              :for="'q' + question.id + 'opt' + optIndex"
+            >
+              {{ option }}
+            </label>
+          </div>
+        </div>
+
+        <!-- Fill-in-the-Blank or Essay -->
+        <textarea
+          v-else
+          v-model="userAnswers[question.id]"
+          class="text-area"
+          :placeholder="'Enter your answer here...'"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="quiz-footer">
+      <button @click="submitAnswers" class="submit-button">Submit</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.take-quiz {
+.quiz-container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .loading {
   text-align: center;
   font-size: 1.5rem;
   margin-top: 50px;
+  font-family: Arial, sans-serif;
 }
 
-.question {
+.quiz-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.quiz-header h1 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.quiz-header p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.quiz-question {
   margin-bottom: 20px;
 }
 
-button {
-  padding: 10px 20px;
+.question-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.question-title {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.question-description {
   font-size: 1rem;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.options {
+  margin-top: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.option-label {
+  margin-left: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.text-area {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.text-area:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.quiz-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 1.25rem;
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-button:hover {
+.submit-button:hover {
   background-color: #0056b3;
 }
 </style>
 
 
-
-
-
-
-
-<!--
-<template>
+<!-- <template>
   <div class="assignmentpage">
     <div class="assignmentbox">
       <div class="title">Assignment Page {{ assignmentDetail.name }}</div>
@@ -304,8 +396,8 @@ input[type="text"] {
   z-index: 1000; 
 }
 
-</style>
--->
+</style> -->
+
 
 
 

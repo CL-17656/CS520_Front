@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'; // Use `useRouter` for navigation
+import { useRouter,useRoute } from 'vue-router'; // Use `useRouter` for navigation
 //import {validateAssignmentId} from '@/api/StudentHomeApi'
 import { reactive } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
@@ -60,7 +60,7 @@ const initialize = async () => {
   }
 }
 onMounted(() => initialize());
-
+const route = useRoute();
 const router = useRouter(); // Create an instance of `useRouter`
 // Data for the course list and semesters
 const assignment = ref([
@@ -77,7 +77,7 @@ const semesters = ref(['Year of 2025']);
 const showModal = ref(false);
 const newAssignmentId = ref('');
 let error_message = ref('')
-
+let quizId = null
 function addCourse() {
   showModal.value = true;
 }
@@ -85,7 +85,7 @@ function addCourse() {
 async function submitCourse() {
   console.log(newAssignmentId.value.trim())
   if (newAssignmentId.value.trim() !== ''  )  {
-    const assignmentId = newAssignmentId.value.trim();
+    quizId = newAssignmentId.value.trim();
 
     // let isVerifyOK = validateAssignmentId(assignmentId);
     
@@ -142,12 +142,13 @@ async function submitCourse() {
     }
 
     newAssignmentId.value = ''; // Clear the input field
-    
+    showModal.value = false;
   }
   
 }
-function viewAssignments(course){
-  router.push({ name: 'assignmentpage', params:{course:JSON.stringify(course)}});
+function viewAssignments(quizId){
+  // let quizId = newAssignmentId.value
+  router.push({ name: 'assignmentpage', params:{quizId}});
 }
 
 function closeModal() {
@@ -168,7 +169,7 @@ function closeModal() {
             <p>{{ assignment.instructor }}</p>
             <div v-if="assignment.isGraded">
             {{ assignment.grade }}</div>
-            <button @click="viewAssignments(course)" class="assignments">Take the Assignment</button>
+            <button @click="viewAssignments(quizId)" class="assignments">Take the Assignment</button>
           </div>
         <div class="course-card add-course">
           <button @click="addCourse">Add Assignment</button>
