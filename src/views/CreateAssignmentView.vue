@@ -82,7 +82,6 @@ async function submit() {
     }
 
     //create answers in backend for questions created above
-    //TODO: Fix create answers below, the answer data below is only for short answer quetsions
     for(let i = 0; i < createdQuestionsData.questionIds.length; ++i)
     { 
       let answerDat = {}
@@ -99,11 +98,12 @@ async function submit() {
         };
       }
       else {
-        possibAnswer = [];
-        correctAnswer = [];
+        let possibAnswer = [];
+        let correctAnswer = [];
+        console.log(assignmentDetail.questions[i].choices);
         for(let j = 0; j < assignmentDetail.questions[i].choices.length; ++j) {
           possibAnswer.push(assignmentDetail.questions[i].choices[j].choice);
-          if(assignmentDetail.questions[i].choices[j].isCorrect == true) {
+          if(assignmentDetail.questions[i].choices[j].isCorrect == "true") {
             correctAnswer.push(assignmentDetail.questions[i].choices[j].choice);
           }
         }
