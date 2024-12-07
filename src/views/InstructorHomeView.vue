@@ -6,8 +6,11 @@ import { useAuthenticationStore } from '@/stores/Auth';
 import { logoutUser } from '@/api/AuthApi';
 import { onMounted } from 'vue';
 import {getAssignmentsByInstructorId, getStudentByAssignmentId} from '@/api/InstructorHomeApi'
+import { useInstructorHomeStore } from '@/stores/InstructorHomeStore';
+
 
 const store = useAuthenticationStore();
+const instructoreHomeStore = useInstructorHomeStore();
 const router = useRouter();
 
 const logoutData = reactive(
@@ -30,9 +33,11 @@ const initialize = async () => {
   console.log(store.userId);
   try {
     //currently use 1 only for debugging purpose
-    const pageData = await getAssignmentsByInstructorId(store.userId);
+    const pageData = await getAssignmentsByInstructorId(store.userId, instructoreHomeStore.pageNumber);
+    instructoreHomeStore.totalPages = 0;
     console.log(pageData);
     if(pageData.data.count != null) {
+      instructoreHomeStore.totalPages = Math.ceil(pageData.data.count / 10);
       for(let i = 0; i < pageData.data.recordList.length; ++i) {
         quizeData.allQuizInform.push({quizId: pageData.data.recordList[i].id, quizName: pageData.data.recordList[i].name});
         const studentTakenQuiz = await getStudentByAssignmentId(pageData.data.recordList[i].id);
@@ -95,6 +100,22 @@ async function logout()
     console.error(error);
   }
 }
+
+function nextPage()
+{
+  if(instructoreHomeStore.pageNumber < instructoreHomeStore.totalPages) {
+    instructoreHomeStore.pageNumber += 1;
+    location.reload();
+  }
+}
+
+function previousPage()
+{
+  if(instructoreHomeStore.pageNumber > 1) {
+    instructoreHomeStore.pageNumber -= 1;
+    location.reload();
+  }
+}
 </script>
 
 <template>
@@ -119,6 +140,14 @@ async function logout()
         </div>
       </div>
       <button class="view-stat-btn" @click="viewQuizStats(quizInform.quizId)">View Quiz Statistics</button>
+    </section>
+    <!-- For page number -->
+    <section>
+      <div class="flex">
+        <button class="prev-page-btn" @click="previousPage()">Previous Page</button>
+        <h2>Page: {{ instructoreHomeStore.pageNumber }} / {{ instructoreHomeStore.totalPages }}</h2>
+        <button class="next-page-btn" @click="nextPage()">Next Page</button>
+      </div>
     </section>
   </main>
 </template>
@@ -178,6 +207,15 @@ button {
 button:hover {
   background-color: #006666;
 }
+.next-page-btn {
+  margin-left: 1rem;
+  font-weight: bold;
+}
+
+.prev-page-btn {
+  margin-right: 1rem;
+  font-weight: bold;
+}
 
 .view-stat-btn {
   margin-top: 1rem;
@@ -194,5 +232,11 @@ button:hover {
   margin-left: 45rem;
   margin-top: 1rem;
   font-weight: bold;
+}
+
+.flex{
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 </style>

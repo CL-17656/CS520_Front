@@ -1,8 +1,8 @@
 import apiUrlEncodeClient from './axiosConfigLogin';
 
-const getAssignmentsByInstructorId = async(instructorId) =>{
+const getAssignmentsByInstructorId = async(instructorId, pagenumber) =>{
     try {
-        const res = await apiUrlEncodeClient.get(`/admin/projects?isDelete=0&userInfoId=${instructorId}`);
+        const res = await apiUrlEncodeClient.get(`/admin/projects?current=${pagenumber}&isDelete=0&userInfoId=${instructorId}`);
         return res.data;
       } catch (error) {
         console.error('Error fetching questions:', error);
