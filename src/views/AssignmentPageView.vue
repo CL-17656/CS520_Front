@@ -123,7 +123,7 @@ const submitAnswers = async () => {
       isDelete: false,
       hasGraded: 0, // Default to 0 as it hasn't been graded yet
       scores: null, // No scores at submission
-      update_correctness: null, t
+      update_correctness: null,
       comments: null, // No comments on submission
     };
 
