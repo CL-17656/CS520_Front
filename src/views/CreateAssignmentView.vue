@@ -65,6 +65,8 @@ function removeChoice(questionIndex, choiceIndex)
 
 // Submit data to the backend
 async function submit() {
+  createdQuestionsData.questionIds = [];
+
   console.log(assignmentDetail);
   console.log(assignmentDetail.questions.length)
   try {
@@ -79,6 +81,9 @@ async function submit() {
       console.log(addQuestionResponse);
       createdQuestionsData.questionIds.push(addQuestionResponse.data);
     }
+
+    //question type array holding all question types present
+    let questionTypes = []
 
     //create answers in backend for questions created above
     for(let i = 0; i < createdQuestionsData.questionIds.length; ++i)
@@ -95,6 +100,9 @@ async function submit() {
           "images": null, 
           "isDelete": null
         };
+        if(questionTypes.includes(3) == false) {
+          questionTypes.push(3);
+        }
       } // answer data for multiple choice questions
       else {
         let possibAnswer = [];
@@ -116,12 +124,23 @@ async function submit() {
           "images": null, 
           "isDelete": null
         };
+        if(assignmentDetail.questions[i].questionType == "1") {
+          if(questionTypes.includes(1) == false) {
+            questionTypes.push(1);
+          }
+        }
+        else {
+          if(questionTypes.includes(2) == false) {
+            questionTypes.push(2);
+          }
+        }
       }
       console.log(answerDat);
       const addAnswerResponse = await createQuestionAnswers(answerDat);
       console.log(addAnswerResponse);
     }
 
+    questionTypes.sort();
     //create a project that conatins all questions created above
     let assignmentData = {
       "answerAnalysis": true,
@@ -145,7 +164,7 @@ async function submit() {
       "startTime": "",
       "status": assignmentDetail.status,
       "tagIds": "",
-      "types": 2
+      "types": JSON.stringify(questionTypes)
     };
     const createAssignRes = await createAssignmentAndAddQuestion(assignmentData);
     console.log(createAssignRes);
