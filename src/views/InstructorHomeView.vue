@@ -16,43 +16,6 @@ const logoutData = reactive(
   }
 );
 
-//Front end data structure with sample data
-/*
-const quizeData = reactive(
-    {
-        allQuizIds: [1, 200, 500],
-        quizes: [
-          { quizId: 1, 
-            studentId: 3,
-            status: "2",
-            name: "New Quiz 1",
-            grade: "100",
-            isGrade: false,
-          },
-          { quizId: 1, 
-            studentId: 5,
-            status: "2",
-            name: "New Quiz 2",
-            grade: "100",
-            isGrade: true,
-          },
-          { quizId: 200, 
-            studentId: 7,
-            status: "2",
-            name: "New Quiz 3",
-            grade: "100",
-            isGrade: false,
-          },
-          { quizId: 500, 
-            studentId: 9,
-            status: "1",
-            name: "New Quiz 4",
-            grade: "100",
-            isGrade: true,
-          },
-        ]
-    }
-);*/
 const quizeData = reactive(
     {
         allQuizInform: [],

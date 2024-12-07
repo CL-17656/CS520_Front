@@ -13,13 +13,12 @@ const courseDetails = computed(() => {
   return typeof course === 'string' ? JSON.parse(course) : course;
 });
 
-// Example questions data
+// front end data structure
 const assignmentDetail = reactive(
   {
+    description: "",
     status: "2", // Default to Quiz (1 for questionaire, 2 for quiz)
     name: "New Quiz",
-    //grade: "100",
-    //isGrade: false,
     startTime: "",
     endTime: "",
     questions:[{
@@ -85,18 +84,18 @@ async function submit() {
     for(let i = 0; i < createdQuestionsData.questionIds.length; ++i)
     { 
       let answerDat = {}
+      //answer data for short answer questions
       if(assignmentDetail.questions[i].questionType == "3") {
         answerDat = {
           "id": createdQuestionsData.questionIds[i], 
           "questionAnalysis": assignmentDetail.questions[i].question,
           "status": assignmentDetail.status, 
-          "type": assignmentDetail.questions[i].questionType, 
-          //"possibleAnswers": JSON.stringify([assignmentDetail.questions[i].sampleResponse]),  
+          "type": assignmentDetail.questions[i].questionType,  
           "correctAnswers": JSON.stringify([assignmentDetail.questions[i].sampleResponse]),
           "images": null, 
           "isDelete": null
         };
-      }
+      } // answer data for multiple choice questions
       else {
         let possibAnswer = [];
         let correctAnswer = [];
@@ -130,7 +129,7 @@ async function submit() {
       "autoSave": true,
       "copyEnabled": false,
       "cover": "",
-      "description": "t",
+      "description": assignmentDetail.description,
       "enableUpdate": true,
       "endTime": "",
       "isActive": true,
@@ -173,7 +172,9 @@ async function submit() {
         </div>
 
         <div class="question-box">
-            
+
+            <div class="question">Enter Assignement Description: </div>
+            <input type="text" placeholder="Enter Assignement Description:" v-model="assignmentDetail.description"/>
 
             <!-- Section: select assignment status -->
             <div class="question">Enter Assignement Type: </div>
