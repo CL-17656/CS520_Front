@@ -108,13 +108,15 @@ onMounted(() => {
             :key="optIndex"
             class="option"
           >
+            <!-- Checkbox for Multiple Choice Questions -->
             <input
               type="checkbox"
               v-if="question.type === 2"
               :id="'q' + question.id + 'opt' + optIndex"
               :value="option"
-              v-model="userAnswers[question.id]"
+              v-model="userAnswers[question.id]" 
             />
+            <!-- Radio Button for Single Choice Questions -->
             <input
               type="radio"
               v-else
@@ -122,6 +124,7 @@ onMounted(() => {
               :value="option"
               v-model="userAnswers[question.id][0]"
             />
+            <!-- Label for each option -->
             <label
               class="option-label"
               :for="'q' + question.id + 'opt' + optIndex"
@@ -131,18 +134,19 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Fill-in-the-Blank or Essay -->
+        <!-- Textarea for Fill-in-the-Blank or Essay Questions -->
         <textarea
           v-else
-          v-model="userAnswers[question.id][0]"
+          v-model="userAnswers[question.id][0]" 
           class="text-area"
           :placeholder="'Enter your answer here...'"
         ></textarea>
       </div>
     </div>
 
+    <!-- Footer section with the Submit button -->
     <div class="quiz-footer">
-      <button @click="submitAnswers" class="submit-button">Submit</button>
+      <button @click="submitAnswers" class="submit-button">Submit</button> <!-- Submit the quiz -->
     </div>
   </div>
 </template>
