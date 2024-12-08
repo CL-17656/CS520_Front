@@ -36,14 +36,15 @@ onMounted(async () => {
 const handleSaveGrade = async () => {
   try {
     // Prepare data for the backend
-    console.log(JSON.stringify( correctArr.value))
+    // console.log(JSON.stringify( correctArr.value))
     const postVO = {
-      projectId: quizId.value,
+      projectId: parseInt(quizId.value),
       isDelete: false,
+      answer:JSON.stringify({"261":"aaaaaaa"}),
       hasGraded: 1, // Mark as graded
-      update_correctness: correctArr.value, // Collect correctness
-      scores: totalscore.value.reduce((sum, score) => sum + score, 0), // Total score
-      comments: feedback.value,
+      update_correctness: [false], // Collect correctness
+      scores: "100", // Total score
+      comments: "xxxxxxx",
     };
 
     // Send to backend

@@ -72,7 +72,7 @@ onMounted(() => initialize());
 
 // Function to grade given quiz id for given student id
 function gradeQuiz(quizId, studentId) {
-  alert("grading quiz " + quizId + " for student " + studentId);
+  router.push({ name: 'grading', params:{quizId} });
 }
 
 // Function navigating to statistic page for given quiz id
@@ -140,7 +140,7 @@ function previousPage()
             <p v-if="quiz.status == 2" >Quiz</p>
             <p v-if="quiz.status == 1" >Questionaire</p>
             <p v-if="quiz.isGrade == 1">Quiz Grade: {{ quiz.grade }}</p>
-            <button v-if="quiz.isGrade == 0" @click="gradeQuiz(quiz.quizId, quiz.studentId)">Grade Quiz</button>
+            <button v-if="quiz.isGrade == 1" @click="gradeQuiz(quiz.quizId, quiz.studentId)">Grade Quiz</button>
         </div>
       </div>
       <button class="view-stat-btn" @click="viewQuizStats(quizInform.quizId)">View Quiz Statistics</button>

@@ -75,7 +75,7 @@ const loadQuizDetails = async () => {
     console.log(quizDetails.value.questionDTOs)
     // Initialize userAnswers with empty arrays/strings based on question type
     quizDetails.value.questionDTOs.forEach((question) => { // quizDetails.value.questionDTOs contains an array of question objects fetched from the backend ( id and type)
-      userAnswers.value[question.id] = question.type === 1 || question.type === 2 ? [] : '';
+      userAnswers.value[question.id] = [];
     });
     isLoading.value = false;
   } catch (error) {
@@ -118,7 +118,7 @@ const loadQuizDetails = async () => {
 const submitAnswers = async () => {
   try {
     const postVO = {
-      projectId: parseInt(quizId),
+      projectId: parseInt(quizId.value),
       answer: JSON.stringify(userAnswers.value), // answers from the user
       isDelete: false,
       hasGraded: 0, // Default to 0 as it hasn't been graded yet
@@ -130,7 +130,7 @@ const submitAnswers = async () => {
     await submitQuizAnswers(postVO);
 
     alert('Quiz submitted successfully!');
-    router.push('/home'); // Redirect to homepage or maybe results view as well
+    router.push('/student'); // Redirect to homepage or maybe results view as well
   } catch (err) {
     console.error('Error submitting quiz:', err);
     alert('Failed to submit quiz. Please try again.');

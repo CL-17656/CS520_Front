@@ -11,7 +11,7 @@ export const fetchAssignmentsForGrading = async (projectId) => {
 }
 // Save grade and feedback for a specific assignment
 export const saveGrade = async (postVO) => {
-  const response = await axios.post(`/project/updateGrade`, postVO);
+  const response = await apiClient.post(`/project/gradeUpdate`, postVO);
   return response.data;
 };
 
