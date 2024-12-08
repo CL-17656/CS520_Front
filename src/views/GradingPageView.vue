@@ -12,7 +12,7 @@ const error = ref(null);
 
 const router = useRouter();
 let feedback = ref("");
-let scores = ref([])
+let score = ref([])
 let correctArr = ref([])
 let answersList = {}
 let correctArrTemp = []
@@ -51,7 +51,7 @@ const handleSaveGrade = async () => {
     // Prepare data for the backend
     console.log(correctArr.value)
     // console.log(JSON.stringify( correctArr.value))
-    console.log(scores.value.reduce((sum,x)=> sum += x,0))
+    console.log(score.value.reduce((sum,x)=> sum += x,0))
     console.log(feedback.value)
 
     const postVO = {
@@ -61,7 +61,7 @@ const handleSaveGrade = async () => {
       answer:JSON.stringify(answersList),
       hasGraded: 1, // Mark as graded
       update_correctness: correctArr.value, // Collect correctness
-      scores: scores.value.reduce((sum,x)=> sum += x,0), // Total score
+      scores: JSON.stringify(score.value.reduce((sum,x)=> sum += x,0)), // Total score
       comments: feedback.value,
     };
 
@@ -123,7 +123,7 @@ const autograde = async () => {
                 Grade:
                 <input
                   type="number"
-                  v-model.number="scores[index]"
+                  v-model.number="score[index]"
                   class="grade-input"
                   min="0"
                   max="1"
