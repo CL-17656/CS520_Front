@@ -137,8 +137,6 @@ async function submitCourse() {
         isGraded: false,
         grade: 0,
       });
-      //TODO:
-      //route to take quiz using this quizdata
     }
 
     newAssignmentId.value = ''; // Clear the input field
@@ -148,6 +146,10 @@ async function submitCourse() {
 }
 function viewAssignments(quizId){
   router.push({ name: 'assignmentpage', params:{quizId}});
+}
+
+function viewResults() {
+ //TODO: route to result page
 }
 
 function closeModal() {
@@ -166,9 +168,7 @@ function closeModal() {
           <div v-for="[index, assignment] in Object.entries(assignmentList)" :key="index" class="course-card">
             <h3>{{ assignment.name }}</h3>
             <p>{{ assignment.instructor }}</p>
-            <div v-if="assignment.isGraded">
-            {{ assignment.grade }}</div>
-            <button @click="viewAssignments(quizId)" class="assignments">Take the Assignment</button>
+            <button @click="viewResults()" class="assignments">View Results</button>
           </div>
         <div class="course-card add-course">
           <button @click="addCourse">Add Assignment</button>
