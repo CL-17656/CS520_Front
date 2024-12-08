@@ -139,8 +139,8 @@ function previousPage()
             <p>Student ID: {{ quiz.studentId }} </p>
             <p v-if="quiz.status == 2" >Quiz</p>
             <p v-if="quiz.status == 1" >Questionaire</p>
-            <p v-if="quiz.isGrade == 1">Quiz Grade: {{ quiz.grade }}</p>
-            <button v-if="quiz.isGrade == 1" @click="gradeQuiz(quiz.quizId, quiz.studentId)">Grade Quiz</button>
+            <p v-if="quiz.isGrade == 1">Quiz Grade: {{ JSON.parse(quiz.grade)["total"] }}</p>
+            <button v-if="quiz.isGrade == 0" @click="gradeQuiz(quiz.quizId, quiz.studentId)">Grade Quiz</button>
         </div>
       </div>
       <button class="view-stat-btn" @click="viewQuizStats(quizInform.quizId)">View Quiz Statistics</button>
