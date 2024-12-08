@@ -1,6 +1,6 @@
 // including the login and register API calls
-import apiClient from './axiosConfig';
-import apiUrlEncodeClient from './axiosConfigLogin';
+import {apiClient, apiUrlEncodeClient} from './axiosConfig';
+//import apiUrlEncodeClient from './axiosConfigLogin';
 
 export const registerUser = async (userData) => {
   try {

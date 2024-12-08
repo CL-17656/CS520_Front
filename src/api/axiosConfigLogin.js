@@ -17,4 +17,4 @@ apiUrlEncodeClient.interceptors.request.use((config) => {
 });
 
 
-export default apiUrlEncodeClient;
+//export default apiUrlEncodeClient;

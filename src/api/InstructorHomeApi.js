@@ -1,4 +1,5 @@
-import apiUrlEncodeClient from './axiosConfigLogin';
+//import apiUrlEncodeClient from './axiosConfigLogin';
+import {apiClient, apiUrlEncodeClient} from './axiosConfig';
 
 const getAssignmentsByInstructorId = async(instructorId, pagenumber) =>{
     try {

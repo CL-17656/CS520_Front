@@ -1,5 +1,5 @@
 import apiClient from './axiosConfig';
-import apiUrlEncodeClient from './axiosConfigLogin';
+//import apiUrlEncodeClient from './axiosConfigLogin';
 
 const createQuestion = async(questionData) =>{
     try {

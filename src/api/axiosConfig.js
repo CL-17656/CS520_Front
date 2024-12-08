@@ -17,4 +17,18 @@ apiClient.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
+const apiUrlEncodeClient = wrapper(axios.create({ jar }));
+apiUrlEncodeClient.interceptors.request.use((config) => {
+  config.withCredentials = true;
+  config.baseURL = 'http://localhost:8898';
+  config.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+  config.jar = jar;
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
 export default apiClient;
+export {apiClient, apiUrlEncodeClient};
