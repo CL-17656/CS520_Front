@@ -5,23 +5,34 @@ import { fetchAssignmentsForGrading, saveGrade } from '@/api/GradingApi';
 
 const route = useRoute();
 const quizId = ref(route.params.quizId);
+const studentId = ref(route.params.studentId);
 const assignment = ref(null); // Initialize with null
 const loading = ref(false);
 const error = ref(null);
 let feedback = ref("");
-let totalscore = ref(0)
-let correctArr = ref()
-
+let scores = ref([])
+let correctArr = ref([])
+let answersList = {}
+let correctArrTemp = []
+let scoresTemp = []
 // Fetch assignments on component mount
 onMounted(async () => {
   try {
     loading.value = true;
     console.log(quizId.value)
-    const response = await fetchAssignmentsForGrading(parseInt(quizId.value));
+    const response = await fetchAssignmentsForGrading(parseInt(quizId.value),parseInt(studentId.value));
     console.log(response.data)
     assignment.value = response.data;
-    totalscore.value = []
-    correctArr.value = []
+    assignment.value.forEach((x) =>{
+      correctArr.value.push(false)
+      correctArrTemp.push(x.answerDTO.isCorrect)
+      answersList[x.id] = x.answerDTO.myAnswers
+      scoresTemp.push(x.answerDTO.isCorrect ? 1 : 0)
+    });
+    
+    // console.log(JSON.stringify(answers))
+
+    console.log(correctArr.value)
     console.log(assignment.value)
   } catch (err) {
     error.value = 'Failed to load assignments.';
@@ -36,17 +47,23 @@ onMounted(async () => {
 const handleSaveGrade = async () => {
   try {
     // Prepare data for the backend
+    console.log(correctArr.value)
     // console.log(JSON.stringify( correctArr.value))
+    console.log(scores.value.reduce((sum,x)=> sum += x,0))
+    console.log(feedback.value)
+
     const postVO = {
       projectId: parseInt(quizId.value),
+      studentId: parseInt(studentId.value),
       isDelete: false,
-      answer:JSON.stringify({"261":"aaaaaaa"}),
+      answer:JSON.stringify(answersList),
       hasGraded: 1, // Mark as graded
-      update_correctness: [false], // Collect correctness
-      scores: "100", // Total score
-      comments: "xxxxxxx",
+      update_correctness: correctArr.value, // Collect correctness
+      scores: scores.value.reduce((sum,x)=> sum += x,0), // Total score
+      comments: feedback.value,
     };
 
+    console.log(JSON.stringify(postVO))
     // Send to backend
     await saveGrade(postVO);
     alert('Grade saved successfully!');
@@ -58,7 +75,16 @@ const handleSaveGrade = async () => {
 
 // Auto-grade function
 const autograde = async () => {
+  for(let i = 0; i < correctArrTemp.length;i++){
+    
+    correctArr.value[i] = correctArrTemp[i]
+    if(scoresTemp[i] > 0){
+      scores.value[i] = scoresTemp[i]
+    }
 
+  }
+  console.log(correctArr.value)
+  console.log(scores.value)
 };
 </script>
 
@@ -93,16 +119,16 @@ const autograde = async () => {
                 Grade:
                 <input
                   type="number"
-                  v-model.number="totalscore"
+                  v-model.number="scores[index]"
                   class="grade-input"
                   min="0"
-                  max="100"
+                  max="1"
                 />
               </label>
               <label>
                 <input
                   type="checkbox"
-                  v-model="correctArr[question.id]"
+                  v-model="correctArr[index]"
                 />
                 Mark as Correct
               </label>

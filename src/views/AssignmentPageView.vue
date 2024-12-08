@@ -39,6 +39,7 @@ const loadQuizDetails = async () => {
 // Submit answers
 const submitAnswers = async () => {
   try {
+    console.log(JSON.stringify(userAnswers.value))
     const postVO = {
       projectId: parseInt(quizId.value),
       answer: JSON.stringify(userAnswers.value), // answers from the user
@@ -100,7 +101,7 @@ onMounted(() => {
               v-else
               :id="'q' + question.id + 'opt' + optIndex"
               :value="option"
-              v-model="userAnswers[question.id]"
+              v-model="userAnswers[question.id][0]"
             />
             <label
               class="option-label"

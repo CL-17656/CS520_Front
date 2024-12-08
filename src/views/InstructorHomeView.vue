@@ -72,7 +72,7 @@ onMounted(() => initialize());
 
 // Function to grade given quiz id for given student id
 function gradeQuiz(quizId, studentId) {
-  router.push({ name: 'grading', params:{quizId} });
+  router.push({ name: 'grading', params:{quizId,studentId} });
 }
 
 // Function navigating to statistic page for given quiz id

@@ -29,9 +29,10 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/grading/:quizId',
+      path: '/grading/:quizId/:studentId',
       name: 'grading',
       component: GradingPageView,
+      props: true
     },   
     {
       path: '/statistic',
