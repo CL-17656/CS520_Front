@@ -11,6 +11,7 @@ import CreateAssignmentView from '@/views/CreateAssignmentView.vue'
 import GradingPageView from '@/views/GradingPageView.vue'
 import { useAuthenticationStore } from '@/stores/Auth';
 import ResultsView from '@/views/ResultsView.vue'
+import UserProfileView from '@/views/UserProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,14 +32,7 @@ const router = createRouter({
       path: '/grading/:quizId',
       name: 'grading',
       component: GradingPageView,
-    },
-    {
-      path: '/course',
-      name: 'coursepage',
-      component: CoursePageView,
-      props: true
-      
-    },    
+    },   
     {
       path: '/statistic',
       name: 'statisticpage',
@@ -78,6 +72,11 @@ const router = createRouter({
       name: 'result',
       props: true,
       component: ResultsView,
+    },
+    {
+      path: '/userProfile',
+      name: 'userProfile',
+      component: UserProfileView,
     }
   ],
 })
@@ -87,10 +86,18 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   const store = useAuthenticationStore();
-  if ((to.name === 'studenthome' || to.name === 'instructorhome') && !store.isAuthenticated) {
+  if ((to.name === 'studenthome' || to.name === 'instructorhome' || to.name === 'createassignment' || to.name === 'result' || to.name === 'assignmentpage' || to.name === 'statisticpage' || to.name === 'grading') && !store.isAuthenticated) {
     next({ name: 'login' }); // Redirect to login if not authenticated
-  } 
-  else if((to.name === 'studenthome' && store.userType == 'prof') || (to.name == 'instructorhome' && store.userType == 'stu')) {
+  }
+  else if(to.name === 'start' && store.isAuthenticated) {
+    if(store.userType == 'prof') {
+      next({name: 'instructorhome'});
+    }
+    else {
+      next({name: 'studenthome'});
+    }
+  }
+  else if((to.name === 'studenthome' && store.userType == 'prof') || (to.name === 'result' && store.userType == 'prof') || (to.name ==='assignmentpage' && store.userType == 'prof') || (to.name == 'instructorhome' && store.userType == 'stu') || (to.name == 'grading' && store.userType == 'stu') || (to.name == 'createassignment' && store.userType == 'stu')) {
     //do nothing
   }
   else {

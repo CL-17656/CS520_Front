@@ -46,7 +46,7 @@ const initialize = async () => {
       for(let i = 0; i < pageData.data.recordList.length; ++i) {
         quizeData.allQuizInform.push({quizId: pageData.data.recordList[i].id, quizName: pageData.data.recordList[i].name});
         const studentTakenQuiz = await getStudentByAssignmentId(pageData.data.recordList[i].id);
-        console.log(studentTakenQuiz)
+        //console.log(studentTakenQuiz)
         if(studentTakenQuiz.data.count != null) {
           for(let j = 0; j < studentTakenQuiz.data.count; ++j) {
             quizeData.quizes.push(

@@ -29,6 +29,7 @@ function checkisStu() {
       <div>
         <RouterLink :to="{name: 'login'}" class="nav-link" v-if="checkAuthenticated() == false">Login</RouterLink>
       </div>
+      <RouterLink :to="{name: 'userProfile'}" class="nav-link" v-if="checkAuthenticated() == true">Profile</RouterLink>
     </nav>
   </header>
 

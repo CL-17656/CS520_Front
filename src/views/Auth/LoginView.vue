@@ -59,7 +59,7 @@ async function submit()
             else {
                 console.log(response);
                 //Store userinfo in local storage
-                store.login(response.data.userInfoId, response.data.userName, response.data.roleList[0]);
+                store.login(response.data.userInfoId, loginData.username, response.data.roleList[0]);
                 console.log(store.userType);
 
                 // Redirect based on account type (Student or Instructor)

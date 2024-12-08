@@ -168,7 +168,7 @@ function closeModal() {
       <div class="courses-grid">
           <div v-for="[index, assignment] in Object.entries(assignmentList)" :key="index" class="course-card">
             <h3>{{ assignment.name }}</h3>
-            <p>{{ assignment.instructor }}</p>
+            <p>Instructor Id: {{ assignment.instructor }}</p>
             <button @click="viewResults(assignment.id)" v-if="assignment.isGraded" class="assignments" >View Results</button>
             <button @click="viewAssignments(quizId)" v-if="!assignment.isGraded" class="assignments" >Take Assignment</button>
           </div>
