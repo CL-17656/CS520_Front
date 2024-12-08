@@ -10,6 +10,7 @@ import StatisticPageView from '../views/StatisticPageView.vue'
 import CreateAssignmentView from '@/views/CreateAssignmentView.vue'
 import GradingPageView from '@/views/GradingPageView.vue'
 import { useAuthenticationStore } from '@/stores/Auth';
+import ResultsView from '@/views/ResultsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,6 +72,12 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
+    },
+    {
+      path: '/result/:id',
+      name: 'result',
+      props: true,
+      component: ResultsView,
     }
   ],
 })

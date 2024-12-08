@@ -148,8 +148,10 @@ function viewAssignments(quizId){
   router.push({ name: 'assignmentpage', params:{quizId}});
 }
 
-function viewResults() {
- //TODO: route to result page
+function viewResults(questionId) {
+  //TODO: route to result page
+  console.log(questionId)
+  router.push({name: 'result', params: {id: questionId} });
 }
 
 function closeModal() {
@@ -168,7 +170,7 @@ function closeModal() {
           <div v-for="[index, assignment] in Object.entries(assignmentList)" :key="index" class="course-card">
             <h3>{{ assignment.name }}</h3>
             <p>{{ assignment.instructor }}</p>
-            <button @click="viewResults()" class="assignments">View Results</button>
+            <button @click="viewResults(assignment.id)" v-if="assignment.isGraded" class="assignments" >View Results</button>
           </div>
         <div class="course-card add-course">
           <button @click="addCourse">Add Assignment</button>

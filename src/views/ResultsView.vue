@@ -5,7 +5,7 @@ import { fetchResults } from '@/api/ResultsApi';
 
 const route = useRoute();
 const router = useRouter();
-const quizId = ref(route.params.quizId || '');
+const quizId = ref(route.params.id);
 
 const results = ref([]);
 const quizTitle = ref('');
@@ -15,6 +15,7 @@ const error = ref(null);
 onMounted(async () => {
   try {
     // Fetching the results from the backend
+    console.log(route.params);
     const response = await fetchResults(quizId.value);
     results.value = response.data;
     quizTitle.value = 'Quiz Results'; // || response.data[0]?.questionTitle;
@@ -24,18 +25,12 @@ onMounted(async () => {
     loading.value = false;
   }
 });
-
-// Sending the student back to the homepage
-function goHome() {
-  router.push({ name: 'StudentHomepage' });
-}
 </script>
 
 <template>
   <div class="results-view">
     <div class="header">
       <h1>{{ quizTitle }}</h1>
-      <button class="home-btn" @click="goHome">Home</button>
     </div>
 
     <div v-if="loading" class="loading">Loading results...</div>
