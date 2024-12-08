@@ -37,14 +37,18 @@ const initialize = async () => {
     instructoreHomeStore.totalPages = 0;
     console.log(pageData);
     if(pageData.data.count != null) {
+      //calculate page number
       instructoreHomeStore.totalPages = Math.ceil(pageData.data.count / 10);
+      if(instructoreHomeStore.totalPages == 0) {
+        instructoreHomeStore.totalPages = 1;
+      }
+      //fecth data and make into format for frontend
       for(let i = 0; i < pageData.data.recordList.length; ++i) {
         quizeData.allQuizInform.push({quizId: pageData.data.recordList[i].id, quizName: pageData.data.recordList[i].name});
         const studentTakenQuiz = await getStudentByAssignmentId(pageData.data.recordList[i].id);
         console.log(studentTakenQuiz)
         if(studentTakenQuiz.data.count != null) {
           for(let j = 0; j < studentTakenQuiz.data.count; ++j) {
-            //console.log(studentTakenQuiz.data.recordList[j].hasGraded)
             quizeData.quizes.push(
             {
               quizId: studentTakenQuiz.data.recordList[j].projectId,
