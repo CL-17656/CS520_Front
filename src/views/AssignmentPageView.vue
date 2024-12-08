@@ -85,34 +85,6 @@ const loadQuizDetails = async () => {
   }
 };
 
-// Submit answers
-// const submitAnswers = async () => {
-//   try {
-//     // const postVO = {
-//     //   projectId: quizId.value,
-//     //   answer: JSON.stringify(userAnswers.value),
-//     //   isDelete: false,
-//     // };
-//     console.log(userAnswers.value)
-//     const postVO = {
-//       projectId: parseInt(quizId.value), // projectId from the schema
-//       answer: JSON.stringify(userAnswers.value), // answer in string format
-//       isDelete: false, // isDelete field from the schema
-//       id: 0, // answer ID
-//       comments: "", // optional: comments, empty by default
-//       hasGraded: 0, // optional: hasGraded, set to 0 by default
-//       scores: "", // optional: scores, empty by default
-//       update_correctness: [], // optional: update_correctness, empty array by default
-//     };
-//     console.log(JSON.stringify(postVO))
-//     await submitQuizAnswers(postVO);
-//     alert('Quiz submitted successfully!');
-//     router.push('/home'); // Redirect to home or results page
-//   } catch (error) {
-//     console.error('Error submitting quiz:', error);
-//     alert('Failed to submit quiz. Please try again.');
-//   }
-// };
 
 // Submit answers
 const submitAnswers = async () => {
