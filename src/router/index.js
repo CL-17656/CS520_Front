@@ -28,7 +28,7 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/grading',
+      path: '/grading/:quizId',
       name: 'grading',
       component: GradingPageView,
     },

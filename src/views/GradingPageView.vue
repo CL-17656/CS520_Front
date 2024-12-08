@@ -4,23 +4,25 @@ import { useRoute } from 'vue-router';
 import { fetchAssignmentsForGrading, saveGrade } from '@/api/GradingApi';
 
 const route = useRoute();
-const quizId = ref(route.params.quizId || '');
+const quizId = ref(route.params.quizId);
 const assignment = ref(null); // Initialize with null
 const loading = ref(false);
 const error = ref(null);
 let feedback = ref("");
-let totalscore = ref()
+let totalscore = ref(0)
 let correctArr = ref()
 
 // Fetch assignments on component mount
 onMounted(async () => {
   try {
     loading.value = true;
-    const response = await fetchAssignmentsForGrading(quizId.value);
-    print(response.data)
+    console.log(quizId.value)
+    const response = await fetchAssignmentsForGrading(parseInt(quizId.value));
+    console.log(response.data)
     assignment.value = response.data;
-    totalscore.value = Array(assignment.value.length).fill(0)
-    correctArr.value = Array(assignment.value.length).fill(false)
+    totalscore.value = []
+    correctArr.value = []
+    console.log(assignment.value)
   } catch (err) {
     error.value = 'Failed to load assignments.';
     console.error(err);
@@ -34,7 +36,7 @@ onMounted(async () => {
 const handleSaveGrade = async () => {
   try {
     // Prepare data for the backend
-    
+    console.log(JSON.stringify( correctArr.value))
     const postVO = {
       projectId: quizId.value,
       isDelete: false,
@@ -55,18 +57,7 @@ const handleSaveGrade = async () => {
 
 // Auto-grade function
 const autograde = async () => {
-  const allMultipleChoice = assignment.value.questions.every(
-    (q) => q.type === 'multiplechoice' || q.type === 'truefalse'
-  );
-  if (allMultipleChoice) {
-    assignment.value.questions = assignment.value.questions.map((q) => ({
-      ...q,
-      grade: q.userResponse === 'Expected Answer' ? 100 : 0, // Simple auto-grade logic
-      isCorrect: q.userResponse === 'Expected Answer',
-    }));
-  } else {
-    alert('Auto Grade is only available for T/F and Multiple Choice questions.');
-  }
+
 };
 </script>
 
@@ -83,7 +74,7 @@ const autograde = async () => {
         <!-- Questions as Box Layout -->
         <div class="questions">
           <div
-            v-for="(question, index) in assignment"
+            v-for="question,index in assignment"
             :key="index"
             class="question-box"
           >
@@ -101,7 +92,7 @@ const autograde = async () => {
                 Grade:
                 <input
                   type="number"
-                  v-model.number="totalscore[index]"
+                  v-model.number="totalscore"
                   class="grade-input"
                   min="0"
                   max="100"
@@ -110,7 +101,7 @@ const autograde = async () => {
               <label>
                 <input
                   type="checkbox"
-                  v-model="correctArr[index]"
+                  v-model="correctArr[question.id]"
                 />
                 Mark as Correct
               </label>
