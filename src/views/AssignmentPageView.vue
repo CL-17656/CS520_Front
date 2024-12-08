@@ -6,11 +6,10 @@ import { fetchQuizDetails, submitQuizAnswers } from '@/api/AssignmentApi';
 const route = useRoute();
 const router = useRouter();
 
-// const quizId = route.params.quizId;
-const quizId = ref(route.params.quizId);
-const quizDetails = ref(null);
-const userAnswers = ref({});
-const isLoading = ref(true); // added this to prevent user from interacting with the UI when the quiz is being fetched
+const quizId = ref(route.params.quizId); // Stores the ID of the quiz fetched from the route parameter
+const quizDetails = ref(null); // Thus holds the quiz details fetched from the backend
+const userAnswers = ref({}); // Keeps track of the answers provided by the user
+const isLoading = ref(true); // Indicates whether the quiz data is still being loaded. Added this to prevent user from interacting with the UI when the quiz is being fetched
 
 // Fetch quiz details
 const loadQuizDetails = async () => {
