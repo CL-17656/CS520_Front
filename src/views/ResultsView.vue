@@ -5,23 +5,28 @@ import { fetchResults } from '@/api/ResultsApi';
 
 const route = useRoute();
 const router = useRouter();
+
+// Store the quiz ID from the route parameters
 const quizId = ref(route.params.id);
 
+// Variables to hold quiz results, title, loading status, and error messages
 const results = ref([]);
 const quizTitle = ref('');
 const loading = ref(true);
 const error = ref(null);
 
+// Runs when the component is mounted  
 onMounted(async () => {
   try {
-    // Fetching the results from the backend
+    // Fetch the results for the quiz from the backend using the quiz ID
     console.log(route.params);
-    const response = await fetchResults(quizId.value);
+    const response = await fetchResults(quizId.value); // Call API to fetch results
     results.value = response.data;
-    quizTitle.value = 'Quiz Results'; // || response.data[0]?.questionTitle;
+    quizTitle.value = 'Quiz Results'; // || response.data[0]?.questionTitle;  // Setting the title for the results page
   } catch (err) {
     error.value = err.message || 'Failed to load results.';
   } finally {
+    // Mark loading as complete regardless of success or failure
     loading.value = false;
   }
 });
@@ -29,19 +34,33 @@ onMounted(async () => {
 
 <template>
   <div class="results-view">
+    <!-- Header of the results page -->
     <div class="header">
+      <!-- Show the title of the quiz -->
       <h1>{{ quizTitle }}</h1>
     </div>
 
+    <!-- Display a loading message while results are being fetched -->
     <div v-if="loading" class="loading">Loading results...</div>
+    
+    <!-- Display an error message if something goes wrong -->
     <div v-if="error" class="error">{{ error }}</div>
 
+    <!-- Show results if there is data to display -->
     <div v-if="results.length" class="results-container">
       <ul class="results-list">
+        <!-- Loop through each result and show the question details -->
         <li v-for="(result, index) in results" :key="index" class="result-item">
+          <!-- Display the question number and title -->
           <h2>Question {{ index + 1 }}: {{ result.questionTitle }}</h2>
+
+          <!-- Show the answer provided by the user -->
           <p><strong>Your Answer:</strong> {{ result.answerDTO.myAnswers.join(', ') || 'No answer provided' }}</p>
+
+          <!-- Show the correct answer -->
           <p><strong>Correct Answer:</strong> {{ result.answerDTO.correctAnswerList.join(', ') || 'N/A' }}</p>
+
+          <!-- Display whether the user's answer was correct or incorrect -->
           <p>
             <strong>Result:</strong>
             <span :class="{ correct: result.answerDTO.isCorrect, incorrect: !result.answerDTO.isCorrect }">
