@@ -81,23 +81,23 @@ onMounted(async () => {
 
 <style scoped>
 .results-view {
-  padding: 1rem;
+  padding: 1rem; /* Add spacing around the entire results view */
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  display: flex; /* Arrange header items in a row */
+  justify-content: space-between; /* Space out the items evenly */
+  align-items: center; /* Align items vertically */
+  margin-bottom: 1.5rem; /* Add spacing below the header */
 }
 
 .home-btn {
-  padding: 0.5rem 1rem;
-  background-color: #004d4d;
+  padding: 0.5rem 1rem; /* Add padding to the button for better size */
+  background-color: #004d4d; /* Dark green background for the button */
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 4px; /* Slightly round the button corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 .loading {
@@ -111,20 +111,20 @@ onMounted(async () => {
 }
 
 .results-container {
-  margin-top: 2rem;
+  margin-top: 2rem; /* Add spacing above the results section */
 }
 
 .results-list {
-  list-style: none;
-  padding: 0;
+  list-style: none; /* Remove bullets from the result items */
+  padding: 0; /* Remove padding around the list */
 }
 
 .result-item {
-  margin-bottom: 2rem;
+  margin-bottom: 2rem; /* Space between each result */
   padding: 1rem;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 5px; /* Smoothen the corners of the result box */
 }
 
 .result-item h2 {
@@ -132,12 +132,12 @@ onMounted(async () => {
 }
 
 .correct {
-  color: green;
+  color: green; /* Show correct answers in green */
   font-weight: bold;
 }
 
 .incorrect {
-  color: red;
+  color: red; /* Show incorrect answers in red */
   font-weight: bold;
 }
 </style>
