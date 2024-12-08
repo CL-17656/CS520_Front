@@ -41,24 +41,30 @@ const loadQuizDetails = async () => {
 };
 
 
-// Submit answers
+/**
+ * Submits the user's answers to the backend.
+ * - Constructs a `postVO` object with the quiz ID, answers, and default values for grading and comments.
+ * - Sends the data to the backend using the `submitQuizAnswers` API call.
+ * - Redirects to the student homepage upon successful submission or alerts the user on failure.
+ */
 const submitAnswers = async () => {
   try {
-    console.log(JSON.stringify(userAnswers.value))
+    console.log(JSON.stringify(userAnswers.value)) // Debugging: Logs the user's answers as a JSON string
+    
     const postVO = {
-      projectId: parseInt(quizId.value),
-      answer: JSON.stringify(userAnswers.value), // answers from the user
-      isDelete: false,
+      projectId: parseInt(quizId.value), // The ID of the quiz being submitted
+      answer: JSON.stringify(userAnswers.value), // User's answers in JSON format
+      isDelete: false, // Marks the quiz submission as not deleted
       hasGraded: 0, // Default to 0 as it hasn't been graded yet
       scores: null, // No scores at submission
-      update_correctness: null,
+      update_correctness: null, // No updates to correctness at submission
       comments: null, // No comments on submission
     };
 
-    await submitQuizAnswers(postVO);
+    await submitQuizAnswers(postVO); // Sends the quiz submission to the backend
 
     alert('Quiz submitted successfully!');
-    router.push('/student'); // Redirect to homepage or maybe results view as well
+    router.push('/student'); // Redirect to homepage
   } catch (err) {
     console.error('Error submitting quiz:', err);
     alert('Failed to submit quiz. Please try again.');
