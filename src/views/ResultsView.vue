@@ -67,9 +67,12 @@ onMounted(async () => {
               {{ result.answerDTO.isCorrect ? 'Correct' : 'Incorrect' }}
             </span>
           </p>
+
+          <!-- Display instructor comments if they exist -->
           <p v-if="result.answerDTO.comment">
             <strong>Comments:</strong> {{ result.answerDTO.comment || 'No comments provided' }}
           </p>
+          
         </li>
       </ul>
     </div>
