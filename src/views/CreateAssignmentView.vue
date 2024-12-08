@@ -22,7 +22,7 @@ const assignmentDetail = reactive(
     startTime: "",
     endTime: "",
     questions:[{
-      questionType: "3", 
+      questionType: "4", 
       question: "Explain the concept of Big O notation and give an example.",
       sampleResponse: "Big O notation is used to describe the performance or complexity of an algorithm. It gives an upper bound on the time or space complexity in terms of the input size. For example, if an algorithm has a time complexity of O(n), it means the runtime grows linearly with the input size.", 
       choices: [{choice: "", isCorrect: false}]
@@ -90,7 +90,7 @@ async function submit() {
     { 
       let answerDat = {}
       //answer data for short answer questions
-      if(assignmentDetail.questions[i].questionType == "3") {
+      if(assignmentDetail.questions[i].questionType == "4") {
         answerDat = {
           "id": createdQuestionsData.questionIds[i], 
           "questionAnalysis": assignmentDetail.questions[i].question,
@@ -100,8 +100,8 @@ async function submit() {
           "images": null, 
           "isDelete": null
         };
-        if(questionTypes.includes(3) == false) {
-          questionTypes.push(3);
+        if(questionTypes.includes(4) == false) {
+          questionTypes.push(4);
         }
       } // answer data for multiple choice questions
       else {
@@ -210,7 +210,7 @@ async function submit() {
                     <select id="assignmentType" class="register" v-model="entry.questionType">
                         <option value="1">Single Choice</option>
                         <option value="2">Multiple Choice</option>
-                        <option value="3">Fill in The Blank</option>
+                        <option value="4">Fill in The Blank</option>
                     </select>
 
                     <!-- Section: Enter question -->
@@ -230,8 +230,8 @@ async function submit() {
                     <button class="questionBtn" v-if="entry.questionType == 1 || entry.questionType == 2" @click="addChoice(index)">Add Choice</button>
 
                     <!-- Section: Answer for Fill in the Blank -->
-                    <div class="question" v-if="entry.questionType == 3">Enter Answer: </div>
-                    <input type="text" placeholder="Enter Answer" v-if="entry.questionType == 3" v-model="entry.sampleResponse">
+                    <div class="question" v-if="entry.questionType == 4">Enter Answer: </div>
+                    <input type="text" placeholder="Enter Answer" v-if="entry.questionType == 4" v-model="entry.sampleResponse">
 
                     <!-- Section: delete question button -->
                     <button class="questionBtn" @click="removeQuestion(index)">Delete This Question</button>

@@ -144,14 +144,13 @@ async function submitCourse() {
   }
   
 }
-function viewAssignments(quizId){
-  router.push({ name: 'assignmentpage', params:{quizId}});
+function viewAssignments(Id){
+  console.log(Id)
+  router.push({ name: 'assignmentpage', params:{quizId: Id} });
 }
 
-function viewResults(questionId) {
-  //TODO: route to result page
-  console.log(questionId)
-  router.push({name: 'result', params: {id: questionId} });
+function viewResults(Id) {
+  router.push({name: 'result', params: {id: Id} });
 }
 
 function closeModal() {
@@ -171,6 +170,7 @@ function closeModal() {
             <h3>{{ assignment.name }}</h3>
             <p>{{ assignment.instructor }}</p>
             <button @click="viewResults(assignment.id)" v-if="assignment.isGraded" class="assignments" >View Results</button>
+            <button @click="viewAssignments(quizId)" v-if="!assignment.isGraded" class="assignments" >Take Assignment</button>
           </div>
         <div class="course-card add-course">
           <button @click="addCourse">Add Assignment</button>
