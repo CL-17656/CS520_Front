@@ -77,24 +77,32 @@ onMounted(() => {
   
 </script>
 <template>
+  <!-- Show loading message while the quiz data is being fetched -->
   <div v-if="isLoading" class="loading">Loading quiz...</div>
+
+  <!-- Main quiz container, shown after loading is complete -->
   <div v-else class="quiz-container">
+
+    <!-- This is the header section of the quiz displaying its name and description -->
     <div class="quiz-header">
       <h1>{{ quizDetails.name }}</h1>
       <p>{{ quizDetails.description }}</p>
     </div>
 
+    <!-- Loop through all the questions in the quiz -->
     <div
       v-for="(question, index) in quizDetails.questionDTOs"
       :key="index"
       class="quiz-question"
     >
+      <!-- Card for each question -->
       <div class="question-card">
-        <h3 class="question-title">{{ question.questionTitle }}</h3>
-        <p class="question-description">{{ question.questionDescription }}</p>
+        <h3 class="question-title">{{ question.questionTitle }}</h3> <!-- Question title -->
+        <p class="question-description">{{ question.questionDescription }}</p> <!-- Question description -->
 
-        <!-- Single/Multiple Choice -->
+        <!-- Options for Single Choice or Multiple Choice Questions -->
         <div v-if="question.type === 1 || question.type === 2" class="options">
+          <!-- Loop through all possible answers for the question -->
           <div
             v-for="(option, optIndex) in question.possibleAnswerList"
             :key="optIndex"
