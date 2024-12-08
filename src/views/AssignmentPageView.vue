@@ -118,7 +118,7 @@ const loadQuizDetails = async () => {
 const submitAnswers = async () => {
   try {
     const postVO = {
-      projectId: quizId,
+      projectId: parseInt(quizId),
       answer: JSON.stringify(userAnswers.value), // answers from the user
       isDelete: false,
       hasGraded: 0, // Default to 0 as it hasn't been graded yet
