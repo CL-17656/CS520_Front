@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
 import { fetchAssignmentsForGrading, saveGrade } from '@/api/GradingApi';
+import { useRouter,useRoute } from 'vue-router'; // Use `useRouter` for navigation
 
 const route = useRoute();
 const quizId = ref(route.params.quizId);
@@ -9,6 +9,8 @@ const studentId = ref(route.params.studentId);
 const assignment = ref(null); // Initialize with null
 const loading = ref(false);
 const error = ref(null);
+
+const router = useRouter();
 let feedback = ref("");
 let scores = ref([])
 let correctArr = ref([])
@@ -71,12 +73,14 @@ const handleSaveGrade = async () => {
     alert('Failed to save grade.');
     console.error(err);
   }
+
+  router.push({name: 'instructorhome'})
 };
 
 // Auto-grade function
 const autograde = async () => {
   for(let i = 0; i < correctArrTemp.length;i++){
-    
+
     correctArr.value[i] = correctArrTemp[i]
     if(scoresTemp[i] > 0){
       scores.value[i] = scoresTemp[i]
