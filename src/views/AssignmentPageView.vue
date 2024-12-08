@@ -192,7 +192,7 @@ onMounted(() => {
         <!-- Fill-in-the-Blank or Essay -->
         <textarea
           v-else
-          v-model="userAnswers[question.id]"
+          v-model="userAnswers[question.id][0]"
           class="text-area"
           :placeholder="'Enter your answer here...'"
         ></textarea>
