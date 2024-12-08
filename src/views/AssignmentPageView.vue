@@ -153,16 +153,18 @@ onMounted(() => {
 
 <style scoped>
 .quiz-container {
+  /* Center the quiz content and give it a clean design */
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+  background-color: #f8f9fa; /* Light gray background for better readability */
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for a subtle 3D effect */
 }
 
 .loading {
+  /* Style for the loading message */
   text-align: center;
   font-size: 1.5rem;
   margin-top: 50px;
@@ -170,18 +172,21 @@ onMounted(() => {
 }
 
 .quiz-header {
+  /* Align the quiz header text to the center */
   text-align: center;
   margin-bottom: 30px;
 }
 
 .quiz-header h1 {
+  /* Style the quiz title */
   font-size: 2rem;
-  color: #333;
+  color: #333; /* Dark gray for contrast */
 }
 
 .quiz-header p {
+  /* Style the quiz description */
   font-size: 1rem;
-  color: #666;
+  color: #666; /* Lighter gray for less emphasis */
 }
 
 .quiz-question {
@@ -189,11 +194,12 @@ onMounted(() => {
 }
 
 .question-card {
-  background-color: #fff;
+  /* Design each question card */
+  background-color: #fff; /* White background for contrast */
   padding: 15px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #ddd; /* Light border for separation */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .question-title {
@@ -212,6 +218,7 @@ onMounted(() => {
 }
 
 .option {
+  /* Align options horizontally for better visibility */
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -243,17 +250,19 @@ onMounted(() => {
 }
 
 .submit-button {
+  /* Style the submit button */
   padding: 10px 20px;
   font-size: 1.25rem;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #007bff; /* Blue for a primary action */
+  color: #fff; /* White text for contrast */
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s; /* Smooth color change on hover */
 }
 
 .submit-button:hover {
+  /* Darken the button on hover for interactivity */
   background-color: #0056b3;
 }
 </style>
