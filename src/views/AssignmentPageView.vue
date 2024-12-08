@@ -11,7 +11,12 @@ const quizDetails = ref(null); // Thus holds the quiz details fetched from the b
 const userAnswers = ref({}); // Keeps track of the answers provided by the user
 const isLoading = ref(true); // Indicates whether the quiz data is still being loaded. Added this to prevent user from interacting with the UI when the quiz is being fetched
 
-// Fetch quiz details
+/**
+ * Fetches the details of the quiz from the backend.
+ * - Calls the API to get quiz information.
+ * - Initializes the userAnswers object based on the questions fetched.
+ * - Handles loading state and errors during the API call.
+ */
 const loadQuizDetails = async () => {
   try {
     console.log(quizId.value)
@@ -20,17 +25,18 @@ const loadQuizDetails = async () => {
     if (response.status !== 200) {
       throw new Error(`Unexpected response status: ${response.status}`);
     }
-    console.log("ttt" + quizDetails.value)
-    console.log(quizDetails.value.questionDTOs)
+    console.log("ttt" + quizDetails.value) // Debugging: Logs fetched quiz details
+    console.log(quizDetails.value.questionDTOs) // Again debugging: Logs the list of questions
+    
     // Initialize userAnswers with empty arrays/strings based on question type
     quizDetails.value.questionDTOs.forEach((question) => { // quizDetails.value.questionDTOs contains an array of question objects fetched from the backend ( id and type)
-      userAnswers.value[question.id] = [];
+      userAnswers.value[question.id] = []; // Sets empty array for multiple-choice and text-based answers
     });
-    isLoading.value = false;
+    isLoading.value = false; // Quiz details have been successfully loaded
   } catch (error) {
     console.error('Error fetching quiz details:', error);
     alert('Failed to load quiz. Please try again.');
-    isLoading.value = false;
+    isLoading.value = false; // Ends loading state even in case of an error
   }
 };
 
