@@ -42,7 +42,7 @@ const initialize = async () => {
     console.log(pageData);
     if(pageData.data.count != "") {
       for(let i = 0; i < pageData.data.count; ++i) {
-        assignId = pageData.data.recordList[i].projectId
+        let assignId = pageData.data.recordList[i].projectId
         const assignmentData = await getAssignmentByProjectId(assignId);
 
         assignmentList.value.push({
