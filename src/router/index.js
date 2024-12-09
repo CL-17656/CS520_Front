@@ -35,7 +35,7 @@ const router = createRouter({
       props: true
     },   
     {
-      path: '/statistic',
+      path: '/statistic/:quizId',
       name: 'statisticpage',
       component: StatisticPageView,
       props: true
