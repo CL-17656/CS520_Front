@@ -1,4 +1,8 @@
 # CS520_Front
+Title : Quiz Management System
+
+Introduction : // under progress
+
  
 in order to see statistic please install chart.js<br/>
 ***npm install chart.js***<br/>
