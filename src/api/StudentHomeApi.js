@@ -43,5 +43,16 @@ const getAssignmentByProjectId = async(projectId) =>{
     }
 }
 
+const getInstructorInfo = async(instructorId) =>{
+  try {
+      const res = await apiUrlEncodeClient.get(`/admin/users?isDelete=0&userInfoId=${instructorId}`);
+      return res.data;
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+      throw error;
+    }
+}
+
 export{getAssignmentsStudentTaken}
 export{getAssignmentByProjectId}
+export{getInstructorInfo}

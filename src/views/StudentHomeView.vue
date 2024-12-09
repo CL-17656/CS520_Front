@@ -6,7 +6,7 @@ import { reactive } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { logoutUser } from '@/api/AuthApi';
 import { onMounted } from 'vue';
-import { getAssignmentsStudentTaken, getAssignmentByProjectId } from '@/api/StudentHomeApi';
+import { getAssignmentsStudentTaken, getAssignmentByProjectId, getInstructorInfo } from '@/api/StudentHomeApi';
 import moment from 'moment';
 
 const store = useAuthenticationStore();
@@ -44,11 +44,13 @@ const initialize = async () => {
       for(let i = 0; i < pageData.data.count; ++i) {
         let assignId = pageData.data.recordList[i].projectId
         const assignmentData = await getAssignmentByProjectId(assignId);
-
+        const instructorAdditionalData = await getInstructorInfo(assignmentData.data.userId);
+        console.log(instructorAdditionalData);
         assignmentList.value.push({
           id:assignId, 
           name: assignmentData.data.name, 
           instructor: assignmentData.data.userId, 
+          instructorName: instructorAdditionalData.data.recordList[0].nickname,
           isGraded: pageData.data.recordList[i].hasGraded,
           grade: pageData.data.recordList[i].scores,
         });
@@ -62,13 +64,6 @@ const initialize = async () => {
 onMounted(() => initialize());
 const route = useRoute();
 const router = useRouter(); // Create an instance of `useRouter`
-// Data for the course list and semesters
-const assignment = ref([
-  {id:123, name: 'midterm preparation', instructor: 'Thomas Carr', isGraded: false,grade: 0},
-  {id:456, name: 'quiz 1', instructor: 'Mark French', isGraded: false,grade: 0},
-  {id:678, name: 'peer report questionnare', instructor: 'Charles Dickinson', isGraded: false,grade: 0},
-  {id:789, name: 'quiz 2', instructor: 'Frank Lee', isGraded: false,grade: 0},
-]);
 
 const assignmentList = ref([]);
 const semesters = ref(['Year of 2025']);
@@ -169,6 +164,7 @@ function closeModal() {
           <div v-for="[index, assignment] in Object.entries(assignmentList)" :key="index" class="course-card">
             <h3>{{ assignment.name }}</h3>
             <p>Instructor Id: {{ assignment.instructor }}</p>
+            <p>Instructor Id: {{ assignment.instructorName }}</p>
             <button @click="viewResults(assignment.id)" v-if="assignment.isGraded" class="assignments" >View Results</button>
             <button @click="viewAssignments(quizId)" v-if="!assignment.isGraded" class="assignments" >Take Assignment</button>
           </div>

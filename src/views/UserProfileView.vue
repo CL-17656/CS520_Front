@@ -1,6 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
-import { changePassword, getUserData } from '@/api/UserProfileApi';
+import { changeNickname, changePassword, getUserData } from '@/api/UserProfileApi';
 import { onMounted } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
 
@@ -9,6 +9,7 @@ const store = useAuthenticationStore();
 const userData = reactive(
   {
     username: "",
+    userNickname: "",
     userID: "",
     role: "",
   }
@@ -23,9 +24,16 @@ const newPasswordData = reactive(
 
 const errors = reactive(
     {
+        nickname: [],
         password: [],
         confirmPassword: [],
         shouldSubmit: true,
+    }
+);
+
+const newNicknameData = reactive(
+    {
+        newNickname: "",
     }
 );
 
@@ -43,12 +51,33 @@ const initialize = async () => {
     else {
         userData.role = "Instructor";
     }
+    userData.userNickname = pageData.data.recordList[0].nickname;
   }
   catch(error) {
     console.log(error);
   }
 };
 onMounted(() => initialize());
+
+async function submitChangeNickname() {
+    errors.nickname = [];
+    errors.shouldSubmit = true;
+    if(!newNicknameData.newNickname) {
+        errors.nickname.push('Must enter a new nickname');
+        errors.shouldSubmit = false;
+    }
+
+    if(errors.shouldSubmit) {
+        const res = await changeNickname({
+            "nickname": newNicknameData.newNickname,
+        });
+        console.log(res);
+        if(res.flag) {
+            newNicknameData.newNickname = "";
+            location.reload();
+        }
+    }
+}
 
 async function sumbitChangePassword() {
     errors.password = [];
@@ -99,6 +128,14 @@ async function sumbitChangePassword() {
         <h1 class="sub-title">{{ userData.userID }} </h1>
     </section>
     <section class="profile-section">
+        <h1 class="sub-title">User NickName: </h1>
+        <h1 class="sub-title">{{ userData.userNickname }} </h1>
+        <h1 class="head">Change NickName: </h1>
+        <input type="text" placeholder="Enter New Nickname" v-model="newNicknameData.newNickname"/>
+        <h1 class="text-red-600" v-if="errors.nickname.length > 0">{{errors.nickname[0]}}</h1>
+        <button class="change-password-btn" @click="submitChangeNickname()">Change Nickname</button>
+    </section>
+    <section class="profile-section">
         <h1 class="sub-title">User Role: </h1>
         <h1 class="sub-title">{{ userData.role }} </h1>
     </section>
@@ -124,7 +161,7 @@ async function sumbitChangePassword() {
   background-color: #f5f5f5;
   border-radius: 8px;
   padding: 1rem;
-  width: 300px;
+  width: 400px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
   margin-top: 1rem;

@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { logoutUser } from '@/api/AuthApi';
 import { onMounted } from 'vue';
-import {getAssignmentsByInstructorId, getStudentByAssignmentId} from '@/api/InstructorHomeApi'
+import {getAssignmentsByInstructorId, getStudentByAssignmentId, getStudentInfo} from '@/api/InstructorHomeApi'
 import { useInstructorHomeStore } from '@/stores/InstructorHomeStore';
 
 
@@ -46,13 +46,15 @@ const initialize = async () => {
       for(let i = 0; i < pageData.data.recordList.length; ++i) {
         quizeData.allQuizInform.push({quizId: pageData.data.recordList[i].id, quizName: pageData.data.recordList[i].name});
         const studentTakenQuiz = await getStudentByAssignmentId(pageData.data.recordList[i].id);
-        console.log(studentTakenQuiz)
         if(studentTakenQuiz.data.count != null) {
           for(let j = 0; j < studentTakenQuiz.data.count; ++j) {
+            const additionalStudentData = await getStudentInfo(studentTakenQuiz.data.recordList[j].userId);
+            console.log(additionalStudentData)
             quizeData.quizes.push(
             {
               quizId: studentTakenQuiz.data.recordList[j].projectId,
               studentId: studentTakenQuiz.data.recordList[j].userId,
+              studentName: additionalStudentData.data.recordList[0].nickname,
               status: studentTakenQuiz.data.recordList[j].status,
               grade: studentTakenQuiz.data.recordList[j].scores,
               isGrade: studentTakenQuiz.data.recordList[j].hasGraded,
@@ -137,6 +139,7 @@ function previousPage()
         <!-- For each submission display following -->
         <div v-for="[key, quiz] in Object.entries(quizeData.quizes.filter(val => val.quizId == quizInform.quizId))" :key="key" class="quiz-card">
             <p>Student ID: {{ quiz.studentId }} </p>
+            <p>Student Name: {{ quiz.studentName }} </p>
             <p v-if="quiz.status == 2" >Quiz</p>
             <p v-if="quiz.status == 1" >Questionaire</p>
             <p v-if="quiz.isGrade == 1">Quiz Grade: {{ JSON.parse(quiz.grade)["total"] }}</p>
@@ -242,5 +245,13 @@ button:hover {
     display:flex;
     justify-content:center;
     align-items:center;
+}
+
+input textarea[type="text"] {
+  padding: 0; /* Removes extra space inside the input */
+  margin: 0;  /* Removes extra space outside the input */
+  height: 80px;
+  width: 100%; /* Ensures the input takes the full width of the container */
+  box-sizing: border-box; /* Ensures padding and border are included in the total width */
 }
 </style>
