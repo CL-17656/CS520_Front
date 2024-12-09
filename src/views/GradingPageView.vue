@@ -15,8 +15,7 @@ let feedback = ref("");
 let score = ref([])
 let correctArr = ref([])
 let answersList = {}
-let correctArrTemp = []
-let scoresTemp = []
+
 // Fetch assignments on component mount
 onMounted(async () => {
   try {
@@ -26,13 +25,10 @@ onMounted(async () => {
     console.log(response.data)
     assignment.value = response.data;
     assignment.value.forEach((x) =>{
-      correctArr.value.push(false)
-      correctArrTemp.push(x.answerDTO.isCorrect)
-      answersList[x.id] = x.answerDTO.myAnswers
-      scoresTemp.push(x.answerDTO.isCorrect ? 1 : 0)
+      correctArr.value.push(x.answerDTO.isCorrect)
+      score.value.push(x.answerDTO.isCorrect ? 1 : 0)
     });
     
-    // console.log(JSON.stringify(answers))
 
     console.log(correctArr.value)
     console.log(assignment.value)
@@ -78,18 +74,18 @@ const handleSaveGrade = async () => {
 };
 
 // Auto-grade function
-const autograde = async () => {
-  for(let i = 0; i < correctArrTemp.length;i++){
+// const autograde = async () => {
+//   for(let i = 0; i < correctArrTemp.length;i++){
 
-    correctArr.value[i] = correctArrTemp[i]
-    if(scoresTemp[i] > 0){
-      scores.value[i] = scoresTemp[i]
-    }
+//     correctArr.value[i] = correctArrTemp[i]
+//     if(scoresTemp[i] > 0){
+//       scores.value[i] = scoresTemp[i]
+//     }
 
-  }
-  console.log(correctArr.value)
-  console.log(scores.value)
-};
+//   }
+//   console.log(correctArr.value)
+//   console.log(scores.value)
+// };
 </script>
 
 
@@ -142,7 +138,7 @@ const autograde = async () => {
 
         <!-- Feedback and Submit Controls -->
         <div class="grading-controls">
-          <button @click="autograde()" class="btn-auto-grade">Auto Grade</button>
+          <!-- <button @click="autograde()" class="btn-auto-grade">Auto Grade</button> -->
 
           <label>
             Feedback:
