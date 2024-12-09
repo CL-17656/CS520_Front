@@ -14,7 +14,7 @@ const router = useRouter();
 let feedback = ref("");
 let score = ref([])
 let correctArr = ref([])
-let answersList = {}
+const answersList = {}
 
 // Fetch assignments on component mount
 onMounted(async () => {
@@ -24,12 +24,14 @@ onMounted(async () => {
     const response = await fetchAssignmentsForGrading(parseInt(quizId.value),parseInt(studentId.value));
     console.log(response.data)
     assignment.value = response.data;
+    
     assignment.value.forEach((x) =>{
       correctArr.value.push(x.answerDTO.isCorrect)
       score.value.push(x.answerDTO.isCorrect ? 1 : 0)
+      answersList[x.id] = x.answerDTO.myAnswers
     });
     
-
+    console.log( `answer${JSON.stringify(answersList)}`)
     console.log(correctArr.value)
     console.log(assignment.value)
   } catch (err) {
@@ -46,6 +48,7 @@ const handleSaveGrade = async () => {
   try {
     // Prepare data for the backend
     console.log(correctArr.value)
+    console.log(answersList)
     // console.log(JSON.stringify( correctArr.value))
     console.log(score.value.reduce((sum,x)=> sum += x,0))
     console.log(feedback.value)
