@@ -80,7 +80,7 @@ function gradeQuiz(quizId, studentId) {
 // Function navigating to statistic page for given quiz id
 function viewQuizStats(quizId)
 {
-  router.push({ name: 'statisticpage', params:{quizId,studentId} });
+  router.push({ name: 'statisticpage', params:{quizId} });
 }
 
 //function for creating quiz
