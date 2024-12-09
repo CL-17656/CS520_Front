@@ -3,7 +3,6 @@ import StudentHomeView from '../views/StudentHomeView.vue'
 import InstructorHomeView from '../views/InstructorHomeView.vue'
 import RegisterView from '@/views/Auth/RegisterView.vue'
 import LoginView from '@/views/Auth/LoginView.vue'
-import CoursePageView from '../views/CoursePageView.vue'
 import StartView from '@/views/Auth/StartView.vue'
 import AssignmentPageView from '../views/AssignmentPageView.vue'
 import StatisticPageView from '../views/StatisticPageView.vue'
@@ -87,7 +86,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   const store = useAuthenticationStore();
-  if ((to.name === 'studenthome' || to.name === 'instructorhome' || to.name === 'createassignment' || to.name === 'result' || to.name === 'assignmentpage' || to.name === 'statisticpage' || to.name === 'grading') && !store.isAuthenticated) {
+  if ((to.name === 'studenthome' || to.name === 'instructorhome' || to.name === 'createassignment' || to.name === 'result' || to.name === 'assignmentpage' || to.name === 'statisticpage' || to.name === 'grading' || to.name === 'userProfile') && !store.isAuthenticated) {
     next({ name: 'login' }); // Redirect to login if not authenticated
   }
   else if(to.name === 'start' && store.isAuthenticated) {
@@ -99,7 +98,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   else if((to.name === 'studenthome' && store.userType == 'prof') || (to.name === 'result' && store.userType == 'prof') || (to.name ==='assignmentpage' && store.userType == 'prof') || (to.name == 'instructorhome' && store.userType == 'stu') || (to.name == 'grading' && store.userType == 'stu') || (to.name == 'createassignment' && store.userType == 'stu')) {
-    //do nothing
+    //should not visit so do nothing
   }
   else {
     next();

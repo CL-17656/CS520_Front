@@ -80,6 +80,14 @@ async function submitCourse() {
   console.log(newAssignmentId.value.trim())
   if (newAssignmentId.value.trim() !== ''  )  {
     quizId = newAssignmentId.value.trim();
+    
+    for(let i = 0; i < assignmentList.value.length; ++i) {
+      if(assignmentList.value[i].id === parseInt(newAssignmentId.value)) {
+        alert("Quiz already added");
+        console.log("alert");
+        return;
+      }
+    }
 
     //Seach assignmentData
     const assignmentData = await getAssignmentByProjectId(newAssignmentId.value);
