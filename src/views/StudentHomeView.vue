@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter,useRoute } from 'vue-router'; // Use `useRouter` for navigation
-//import {validateAssignmentId} from '@/api/StudentHomeApi'
 import { reactive } from 'vue';
 import { useAuthenticationStore } from '@/stores/Auth';
 import { logoutUser } from '@/api/AuthApi';
@@ -81,30 +80,6 @@ async function submitCourse() {
   console.log(newAssignmentId.value.trim())
   if (newAssignmentId.value.trim() !== ''  )  {
     quizId = newAssignmentId.value.trim();
-
-    // let isVerifyOK = validateAssignmentId(assignmentId);
-    
-
-    ///console.log(assignment.value)
-    //let temp = false
-    //for( const entry of assignment.value){
-    //  if(entry.id == assignmentId){
-    //   assignmentList.value.push(entry);
-    //    showModal.value = false;
-    //    temp = true
-    //  }
-    //}
-    //if(!temp){
-      //error_message.value = 'Course ID not found';
-    //}
-
-    // if (isVerifyOK) {
-    //   // Add the course to the assignmentList
-    //   assignmentList.value.push(not read yet);
-    //   showModal.value = false;
-    // } else {
-    //   error_message.value = 'Course ID not found';
-    // }
 
     //Seach assignmentData
     const assignmentData = await getAssignmentByProjectId(newAssignmentId.value);

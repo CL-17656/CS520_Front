@@ -2,7 +2,6 @@ import {apiClient, apiUrlEncodeClient} from './axiosConfig';
 
 const getUserData = async(userId) =>{
     try {
-        //const res = await apiUrlEncodeClient.get(`/admin/users/online?userInfoId=${userId}`);
         const res = await apiUrlEncodeClient.get(`/admin/users?isDelete=0&userInfoId=${userId}`);
         return res.data;
       } catch (error) {
