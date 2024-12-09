@@ -27,3 +27,6 @@ tough-cookie<br/>
 <br/>
 axios-cookiejar-support<br/>
 **npm install axios tough-cookie axios-cookiejar-support**<br/>
+
+echart<br/>
+**npm install echarts**<br/>
