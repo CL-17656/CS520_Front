@@ -54,6 +54,11 @@ onMounted(async () => {
 
     <!-- Show results if there is data to display -->
     <div v-if="results.length" class="results-container">
+      <!-- Display total score -->
+      <div class="total-score">
+        <h2>Total Score: {{ totalScore }} / {{ results.length }}</h2>
+      </div>
+      
       <ul class="results-list">
         <!-- Loop through each result and show the question details -->
         <li v-for="(result, index) in results" :key="index" class="result-item">
