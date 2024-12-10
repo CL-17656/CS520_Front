@@ -13,6 +13,7 @@ const error = ref(null);
 const router = useRouter();
 let feedback = ref("");
 let score = ref([])
+let returnscore = {}
 let correctArr = ref([])
 const answersList = {}
 
@@ -50,8 +51,12 @@ const handleSaveGrade = async () => {
     console.log(correctArr.value)
     console.log(answersList)
     // console.log(JSON.stringify( correctArr.value))
-    console.log(score.value.reduce((sum,x)=> sum += x,0))
     console.log(feedback.value)
+    let n = 0
+    for (const [key, value] of Object.entries(answersList)) {
+        returnscore[key] = score.value[n];
+        n++;
+    } 
 
     const postVO = {
       projectId: parseInt(quizId.value),
@@ -60,7 +65,7 @@ const handleSaveGrade = async () => {
       answer:JSON.stringify(answersList),
       hasGraded: 1, // Mark as graded
       update_correctness: correctArr.value, // Collect correctness
-      scores: JSON.stringify(score.value.reduce((sum,x)=> sum += x,0)), // Total score
+      scores: JSON.stringify(returnscore), // Total score
       comments: feedback.value,
     };
 
