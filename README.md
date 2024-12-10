@@ -27,15 +27,16 @@ The **Quiz Management System** is a simple and user-friendly platform designed t
 3. **Taking Quizzes**:  
    - Students can easily access and complete quizzes. The system offers real-time validation for certain question types.
 
-4. **Grading Quizzes**:  
+4. **Grading Quizzes**:
+   The instructors can grade and provide feedback for the quizzes taken by students. This feature has 2 components :  
    - **Automatic Grading**:  
-     - Questions like multiple-choice and single-choice are automatically graded based on predefined correct answers.  
+     - Questions like multiple-choice and single-choice are automatically graded based on predefined correct answers. This helps to make the grading more efficient.
    - **Manual Grading**:  
      - Text-based answers can be graded manually by instructors.  
-     - Instructors can provide feedback for the entire quiz but not for individual questions.  
-     - If a quiz is graded fully automatically, feedback options are disabled for instructors.  
+   
+   Furthermore, instructors can also provide feedback for the entire quiz along with the   
 
-5. **Statistics**:  
+6. **Statistics**:  
    - Instructors and students can view detailed quiz performance analytics.  
    - Interactive charts display correct/incorrect responses, average scores, and more for better insights.
 
@@ -135,21 +136,13 @@ These AI models can improve grading efficiency and provide actionable insights f
 
 
 
-Introduction : The Quiz Management System is a simple and user-friendly platform designed to help instructors and students manage quizzes effectively. It allows instructors to create and grade quizzes, students to take them, and both to view the results. The results for students give them detailed insights on their performance. This project ensures a smooth experience for both instructors and students, making quiz management and performance tracking effortless.
 
 
-key features of our project :
-1) account management :
-Instructors and students can create and      manage their accounts. Out system            provides features based on the user’s        role.
-
-2) Creation of quizzes :
-Instructors can easily create quizzes    with different question types, such as single choice, multiple-choice, fill-in-the-blank, and essay questions.
 
 3) Taking the quizzes :
 Our system allows the students to take quizzes in a simple and user-friendly interface.
 
 4) Grading quizzes :
-The instructors can grade and provide feedback for the quizzes taken by students. This feature has 2 components :
    - automatic grading : this makes the grading more efficient by allowing autograding of all questions except for essay type.
 
    - manual grading : the instructors 
