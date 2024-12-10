@@ -23,6 +23,12 @@ onMounted(async () => {
     const response = await fetchResults(quizId.value); // Call API to fetch results
     results.value = response.data;
     quizTitle.value = 'Quiz Results'; // || response.data[0]?.questionTitle;  // Setting the title for the results page
+    
+    // Calculate the total score
+    totalScore.value = results.value.reduce((score, result) => {
+      return score + (result.answerDTO.isCorrect ? 1 : 0);
+    }, 0);
+    
   } catch (err) {
     error.value = err.message || 'Failed to load results.';
   } finally {
