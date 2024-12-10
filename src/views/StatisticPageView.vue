@@ -184,88 +184,59 @@ onMounted(async () => {
 <style scoped>
 .statistics-view {
   padding: 1rem;
-  max-width: 1200px; /* Limit the width for better readability */
-  margin: 0 auto; /* Center the content horizontally */
+  max-width: 1200px; 
+  margin: 0 auto; 
 }
 
 .title {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #333; /* A neutral color for the title */
+  color: #333; 
 }
 
 .subtitle {
   font-size: 1.8rem;
   margin: 2rem 0 1.5rem;
   text-align: center;
-  color: #555; /* Slightly lighter color for subtitles */
+  color: #555; 
 }
 
 .question-chart-container {
   display: flex;
-  flex-wrap: wrap; /* Wrap charts to the next row if necessary */
-  gap: 1.5rem; /* Space between charts */
-  justify-content: center; /* Center the charts */
+  flex-direction: column; 
+  gap: 2rem; 
+  align-items: center; 
 }
 
 .question-chart-container > div {
-  flex: 1 1 calc(50% - 1.5rem); /* Two charts per row with spacing */
-  max-width: 600px; /* Ensure charts don't grow too large */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  border: 1px solid #ddd; /* Border for separation */
-  border-radius: 8px; /* Rounded corners for a polished look */
+  width: 100%;
+  max-width: 1000px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
   padding: 1rem;
-  background-color: #fff; /* Light background for charts */
-  transition: transform 0.3s ease; /* Animation on hover */
+  background-color: #fff;
+  text-align: center; 
 }
 
 .question-chart-container > div:hover {
-  transform: scale(1.02); /* Slight zoom on hover for interactivity */
+  transform: scale(1.02); 
 }
 
 .loading {
   font-size: 1.2rem;
   color: #555;
-  text-align: center; /* Center align loading text */
+  text-align: center; 
 }
 
 .error {
   font-size: 1.2rem;
   color: red;
-  text-align: center; /* Center align error text */
+  text-align: center; 
 }
 
 .chart-container {
   margin-bottom: 2rem;
 }
-/* .statistics-view {
-  padding: 1rem;
-}
-.title {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-.subtitle {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-
-}
-.loading {
-  font-size: 1.2rem;
-  color: #555;
-}
-
-.error {
-  font-size: 1.2rem;
-  color: red;
-}
-
-.chart-container {
-
-  margin-bottom: 2rem;
-} */
 </style>
-
