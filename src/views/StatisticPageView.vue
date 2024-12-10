@@ -177,7 +177,7 @@ onMounted(async () => {
       <!-- <div ref="averageScoreRef" style="width: 100%; height: 400px;"></div> -->
       <h2 class="subtitle">Question Statistics</h2>
     </div>
-    <div class="question-chart-container">    <div v-for="(chartData, index) in chartsData" :key="index" :ref="el => chartRefs[index] = el" style="width: 100%; height: 200px;"></div>
+    <div class="question-chart-container">    <div v-for="(chartData, index) in chartsData" :key="index" :ref="el => chartRefs[index] = el" style="width: 100%; height: 400px;"></div>
 </div>
 </template>
 
@@ -202,7 +202,7 @@ onMounted(async () => {
   color: #555; 
 }
 
-.question-chart-container {
+/* .question-chart-container {
   display: flex;
   flex-direction: column; 
   gap: 2rem; 
@@ -211,7 +211,32 @@ onMounted(async () => {
 
 .question-chart-container > div {
   width: 100%;
-  max-width: 1000px; 
+  max-width: 1500px; 
+  padding-top: 100px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  padding: 1rem;
+  background-color: #fff;
+  text-align: center; 
+}
+
+.question-chart-container > div:hover {
+  transform: scale(1.02); 
+} */
+.question-chart-container {
+  display: flex;
+  flex-direction: column; 
+  gap: 2rem; 
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  height: 100vh; /* Full viewport height */
+  padding: 2rem; /* Optional: Add some padding */
+}
+
+.question-chart-container > div {
+  width: 100%;
+  max-width: 1500px; 
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   border: 1px solid #ddd; 
   border-radius: 8px; 
@@ -223,6 +248,7 @@ onMounted(async () => {
 .question-chart-container > div:hover {
   transform: scale(1.02); 
 }
+
 
 .loading {
   font-size: 1.2rem;
