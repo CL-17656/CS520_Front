@@ -73,7 +73,7 @@ Ensure you have the following installed:
    ```bash
    npm run serve
    ```
-6. Access the application in your browser at `http://localhost:8080`.
+6. Access the application in your browser at `http://localhost:8090/`.
 
 ---
 
