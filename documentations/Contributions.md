@@ -53,8 +53,9 @@ Arin focused on the **Take Assignment** and **Statistics** features, along with 
 
 ### Isaac
 Isaac contributed to the **Grading** and **Statistics** features. Key contributions include:  
-- Creating the grading page for instructors to view and grade student submissions.  
-- Adding visualizations to show grade distributions and quiz performance.  
+- Creating the grading page for instructors to view, grade, and comment on student submissions.
+- Design student and instructor home pages.
+- Design and implement the statistics page with visual charts.  
 - Simplifying the feedback process for instructors.  
 
 ---
