@@ -53,10 +53,13 @@ const handleSaveGrade = async () => {
     // console.log(JSON.stringify( correctArr.value))
     console.log(feedback.value)
     let n = 0
+    let total = 0
     for (const [key, value] of Object.entries(answersList)) {
         returnscore[key] = score.value[n];
+        total += score.value[n]
         n++;
     } 
+    returnscore["total"] = total
 
     const postVO = {
       projectId: parseInt(quizId.value),

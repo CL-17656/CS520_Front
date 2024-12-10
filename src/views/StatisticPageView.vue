@@ -74,9 +74,9 @@ onMounted(async () => {
     const response = await fetchScoreDistribution(quizId.value);
     grades.value = response.data; 
 
-    const res = await fetchAverageScore()
-    avg.value = res.data
-    console.log(avg.data)
+    // const res = await fetchAverageScore()
+    // avg.value = res.data
+    console.log(grades.data)
 
     
     renderBarChart();
