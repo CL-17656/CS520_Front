@@ -67,7 +67,7 @@ Ensure you have the following installed:
    ```
 4. Install required charting libraries:
    ```bash
-   npm install chart.js chartjs-adapter-date-fns
+    npm install echarts
    ```
 5. Start the development server:
    ```bash
