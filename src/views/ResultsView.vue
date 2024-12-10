@@ -14,6 +14,7 @@ const results = ref([]);
 const quizTitle = ref('');
 const loading = ref(true);
 const error = ref(null);
+const totalScore = ref(0); 
 
 // Runs when the component is mounted  
 onMounted(async () => {
