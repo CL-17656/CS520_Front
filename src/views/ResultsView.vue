@@ -22,6 +22,7 @@ onMounted(async () => {
     console.log(route.params);
     const response = await fetchResults(quizId.value); // Call API to fetch results
     results.value = response.data;
+    console.log(results.value)
     quizTitle.value = 'Quiz Results'; // || response.data[0]?.questionTitle;  // Setting the title for the results page
   } catch (err) {
     error.value = err.message || 'Failed to load results.';
