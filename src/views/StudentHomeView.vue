@@ -52,6 +52,7 @@ const initialize = async () => {
           instructorName: instructorAdditionalData.data.recordList[0].nickname,
           isGraded: pageData.data.recordList[i].hasGraded,
           grade: pageData.data.recordList[i].scores,
+          hasTaken: true,
         });
       }
     }
@@ -114,6 +115,7 @@ async function submitCourse() {
         instructor: assignmentData.data.userId, 
         isGraded: false,
         grade: 0,
+        hasTaken: false,
       });
     }
 
@@ -149,7 +151,7 @@ function closeModal() {
             <p>Instructor Id: {{ assignment.instructor }}</p>
             <p>Instructor Id: {{ assignment.instructorName }}</p>
             <button @click="viewResults(assignment.id)" v-if="assignment.isGraded" class="assignments" >View Results</button>
-            <button @click="viewAssignments(quizId)" v-if="!assignment.isGraded" class="assignments" >Take Assignment</button>
+            <button @click="viewAssignments(quizId)" v-if="!assignment.hasTaken" class="assignments" >Take Assignment</button>
           </div>
         <div class="course-card add-course">
           <button @click="addCourse">Add Assignment</button>
