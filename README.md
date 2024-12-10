@@ -15,8 +15,7 @@
 
 ## Introduction
 
-The **Quiz Management System** is a robust platform designed to simplify the process of quiz creation, participation, grading, and analytics. The system provides comprehensive tools for instructors to manage their quizzes and for students to take and review quizzes effectively. The user-friendly interface and advanced features ensure seamless functionality for all users.
-
+The **Quiz Management System** is a simple and user-friendly platform designed to help instructors and students manage quizzes effectively. It allows instructors to create and grade quizzes, students to take them, and both to view the results. The results for students give them detailed insights on their performance. This project ensures a smooth experience for both instructors and students, making quiz management and performance tracking effortless.
 ### Features
 
 1. **Account Management**:  
@@ -135,14 +134,6 @@ These AI models can improve grading efficiency and provide actionable insights f
 
 
 
-
-
-
-
-
-
-# CS520_Front
-Title : Quiz Management System
 
 Introduction : The Quiz Management System is a simple and user-friendly platform designed to help instructors and students manage quizzes effectively. It allows instructors to create and grade quizzes, students to take them, and both to view the results. The results for students give them detailed insights on their performance. This project ensures a smooth experience for both instructors and students, making quiz management and performance tracking effortless.
 
