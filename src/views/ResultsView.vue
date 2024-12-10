@@ -146,4 +146,12 @@ onMounted(async () => {
   color: red; /* Show incorrect answers in red */
   font-weight: bold;
 }
+
+.total-score {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #004d4d; /* Add a distinct color for the total score */
+  text-align: center;
+}
 </style>
