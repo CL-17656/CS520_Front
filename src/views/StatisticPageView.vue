@@ -177,11 +177,69 @@ onMounted(async () => {
       <!-- <div ref="averageScoreRef" style="width: 100%; height: 400px;"></div> -->
       <h2 class="subtitle">Question Statistics</h2>
     </div>
-    <div v-for="(chartData, index) in chartsData" :key="index" :ref="el => chartRefs[index] = el" style="width: 100%; height: 200px;"></div>
+    <div class="question-chart-container">    <div v-for="(chartData, index) in chartsData" :key="index" :ref="el => chartRefs[index] = el" style="width: 100%; height: 200px;"></div>
+</div>
 </template>
 
 <style scoped>
 .statistics-view {
+  padding: 1rem;
+  max-width: 1200px; /* Limit the width for better readability */
+  margin: 0 auto; /* Center the content horizontally */
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333; /* A neutral color for the title */
+}
+
+.subtitle {
+  font-size: 1.8rem;
+  margin: 2rem 0 1.5rem;
+  text-align: center;
+  color: #555; /* Slightly lighter color for subtitles */
+}
+
+.question-chart-container {
+  display: flex;
+  flex-wrap: wrap; /* Wrap charts to the next row if necessary */
+  gap: 1.5rem; /* Space between charts */
+  justify-content: center; /* Center the charts */
+}
+
+.question-chart-container > div {
+  flex: 1 1 calc(50% - 1.5rem); /* Two charts per row with spacing */
+  max-width: 600px; /* Ensure charts don't grow too large */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border: 1px solid #ddd; /* Border for separation */
+  border-radius: 8px; /* Rounded corners for a polished look */
+  padding: 1rem;
+  background-color: #fff; /* Light background for charts */
+  transition: transform 0.3s ease; /* Animation on hover */
+}
+
+.question-chart-container > div:hover {
+  transform: scale(1.02); /* Slight zoom on hover for interactivity */
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center; /* Center align loading text */
+}
+
+.error {
+  font-size: 1.2rem;
+  color: red;
+  text-align: center; /* Center align error text */
+}
+
+.chart-container {
+  margin-bottom: 2rem;
+}
+/* .statistics-view {
   padding: 1rem;
 }
 .title {
@@ -206,7 +264,8 @@ onMounted(async () => {
 }
 
 .chart-container {
+
   margin-bottom: 2rem;
-}
+} */
 </style>
 
