@@ -42,33 +42,46 @@ function renderBarChart() {
   const chart = echarts.init(barChartRef.value);
 
   let option = {
-      title: {
-        text: `Score Distribution`,
-        left: 'center'
+    title: {
+    text: 'Score Distribution',
+    left: 'center'
+  },
+  tooltip: {
+    trigger: 'item'
+  },
+  legend: {
+    top: '5%',
+    left: 'center'
+  },
+  series: [
+    {
+      name: 'Access From',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 2
       },
-      tooltip: {
-        trigger: 'item'
+      label: {
+        show: false,
+        position: 'center'
       },
-      legend: {
-        orient: 'vertical',
-        left: 'left'
-      },
-      series: [
-        {
-          name: 'scores',
-          type: 'pie',
-          radius: '50%',
-          data: grades.value,
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          }
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: 40,
+          fontWeight: 'bold'
         }
-      ]
-    };
+      },
+      labelLine: {
+        show: false
+      },
+      data: grades.value
+    }
+  ]
+};
   chart.setOption(option);
   console.log("hello")
 }
@@ -115,6 +128,11 @@ onMounted(async () => {
         const response = await fetchScoreDistribution(quizId.value);
         grades.value = response.data; 
 
+        console.log(grades.value)
+        for (const dataEntry of grades.value) {
+          dataEntry.name = `Total Score: ${dataEntry.name}`
+        }
+
         const res = await fetchAssignmentDataAnalysis(quizId.value);
         assignmentdata.value = res.data;
 
@@ -124,7 +142,7 @@ onMounted(async () => {
             let tempdata = []
             for (const a of entry.analysisDTO.possibleAnswerList){
               const [key, value] = Object.entries(a)[0];
-              tempdata.push({ name: key, value: value });
+              tempdata.push({ name: `choice: ${key}`, value: value });
 
             }
             console.log(tempdata)
@@ -138,13 +156,9 @@ onMounted(async () => {
         // avg.value = res.data
         console.log(chartsData.value)
         renderBarChart();
-
-        // Wait for the DOM to update before initializing dynamic charts
-        // console.log(`sssss ${chartsData.value}`)
         
         await nextTick(); // Wait for the DOM update
         chartsData.value.forEach((chartData, index) => {
-          console.log(`dddd ${chartData}`); // Check if this logs
           const container = chartRefs.value[index];
           renderQuestionChart(container, chartData);
         });
