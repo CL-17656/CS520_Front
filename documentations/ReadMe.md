@@ -25,7 +25,7 @@ The **Quiz Management System** is a simple and user-friendly platform designed t
    - Instructors can design quizzes with various question types such as multiple-choice, single-choice, or text-based answers.
 
 3. **Taking Quizzes**:  
-   - Students can easily access and complete quizzes. The system offers real-time validation for certain question types.
+   - Students can easily access and complete quizzes in a simple and user-friendly interface. The system offers real-time validation for certain question types.
 
 4. **Grading Quizzes**:
    The instructors can grade and provide feedback for the quizzes taken by students. This feature has 2 components :  
@@ -120,27 +120,6 @@ Currently, the system does not use any AI models. Grading is handled based on pr
 These AI models can improve grading efficiency and provide actionable insights for instructors and students.  
 
 --- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3) Taking the quizzes :
-Our system allows the students to take quizzes in a simple and user-friendly interface.
 
 
 
