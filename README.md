@@ -55,13 +55,13 @@ Ensure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/example/quiz-management-system.git
+   git clone <repository-url>
    ```
 2. Navigate to the project directory:
    ```bash
-   cd quiz-management-system
+   cd <repository-folder>
    ```
-3. Install dependencies:
+3. Install the required packages/dependencies:
    ```bash
    npm install
    ```
