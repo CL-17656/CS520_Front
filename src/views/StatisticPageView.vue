@@ -7,7 +7,7 @@ import { nextTick } from 'vue';
 
 const route = useRoute();
 const quizId = ref(route.params.quizId);
-// const quizName = ref(route.params.quizName);
+const quizName = ref(route.params.quizName);
 const grades = ref([]);
 const loading = ref(true);
 const error = ref(null);
@@ -158,7 +158,7 @@ onMounted(async () => {
 
 <template>
   <div class="statistics-view">
-    <h1 class="title">Assignment Statistics For </h1>
+    <h1 class="title">Assignment Statistics For {{ quizName }}</h1>
       <div ref="barChartRef" style="width: 100%; height: 400px;"></div>
       <!-- <div ref="averageScoreRef" style="width: 100%; height: 400px;"></div> -->
       <h2 class="subtitle">Question Statistics</h2>
