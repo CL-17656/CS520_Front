@@ -10,3 +10,12 @@ export async function fetchStudentResults(projectId) {
     throw error;
   }
 }
+export async function fetchScoreDistribution(projectId){
+  try {
+    const response = await apiClient.get(`/admin/project/${projectId}/pieChart`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching results:', error);
+    throw error;
+  }
+}

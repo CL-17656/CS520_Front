@@ -78,9 +78,9 @@ function gradeQuiz(quizId, studentId) {
 }
 
 // Function navigating to statistic page for given quiz id
-function viewQuizStats(quizId)
+function viewQuizStats(quizId,quizName)
 {
-  router.push({ name: 'statisticpage', params:{quizId} });
+  router.push({ name: 'statisticpage', params:{quizId,quizName} });
 }
 
 //function for creating quiz
@@ -146,7 +146,7 @@ function previousPage()
             <button v-if="quiz.isGrade == 0" @click="gradeQuiz(quiz.quizId, quiz.studentId)">Grade Quiz</button>
         </div>
       </div>
-      <button class="view-stat-btn" @click="viewQuizStats(quizInform.quizId)">View Quiz Statistics</button>
+      <button class="view-stat-btn" @click="viewQuizStats(quizInform.quizId,quizInform.quizName)">View Quiz Statistics</button>
     </section>
     <!-- For page number -->
     <section>
