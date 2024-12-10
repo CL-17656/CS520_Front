@@ -69,8 +69,8 @@ onMounted(async () => {
           </p>
 
           <!-- Display instructor comments if they exist -->
-          <p v-if="result.answerDTO.comment">
-            <strong>Comments:</strong> {{ result.answerDTO.comment || 'No comments provided' }}
+          <p v-if="result.comments">
+            <strong>Comments:</strong> {{ result.comments || 'No comments provided' }}
           </p>
           
         </li>
