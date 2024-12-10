@@ -39,7 +39,7 @@ Katie focused on improving backend functionality and handling quiz workflows. Ke
 
 ### Chuchen
 Chuchen worked on **Account Management** and **Create Assignment** features. Key contributions include:  
-- Designing and implemented the user registration and login pages for students and instructors.
+- Designing the user registration and login pages for students and instructors.
 - Design and implement student and instructor home pages
 - Design and implement user profile page
 - Implementing the quiz creation page for instructors to add different question types.  
