@@ -2,7 +2,7 @@
 
 ---
 
-This project was a team effort, and everyone worked together to make it a success. Each team member contributed to various parts of the project, but some areas saw more focused contributions from specific members. Below are the key contributions from each team member.
+This project is the result of the collective efforts and dedication of the entire team. Everyone has worked really hard to make it a success. Each team member played a crucial role in its development, contributing to the various aspects of the project in meaningful ways. While everyone participated in all areas, some areas saw more focused contributions from specific members. Below are the key contributions from each team member.
 
 ---
 
