@@ -67,4 +67,8 @@ The entire team worked together on testing to ensure the project runs smoothly. 
 
 ---
 
-Every team member played a vital role in completing this project, and their combined efforts made it a success! We are very 
+---
+
+The team would like to express heartfelt thanks to our TA, **Shruti**, for providing valuable feedback and suggestions that greatly improved our project. Your guidance and support were truly appreciated throughout this journey.
+
+We are also deeply grateful to have worked as part of such an amazing team. Everyone's dedication, creativity, and collaboration made this experience both rewarding and memorable. Lastly, we are thankful for the opportunity to work on this beautiful project, which allowed us to learn, grow, and create something we are proud of.
