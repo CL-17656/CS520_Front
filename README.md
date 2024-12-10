@@ -142,12 +142,7 @@ These AI models can improve grading efficiency and provide actionable insights f
 3) Taking the quizzes :
 Our system allows the students to take quizzes in a simple and user-friendly interface.
 
-4) Grading quizzes :
-   - automatic grading : this makes the grading more efficient by allowing autograding of all questions except for essay type.
 
-   - manual grading : the instructors 
-
-6) Viewing the results (for students ) and statistics (for instructors) :
 
 
  
