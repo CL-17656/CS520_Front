@@ -67,4 +67,4 @@ The entire team worked together on testing to ensure the project runs smoothly. 
 
 ---
 
-Every team member played a vital role in completing this project, and their combined efforts made it a success!
+Every team member played a vital role in completing this project, and their combined efforts made it a success! We are very 
