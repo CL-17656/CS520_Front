@@ -32,12 +32,15 @@ The **Quiz Management System** is a simple and user-friendly platform designed t
    - **Automatic Grading**:  
      - Questions like multiple-choice and single-choice are automatically graded based on predefined correct answers. This helps to make the grading more efficient.
    - **Manual Grading**:  
-     - Text-based answers can be graded manually by instructors.  
+     - Text-based answers can be graded manually by instructors. The instructor can further manual grade the autograded questions in case there're some discrepancies in the predefined answers.
    
    Furthermore, instructors can also provide feedback for the entire quiz along with the   
 
 6. **Statistics**:  
-   - Instructors and students can view detailed quiz performance analytics.  
+   - Instructors and students can view detailed quiz performance analytics.
+     - **Student stats**:
+        sfvvddsf
+
    - Interactive charts display correct/incorrect responses, average scores, and more for better insights.
 
 ---
