@@ -29,7 +29,7 @@ describe('LoginView', () => {
     expect(input.element.value).toBe('Vitest');
   });
 
-  it('updates username input updates submitData', async () => {
+  it('updates submitData on username input change', async () => {
     const wrapper = mount(LoginView);
 
     const input = wrapper.find('[type="text"]');
@@ -38,7 +38,7 @@ describe('LoginView', () => {
     expect(wrapper.vm.loginData.username).toBe('Vitest');
   });
 
-  it('updates password input updates submitData', async () => {
+  it('updates submitData on password input change', async () => {
     const wrapper = mount(LoginView);
 
     const input = wrapper.find('[type="password"]');

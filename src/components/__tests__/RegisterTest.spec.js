@@ -12,10 +12,19 @@ describe('RegisterView', () => {
     const store = useAuthenticationStore();
   });
 
-  it('updates username input on input change', async () => {
+  it('updates invitation code input on input change', async () => {
     const wrapper = mount(RegisterView);
 
     const input = wrapper.find('[placeholder="Enter invitationCode"]');
+    await input.setValue('Vitest');
+
+    expect(input.element.value).toBe('Vitest');
+  });
+
+  it('updates username input on input change', async () => {
+    const wrapper = mount(RegisterView);
+
+    const input = wrapper.find('[placeholder="Enter Username"]');
     await input.setValue('Vitest');
 
     expect(input.element.value).toBe('Vitest');
@@ -30,16 +39,25 @@ describe('RegisterView', () => {
     expect(input.element.value).toBe('Vitest');
   });
 
-  it('updates username input updates submitData', async () => {
-    const wrapper = mount(LoginView);
+  it('updates password confirmation input on input change', async () => {
+    const wrapper = mount(RegisterView);
 
-    const input = wrapper.find('[type="text"]');
+    const input = wrapper.find('[placeholder="Confirm Password"]');
     await input.setValue('Vitest');
 
-    expect(wrapper.vm.loginData.username).toBe('Vitest');
+    expect(input.element.value).toBe('Vitest');
   });
 
-  it('updates password input updates submitData', async () => {
+  it('updates submitData on username input change', async () => {
+    const wrapper = mount(RegisterView);
+
+    const input = wrapper.find('[placeholder="Enter Username"');
+    await input.setValue('Vitest');
+
+    expect(wrapper.vm.registerData.username).toBe('Vitest');
+  });
+
+  it('updates submitData on password input change', async () => {
     const wrapper = mount(LoginView);
 
     const input = wrapper.find('[type="password"]');
