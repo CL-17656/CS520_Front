@@ -11,7 +11,16 @@ Instructors and students can create and      manage their accounts. Out system  
 Instructors can easily create quizzes    with different question types, such as single choice, multiple-choice, fill-in-the-blank, and essay questions.
 
 3) Taking the quizzes :
-Our system allows the students to take quizzes in a simple and user-friendly interface. 
+Our system allows the students to take quizzes in a simple and user-friendly interface.
+
+4) Grading quizzes :
+The instructors can grade and provide feedback for the quizzes taken by students. This feature has 2 components :
+   - automatic grading : this makes the grading more efficient by allowing autograding of all questions except for essay type.
+
+   - manual grading : the instructors 
+
+6) Viewing the results (for students ) and statistics (for instructors) :
+
 
  
 in order to see statistic please install chart.js<br/>
