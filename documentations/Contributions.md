@@ -23,19 +23,21 @@ This project was a team effort, and everyone worked together to make it a succes
 
 ### Berite
 Berite worked on the backend systems and database for the project. Key contributions include:  
-- Designing the database to handle quizzes, accounts, and grading.  
+- Designing the MySQL database to handle quizzes, accounts, and grading.  
 - Creating APIs for user login, quiz creation, and quiz submissions.  
 - Ensuring the backend is reliable and integrates smoothly with the frontend.  
 
 ### Katie
 Katie focused on improving backend functionality and handling quiz workflows. Key contributions include:  
-- Building APIs for grading and fetching quiz statistics.  
-- Implementing backend logic for automatic and manual grading.  
+- Building Spring APIs for grading and fetching quiz statistics.  
+- Implementing backend logic for automatic and manual grading. Called from frontend grading views.
 - Ensuring the database supports dynamic question storage and retrieval.
 
 ---
 
 ## Frontend Contributions
+
+The frontend was created with the Vue.js framework.
 
 ### Chuchen
 Chuchen worked on **Account Management** and **Create Assignment** features. Key contributions include:  
@@ -61,7 +63,7 @@ Isaac contributed to the **Grading** and **Statistics** features. Key contributi
 ## Testing Contributions
 
 The entire team worked together on testing to ensure the project runs smoothly. Contributions include:  
-- Writing and testing backend APIs to check their reliability.  
+- Writing and testing backend APIs to check their reliability. Diffblue was used to assist with generating tests.
 - Testing frontend features for usability and fixing issues.  
 - Conducting manual tests to find and solve bugs.
 
