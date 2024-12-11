@@ -45,8 +45,8 @@ With this system, instructors can effortlessly design quizzes, grade submissions
        - View both -- your answer and the correct answer
        - View the feedback provided by the instructor for the quiz
    - **Instructor stats**:
-       - View the overall 
-   - Interactive charts display correct/incorrect responses, average scores, and more for better insights.
+       - View the overall distribution of the unique quiz scores through the interactive charts.
+       - 
 
 ---
 
