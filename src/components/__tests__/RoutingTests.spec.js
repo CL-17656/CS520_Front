@@ -256,7 +256,7 @@ describe('Routing Tests', () => {
   //   store.login(1, 'student_user', 'stu');
   //   router.push({ name: 'statisticpage', params: { quizId: 123, quizName: 'Sample Quiz' } });
   //   await router.isReady();
-q
+  
   //   expect(router.currentRoute.value.name).not.toBe('statisticpage');
   // });
 
