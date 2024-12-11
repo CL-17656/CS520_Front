@@ -46,8 +46,8 @@ With this system, instructors can effortlessly design quizzes, grade submissions
        - View the feedback provided by the instructor for the quiz
    - **Instructor stats**:
        - View the overall distribution of the unique quiz scores through the interactive charts.
-       - Get better insights into the performance of the students by analysing each question though interactive pie charts
-
+       - Get better insights into the performance of the students by analysing single and multiple choice questions though interactive pie charts. The instructor can interact with the pie charts to get detailed distribution about the choices of the students.
+    These statistics are very crucial for both -- students and instructors -- to learn about the areas of improvement.
 ---
 
 ## Installation
