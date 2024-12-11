@@ -134,6 +134,20 @@ These AI models can improve grading efficiency and provide actionable insights f
 
 
 
+Required Dependencies
+Vitest: For running tests.
+npm install vitest --save-dev
+
+Vue Test Utils: For testing Vue components.
+npm install @vue/test-utils --save-dev
+
+Pinia: For managing the global state in tests.
+npm install pinia --save
+
+jsdom: For simulating a browser environment.
+npm install jsdom --save-dev
+
+npx vitest
 
 
 
@@ -141,9 +155,6 @@ These AI models can improve grading efficiency and provide actionable insights f
 
 
 
-
-3) Taking the quizzes :
-Our system allows the students to take quizzes in a simple and user-friendly interface.
 
 
 
