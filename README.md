@@ -68,26 +68,26 @@ Ensure you have the following installed:
    ```bash
    npm install
    ```
-  #### Install Additional Dependencies
+#### Install Additional Dependencies
   
-  a) **Chart.js** (For rendering charts on the statistics page):
+a) **Chart.js** (For rendering charts on the statistics page):
      ```bash
      npm install chart.js
      npm install chartjs-adapter-date-fns
      ```
-  b) **Axios** (For API calls):
+b) **Axios** (For API calls):
      ```bash
      npm install --save axios vue-axios
      ```
-  c) **Pinia Plugin for Persisted Local Storage**:
+c) **Pinia Plugin for Persisted Local Storage**:
      ```bash
      npm install pinia-plugin-persistedstate
      ```
-  d) **Moment.js** (For date formatting):
+d) **Moment.js** (For date formatting):
      ```bash
      npm install moment vue-moment
      ```
-  e) **ECharts** (Optional alternative for visualization):
+e) **ECharts** (Optional alternative for visualization):
      ```bash
      npm install echarts
      ```
