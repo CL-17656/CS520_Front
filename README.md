@@ -15,7 +15,9 @@
 
 ## Introduction
 
-The **Quiz Management System** is a simple and user-friendly platform designed to help instructors and students manage quizzes effectively. It allows instructors to create and grade quizzes, students to take them, and both to view the results. The results for students give them detailed insights on their performance. This project ensures a smooth experience for both instructors and students, making quiz management and performance tracking effortless.
+The **Quiz Management System** is a robust platform designed to make the learning and teaching experience seamless and efficient. Our system is built for students and instructors, offering an easy-to-use interface for creating, taking, and managing quizzes.
+
+With this system, instructors can effortlessly design quizzes, grade submissions (both automatically and manually), and analyze student performance through detailed statistics. Students, on the other hand, can take quizzes, view their results, and track their progress over time.
 ### Features
 
 1. **Account Management**:  
