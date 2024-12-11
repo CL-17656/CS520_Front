@@ -131,6 +131,37 @@ Ensure you have the following installed:
 
 ---
 
+## Setting Up the Testing Environment
+
+### Testing Framework & Utilities
+- **Vitest** (testing framework):
+  ```bash
+  npm install --save-dev vitest
+  ```
+  
+- **Vue Test Utils** (for mounting and testing Vue components):
+  ```bash
+  npm install --save-dev @vue/test-utils
+  ```
+
+- **flush-promises** (to wait for asynchronous updates in tests):
+  ```bash
+  npm install --save-dev flush-promises
+  ```
+
+### Running the Tests
+To run the unit tests:
+```bash
+npx vitest
+```
+
+If you need to run tests in watch mode:
+```bash
+npx vitest --watch
+```
+
+---
+
 ## Datasets
 
 The system does not use external datasets. All quizzes, questions, and answers are dynamically created and managed by instructors. Quiz data, student responses, and grading are stored in the system's database for real-time retrieval and analytics.
@@ -175,3 +206,8 @@ jsdom: For simulating a browser environment.
 npm install jsdom --save-dev
 
 npx vitest
+
+
+
+
+
