@@ -90,6 +90,16 @@ Ensure you have the following installed:
          ```bash
          npm install echarts
          ```
+      - **tough-cookie**:
+         ```bash
+         npm install tough-cookie
+         ```
+      - **axios-cookiejar-support**:
+         ```bash
+         npm install axios tough-cookie axios-cookiejar-support
+         ```
+
+
 
 4. Start the development server:
    ```bash
