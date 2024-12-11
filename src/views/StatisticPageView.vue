@@ -18,25 +18,7 @@ const barChartRef = ref(null);
 const averageScoreRef = ref(null)
 const assignmentdata = ref(null)
 const chartRefs = ref([]);
-// function renderAverageScoreChart(){
-//   const chart = echarts.init(averageScoreRef.value);
-//   let option = {
-//   xAxis: {
-//     type: 'category',
-//     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-//   },
-//   yAxis: {
-//     type: 'value'
-//   },
-//   series: [
-//     {
-//       data: [820, 932, 901, 934, 1290, 1330, 1320],
-//       type: 'line',
-//       smooth: true
-//     }
-//   ]
-// };
-// }
+
 // Initialize ECharts
 function renderBarChart() {
   const chart = echarts.init(barChartRef.value);
@@ -107,7 +89,7 @@ function renderQuestionChart(container, chartData) {
         name: chartData.name,
         type: 'pie',
         radius: '50%',
-        data: chartData.data, // Ensure data is in the format [{ value, name }]
+        data: chartData.data, 
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
@@ -125,17 +107,18 @@ function renderQuestionChart(container, chartData) {
 
 onMounted(async () => {
       try {
+        // fetch the score distribution from back end 
         const response = await fetchScoreDistribution(quizId.value);
         grades.value = response.data; 
 
-        console.log(grades.value)
+        // format the array for chart
         for (const dataEntry of grades.value) {
           dataEntry.name = `Total Score: ${dataEntry.name}`
         }
-
+        // fetch all the question data
         const res = await fetchAssignmentDataAnalysis(quizId.value);
         assignmentdata.value = res.data;
-
+        // format question stats for chart use
         for (const entry of assignmentdata.value){
           
           if(entry.type == 1 || entry.type == 2){
@@ -144,17 +127,12 @@ onMounted(async () => {
               const [key, value] = Object.entries(a)[0];
               tempdata.push({ name: `choice: ${key}`, value: value });
 
-            }
-            console.log(tempdata)
-            
-
+            }            
 
             chartsData.value.push({title: entry.questionTitle, name:"answer distribution", data:tempdata  })
           }
         }
-        // const res = await fetchAverageScore()
-        // avg.value = res.data
-        console.log(chartsData.value)
+
         renderBarChart();
         
         await nextTick(); // Wait for the DOM update
@@ -202,28 +180,6 @@ onMounted(async () => {
   color: #555; 
 }
 
-/* .question-chart-container {
-  display: flex;
-  flex-direction: column; 
-  gap: 2rem; 
-  align-items: center; 
-}
-
-.question-chart-container > div {
-  width: 100%;
-  max-width: 1500px; 
-  padding-top: 100px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  border: 1px solid #ddd; 
-  border-radius: 8px; 
-  padding: 1rem;
-  background-color: #fff;
-  text-align: center; 
-}
-
-.question-chart-container > div:hover {
-  transform: scale(1.02); 
-} */
 .question-chart-container {
   display: flex;
   flex-direction: column; 
