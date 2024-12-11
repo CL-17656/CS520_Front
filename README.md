@@ -39,7 +39,7 @@ With this system, instructors can effortlessly design quizzes, grade submissions
    Furthermore, instructors can also provide feedback for the entire quiz along with the   
 
 5. **Statistics**:  
-   Instructors and students can view detailed quiz performance analytics:
+   Instructors and students can view detailed quiz performance analytics. These statistics are very crucial for both to learn about the areas of improvement:
    - **Student stats**:
        - View the total score for the quiz
        - View both -- your answer and the correct answer
@@ -47,7 +47,7 @@ With this system, instructors can effortlessly design quizzes, grade submissions
    - **Instructor stats**:
        - View the overall distribution of the unique quiz scores through the interactive charts.
        - Get better insights into the performance of the students by analysing single and multiple choice questions though interactive pie charts. The instructor can interact with the pie charts to get detailed distribution about the choices of the students.
-   - These statistics are very crucial for both -- students and instructors -- to learn about the areas of improvement.
+
 ---
 
 ## Installation
