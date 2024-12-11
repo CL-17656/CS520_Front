@@ -39,7 +39,7 @@ With this system, instructors can effortlessly design quizzes, grade submissions
    Furthermore, instructors can also provide feedback for the entire quiz along with the   
 
 6. **Statistics**:  
-     Instructors and students can view detailed quiz performance analytics.
+     Instructors and students can view detailed quiz performance analytics:
      - **Student stats**:
        - 
      - **Instructor stats**:
