@@ -113,12 +113,6 @@ Ensure you have the following installed:
          npm install axios tough-cookie axios-cookiejar-support
          ```
 
-4. Start the development server:
-   ```bash
-   npm run serve
-   ```
-5. Access the application in your browser at `http://localhost:8090/`.
-
 ---
 
 ## Configuration
