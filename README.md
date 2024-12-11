@@ -27,7 +27,7 @@ With this system, instructors can effortlessly design quizzes, grade submissions
    - Instructors can design quizzes with various question types such as multiple-choice, single-choice, or text-based answers.
 
 3. **Taking Quizzes**:  
-   - Students can easily access and complete quizzes. The system offers real-time validation for certain question types.
+   - Students can easily access and complete quizzes. The questions are displayed in card format to provide better readability for the users. The multichoices are well spaced and horizontally arranged to display each choice clearly.
 
 4. **Grading Quizzes**:
    The instructors can grade and provide feedback for the quizzes taken by students. This feature has 2 components :  
