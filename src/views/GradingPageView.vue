@@ -20,21 +20,17 @@ const answersList = {}
 // Fetch assignments on component mount
 onMounted(async () => {
   try {
+    // fetch the quiz for grading
     loading.value = true;
-    console.log(quizId.value)
     const response = await fetchAssignmentsForGrading(parseInt(quizId.value),parseInt(studentId.value));
-    console.log(response.data)
     assignment.value = response.data;
-    
+    // push isCorrect and myAnswers into the array for future use.
     assignment.value.forEach((x) =>{
       correctArr.value.push(x.answerDTO.isCorrect)
       score.value.push(x.answerDTO.isCorrect ? 1 : 0)
       answersList[x.id] = x.answerDTO.myAnswers
     });
     
-    console.log( `answer${JSON.stringify(answersList)}`)
-    console.log(correctArr.value)
-    console.log(assignment.value)
   } catch (err) {
     error.value = 'Failed to load assignments.';
     console.error(err);
@@ -48,10 +44,6 @@ onMounted(async () => {
 const handleSaveGrade = async () => {
   try {
     // Prepare data for the backend
-    console.log(correctArr.value)
-    console.log(answersList)
-    // console.log(JSON.stringify( correctArr.value))
-    console.log(feedback.value)
     let n = 0
     let total = 0
     for (const [key, value] of Object.entries(answersList)) {
@@ -72,7 +64,6 @@ const handleSaveGrade = async () => {
       comments: feedback.value,
     };
 
-    console.log(JSON.stringify(postVO))
     // Send to backend
     await saveGrade(postVO);
     alert('Grade saved successfully!');
@@ -84,19 +75,6 @@ const handleSaveGrade = async () => {
   router.push({name: 'instructorhome'})
 };
 
-// Auto-grade function
-// const autograde = async () => {
-//   for(let i = 0; i < correctArrTemp.length;i++){
-
-//     correctArr.value[i] = correctArrTemp[i]
-//     if(scoresTemp[i] > 0){
-//       scores.value[i] = scoresTemp[i]
-//     }
-
-//   }
-//   console.log(correctArr.value)
-//   console.log(scores.value)
-// };
 </script>
 
 
