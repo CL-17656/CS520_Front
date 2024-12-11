@@ -30,7 +30,7 @@ With this system, instructors can effortlessly design quizzes, grade submissions
    - Students can easily access and complete quizzes. The system offers real-time validation for certain question types.
 
 4. **Grading Quizzes**:
-   The instructors can grade and provide feedback for the quizzes taken by students. This feature has 2 components :  
+     The instructors can grade and provide feedback for the quizzes taken by students. This feature has 2 components :  
    - **Automatic Grading**:  
      - Questions like multiple-choice and single-choice are automatically graded based on predefined correct answers. This helps to make the grading more efficient.
    - **Manual Grading**:  
