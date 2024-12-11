@@ -41,8 +41,9 @@ With this system, instructors can effortlessly design quizzes, grade submissions
 6. **Statistics**:  
      Instructors and students can view detailed quiz performance analytics.
      - **Student stats**:
-        sfvvddsf
-
+       - 
+     - **Instructor stats**:
+       -  
    - Interactive charts display correct/incorrect responses, average scores, and more for better insights.
 
 ---
