@@ -50,7 +50,7 @@ Chuchen worked on **Account Management** and **Create Assignment** features. Key
 Arin focused on the **Take Assignment** and **Statistics** features, along with documentation. Key contributions include:  
 - Building the quiz-taking page where students can answer interactively.
 - Making the results page for students to learn about their performance and any feedbacks for the instructor.
-- Designing and implementing the statistics page for instructors with visual charts for detailed performance insights into each question.   
+- Designing and implementing the statistics page for instructors with visual charts for detailed performance insights into each question. Get further insights into the distribution of each choice for each question by hovering over the charts.  
 - Writing clear and detailed documentations for the project.
 - Writing the routing tests for the frontend for all the views
 
