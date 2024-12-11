@@ -112,19 +112,6 @@ Ensure you have the following installed:
          ```bash
          npm install axios tough-cookie axios-cookiejar-support
          ```
-      - **Java**
-         ```bash
-         brew install oracle-jdk --cask
-         ```
-      - **MySQL**
-         ```bash
-         brew install mysql
-         ```
-      - **Redis**
-         ```bash
-         brew install mysql
-         ```
-
 
 4. Start the development server:
    ```bash
@@ -162,6 +149,13 @@ p.s. the current front end hasn't implemented captcha functionality. If you want
    - The default instructor username and password are "XXX" and "123456".
 
    - The default student username and password are "XXX" and "123456"
+
+5. **Frontend**:
+   - Start the development server:
+     ```bash
+     npm run dev
+     ```
+   - Access the application in your browser at `http://localhost:8090/`.
 
 
 
