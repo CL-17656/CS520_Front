@@ -252,14 +252,6 @@ describe('Routing Tests', () => {
     expect(wrapper.findComponent(StatisticPageView).exists()).toBe(true);
   });
 
-  // it('prevents a student from accessing StatisticPageView', async () => {
-  //   store.login(1, 'student_user', 'stu');
-  //   router.push({ name: 'statisticpage', params: { quizId: 123, quizName: 'Sample Quiz' } });
-  //   await router.isReady();
-  
-  //   expect(router.currentRoute.value.name).not.toBe('statisticpage');
-  // });
-
   it('navigates to AssignmentPageView for an authenticated student', async () => {
     store.login(1, 'student_user', 'stu');
     router.push({ name: 'assignmentpage', params: { quizId: 123 } });
@@ -300,32 +292,5 @@ describe('Routing Tests', () => {
     expect(router.currentRoute.value.name).not.toBe('createassignment');
   });
 
-  // it('logs out a student and redirects to StartView', async () => {
-  //   store.login(1, 'student_user', 'stu');
-  //   router.push('/student');
-  //   await router.isReady();
-
-  //   const wrapper = shallowMount(StudentHomeView, {
-  //     global: { plugins: [router] },
-  //   });
-
-  //   await wrapper.find('button.logout-btn').trigger('click');
-  //   await flushPromises();
-  //   expect(router.currentRoute.value.name).toBe('start');
-  // });
-
-  // it('logs out an instructor and redirects to StartView', async () => {
-  //   store.login(2, 'instructor_user', 'prof');
-  //   router.push('/instructor');
-  //   await router.isReady();
-
-  //   const wrapper = shallowMount(InstructorHomeView, {
-  //     global: { plugins: [router] },
-  //   });
-
-  //   await wrapper.find('button.logout-btn').trigger('click');
-  //   await flushPromises();
-  //   expect(router.currentRoute.value.name).toBe('start');
-  // });
 });
 
