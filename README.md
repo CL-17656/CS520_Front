@@ -148,6 +148,10 @@ Ensure you have the following installed:
   ```bash
   npm install --save-dev flush-promises
   ```
+- **Pinia** (For managing the global state in tests):
+  ```bash
+  npm install --save pinia
+  ```
 
 ### Running the Tests
 To run the unit tests:
