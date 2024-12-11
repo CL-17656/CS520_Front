@@ -195,9 +195,10 @@ npx vitest --watch
 
 ## Datasets
 
-The system does not use external datasets. All quizzes, questions, and answers are dynamically created and managed by instructors. Quiz data, student responses, and grading are stored in the system's database for real-time retrieval and analytics.
-
-For testing purposes, mock datasets can be added to the backend to simulate quiz and grading data. This will help in understanding the flow of quiz creation, participation, and grading.
+- The system does not use external datasets.
+- All quizzes, questions, and answers are dynamically created and managed by instructors.
+- Quiz data, student responses, and grading are stored in the system's database for real-time retrieval and analytics.
+- For testing purposes, mock datasets can be added to the backend to simulate quiz and grading data. This will help in understanding the flow of quiz creation, participation, and grading.
 
 
 ---
