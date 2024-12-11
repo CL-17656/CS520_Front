@@ -15,7 +15,9 @@
 
 ## Introduction
 
-The **Quiz Management System** is a simple and user-friendly platform designed to help instructors and students manage quizzes effectively. It allows instructors to create and grade quizzes, students to take them, and both to view the results. The results for students give them detailed insights on their performance. This project ensures a smooth experience for both instructors and students, making quiz management and performance tracking effortless.
+The **Quiz Management System** is a robust platform designed to make the learning and teaching experience seamless and efficient. Our system is built for students and instructors, offering an easy-to-use interface for creating, taking, and managing quizzes.
+
+With this system, instructors can effortlessly design quizzes, grade submissions (both automatically and manually), and analyze student performance through detailed statistics. Students, on the other hand, can take quizzes, view their results, and track their progress over time.
 ### Features
 
 1. **Account Management**:  
@@ -25,7 +27,7 @@ The **Quiz Management System** is a simple and user-friendly platform designed t
    - Instructors can design quizzes with various question types such as multiple-choice, single-choice, or text-based answers.
 
 3. **Taking Quizzes**:  
-   - Students can easily access and complete quizzes. The system offers real-time validation for certain question types.
+   - Students can easily access and complete quizzes. The questions are displayed in card format to provide better readability for the users. The multichoices are well spaced and horizontally arranged to display each choice clearly.
 
 4. **Grading Quizzes**:
    The instructors can grade and provide feedback for the quizzes taken by students. This feature has 2 components :  
@@ -36,12 +38,15 @@ The **Quiz Management System** is a simple and user-friendly platform designed t
    
    Furthermore, instructors can also provide feedback for the entire quiz along with the   
 
-6. **Statistics**:  
-   - Instructors and students can view detailed quiz performance analytics.
-     - **Student stats**:
-        sfvvddsf
-
-   - Interactive charts display correct/incorrect responses, average scores, and more for better insights.
+5. **Statistics**:  
+   Instructors and students can view detailed quiz performance analytics. These statistics are very crucial for both to learn about the areas of improvement.
+   - **Student stats**:
+       - View the total score for the quiz
+       - View both -- your answer and the correct answer
+       - View the feedback provided by the instructor for the quiz
+   - **Instructor stats**:
+       - View the overall distribution of the unique quiz scores through the interactive charts.
+       - Get better insights into the performance of the students by analysing single and multiple choice questions though interactive pie charts. The instructor can interact with the pie charts to get detailed distribution about the choices of the students.
 
 ---
 
@@ -64,49 +69,137 @@ Ensure you have the following installed:
    ```bash
    cd <repository-folder>
    ```
-3. Install the required packages/dependencies:
+3. Install redis:
+   ```bash
+   brew install redis
+   ```
+4. Install Java:
+   ```bash
+   brew install oracle-jdk --cask
+   ```
+5. Install mysql:
+   ```bash
+   brew install mysql
+   ```
+6. Install the required packages/dependencies:
    ```bash
    npm install
    ```
-4. Install required charting libraries:
-   ```bash
-    npm install echarts
-   ```
-5. Start the development server:
-   ```bash
-   npm run serve
-   ```
-6. Access the application in your browser at `http://localhost:8090/`.
+   #### Install Additional Dependencies
+      - **Chart.js** (For rendering charts on the statistics page):
+         ```bash
+         npm install chart.js
+         npm install chartjs-adapter-date-fns
+         ```
+      - **Axios** (For API calls):
+         ```bash
+         npm install --save axios vue-axios
+         ```
+      - **Pinia Plugin for Persisted Local Storage**:
+         ```bash
+         npm install pinia-plugin-persistedstate
+         ```
+      - **Moment.js** (For date formatting):
+         ```bash
+         npm install moment vue-moment
+         ```
+      - **ECharts** (Optional alternative for visualization):
+         ```bash
+         npm install echarts
+         ```
+      - **tough-cookie**:
+         ```bash
+         npm install tough-cookie
+         ```
+      - **axios-cookiejar-support**:
+         ```bash
+         npm install axios tough-cookie axios-cookiejar-support
+         ```
 
 ---
 
 ## Configuration
 
-1. **Environment Variables**:  
-   - Create a `.env` file in the project root directory. Add the following configuration:
-     ```env
-     VUE_APP_API_BASE_URL=http://localhost:5000/api
-     ```
-
-2. **State Management**:  
+1. **State Management**:  
    - Use Pinia with persisted state:
      ```bash
      npm install pinia-plugin-persistedstate
      ```
 
-3. **Styling**:  
+2. **Styling**:  
    - TailwindCSS can be optionally installed for advanced styling:
      ```bash
      npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
      ```
 
+3. **Backend**:
+   - Change database setup in CS520/src/main/resources/application.yml where spring.datasource.url should be the latter one(details in dataset information) created in database and password should be changed to your own root password.
+   - After running the backend, see swagger api file in http://localhost:8898/doc.html.
+
+p.s. the current front end hasn't implemented captcha functionality. If you want to use this, make sure you have redis installed. You could change your redis set up in CS520/src/main/resources/application.yml as well. Use `brew services start redis` to start redis in the backend.
+
+4. **Datasets**:
+   - Use `sqlcmd -s localhost -d cs520_project -i CS520/cs520.sql`  to create database for the project.
+
+   - The default admin username and password are "admin" and "123456".
+
+   - The default instructor username and password are "XXX" and "123456".
+
+   - The default student username and password are "XXX" and "123456"
+
+5. **Frontend**:
+   - Start the development server:
+     ```bash
+     npm run dev
+     ```
+   - Access the application in your browser at `http://localhost:8090/`.
+
+
+
+---
+
+## Setting Up the Testing Environment (frontend)
+
+### Testing Framework & Utilities
+- **Vitest** (testing framework):
+  ```bash
+  npm install --save-dev vitest
+  ```
+  
+- **Vue Test Utils** (for mounting and testing Vue components):
+  ```bash
+  npm install --save-dev @vue/test-utils
+  ```
+
+- **flush-promises** (to wait for asynchronous updates in tests):
+  ```bash
+  npm install --save-dev flush-promises
+  ```
+- **Pinia** (For managing the global state in tests):
+  ```bash
+  npm install --save pinia
+  ```
+
+### Running the Tests 
+To run the unit tests:
+```bash
+npx vitest
+```
+
+If you need to run tests in watch mode:
+```bash
+npx vitest --watch
+```
+
 ---
 
 ## Datasets
 
-The system does not use external datasets. All quizzes, questions, and answers are dynamically created and managed by instructors. Quiz data, student responses, and grading are stored in the system's database for real-time retrieval and analytics.
+- The system does not use external datasets.
+- All quizzes, questions, and answers are dynamically created and managed by instructors.
+- Quiz data, student responses, and grading are stored in the system's database for real-time retrieval and analytics.
+- For testing purposes, mock datasets can be added to the backend to simulate quiz and grading data. This will help in understanding the flow of quiz creation, participation, and grading.
 
-For testing purposes, mock datasets can be added to the backend to simulate quiz and grading data. This will help in understanding the flow of quiz creation, participation, and grading.
 
 ---
 
@@ -123,59 +216,3 @@ Currently, the system does not use any AI models. Grading is handled based on pr
 These AI models can improve grading efficiency and provide actionable insights for instructors and students.  
 
 --- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3) Taking the quizzes :
-Our system allows the students to take quizzes in a simple and user-friendly interface.
-
-
-
-
- 
-in order to see statistic please install chart.js<br/>
-***npm install chart.js***<br/>
-and<br/>
-***npm install chartjs-adapter-date-fns***<br/>
-<br/>
-recording some dependencies:<br/>
-chart:<br/>
-***npm install chart.js***<br/>
-***npm install chartjs-adapter-date-fns***<br/>
-<br/>
-axios:<br/>
-***npm install --save axios vue-axios***<br/>
-<br/>
-tailwind(possibly not needed):<br/>
-***npm install -D tailwindcss@latest postcss@latest autoprefixer@latest***<br/>
-<br/>
-Pinia persisted local storage<br/>
-***npm install pinia-plugin-persistedstate***<br/>
-<br/>
-Vue Moment<br/>
-***npm install moment vue-moment***<br/>
-<br/>
-tough-cookie<br/>
-**npm install tough-cookie**<br/>
-<br/>
-axios-cookiejar-support<br/>
-**npm install axios tough-cookie axios-cookiejar-support**<br/>
-
-echart<br/>
-**npm install echarts**<br/>
