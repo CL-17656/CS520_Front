@@ -158,7 +158,7 @@ p.s. the current front end hasn't implemented captcha functionality. If you want
 
 ---
 
-## Setting Up the Testing Environment
+## Setting Up the Testing Environment (frontend)
 
 ### Testing Framework & Utilities
 - **Vitest** (testing framework):
@@ -180,7 +180,7 @@ p.s. the current front end hasn't implemented captcha functionality. If you want
   npm install --save pinia
   ```
 
-### Running the Tests (frontend)
+### Running the Tests 
 To run the unit tests:
 ```bash
 npx vitest
