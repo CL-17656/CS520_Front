@@ -14,6 +14,7 @@ const results = ref([]);
 const quizTitle = ref('');
 const loading = ref(true);
 const error = ref(null);
+const totalScore = ref(0); 
 
 // Runs when the component is mounted  
 onMounted(async () => {
@@ -22,8 +23,13 @@ onMounted(async () => {
     console.log(route.params);
     const response = await fetchResults(quizId.value); // Call API to fetch results
     results.value = response.data;
-    console.log(results.value)
     quizTitle.value = 'Quiz Results'; // || response.data[0]?.questionTitle;  // Setting the title for the results page
+    
+    // Calculate the total score
+    totalScore.value = results.value.reduce((score, result) => {
+      return score + (result.answerDTO.isCorrect ? 1 : 0);
+    }, 0);
+    
   } catch (err) {
     error.value = err.message || 'Failed to load results.';
   } finally {
@@ -49,6 +55,11 @@ onMounted(async () => {
 
     <!-- Show results if there is data to display -->
     <div v-if="results.length" class="results-container">
+      <!-- Display total score -->
+      <div class="total-score">
+        <h2>Total Score: {{ totalScore }} / {{ results.length }}</h2>
+      </div>
+      
       <ul class="results-list">
         <!-- Loop through each result and show the question details -->
         <li v-for="(result, index) in results" :key="index" class="result-item">
@@ -140,5 +151,13 @@ onMounted(async () => {
 .incorrect {
   color: red; /* Show incorrect answers in red */
   font-weight: bold;
+}
+
+.total-score {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #004d4d; /* Add a distinct color for the total score */
+  text-align: center;
 }
 </style>

@@ -68,15 +68,35 @@ Ensure you have the following installed:
    ```bash
    npm install
    ```
-4. Install required charting libraries:
+#### Install Additional Dependencies
+
+a) **Chart.js** (For rendering charts on the statistics page):
    ```bash
-    npm install echarts
+   npm install chart.js
+   npm install chartjs-adapter-date-fns
    ```
-5. Start the development server:
+b) **Axios** (For API calls):
+   ```bash
+   npm install --save axios vue-axios
+   ```
+c) **Pinia Plugin for Persisted Local Storage**:
+   ```bash
+   npm install pinia-plugin-persistedstate
+   ```
+d) **Moment.js** (For date formatting):
+   ```bash
+   npm install moment vue-moment
+   ```
+e) **ECharts** (Optional alternative for visualization):
+   ```bash
+   npm install echarts
+   ```
+
+4. Start the development server:
    ```bash
    npm run serve
    ```
-6. Access the application in your browser at `http://localhost:8090/`.
+5. Access the application in your browser at `http://localhost:8090/`.
 
 ---
 
@@ -134,6 +154,20 @@ These AI models can improve grading efficiency and provide actionable insights f
 
 
 
+Required Dependencies
+Vitest: For running tests.
+npm install vitest --save-dev
+
+Vue Test Utils: For testing Vue components.
+npm install @vue/test-utils --save-dev
+
+Pinia: For managing the global state in tests.
+npm install pinia --save
+
+jsdom: For simulating a browser environment.
+npm install jsdom --save-dev
+
+npx vitest
 
 
 
@@ -141,9 +175,6 @@ These AI models can improve grading efficiency and provide actionable insights f
 
 
 
-
-3) Taking the quizzes :
-Our system allows the students to take quizzes in a simple and user-friendly interface.
 
 
 
@@ -177,5 +208,7 @@ tough-cookie<br/>
 axios-cookiejar-support<br/>
 **npm install axios tough-cookie axios-cookiejar-support**<br/>
 
-echart<br/>
-**npm install echarts**<br/>
+
+
+
+

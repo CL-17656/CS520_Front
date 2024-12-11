@@ -2,7 +2,7 @@
 
 ---
 
-This project was a team effort, and everyone worked together to make it a success. Each team member contributed to various parts of the project, but some areas saw more focused contributions from specific members. Below are the key contributions from each team member.
+This project is the result of the collective efforts and dedication of the entire team. Everyone has worked really hard to make it a success. Each team member played a crucial role in its development, contributing to the various aspects of the project in meaningful ways. While everyone participated in all areas, some areas saw more focused contributions from specific members. Below are the key contributions from each team member.
 
 ---
 
@@ -41,7 +41,7 @@ The frontend was created with the Vue.js framework.
 
 ### Chuchen
 Chuchen worked on **Account Management** and **Create Assignment** features. Key contributions include:  
-- Designing and implemented the user registration and login pages for students and instructors.
+- Designing the user registration and login pages for students and instructors.
 - Design and implement student and instructor home pages
 - Design and implement user profile page
 - Implementing the quiz creation page for instructors to add different question types.  
@@ -69,4 +69,8 @@ The entire team worked together on testing to ensure the project runs smoothly. 
 
 ---
 
-Every team member played a vital role in completing this project, and their combined efforts made it a success!
+---
+
+The team would like to express heartfelt thanks to our TA, **Shruti**, for providing valuable feedback and suggestions that greatly improved our project. Your guidance and support were truly appreciated throughout this journey.
+
+We are also deeply grateful to have worked as part of such an amazing team. Everyone's dedication, creativity, and collaboration made this experience both rewarding and memorable. Lastly, we are thankful for the opportunity to work on this beautiful project, which allowed us to learn, grow, and create something we are proud of.
