@@ -68,7 +68,7 @@ Ensure you have the following installed:
    ```bash
    npm install
    ```
-#### Install Additional Dependencies
+  - #### Install Additional Dependencies
 a) **Chart.js** (For rendering charts on the statistics page):
    ```bash
    npm install chart.js
