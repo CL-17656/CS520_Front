@@ -50,25 +50,16 @@ Chuchen worked on **Account Management** and **Create Assignment** features. Key
 Arin focused on the **Take Assignment** and **Statistics** features, along with documentation. Key contributions include:  
 - Building the quiz-taking page where students can answer interactively.
 - Making the results page for students to learn about their performance and any feedbacks for the instructor.
-- Designing the statistics page for instructors with visual charts for detailed performance insights into each question.  
+- Designing and implementing the statistics page for instructors with visual charts for detailed performance insights into each question.   
 - Writing clear and detailed documentations for the project.
+- Writing the routing tests for the frontend for all the views
 
 ### Isaac
 Isaac contributed to the **Grading** and **Statistics** features. Key contributions include:  
 - Creating the grading page for instructors to view, grade, and comment on student submissions.
-- Design and implement the statistics page with visual charts.  
+- Design the statistics page with interactive charts and colors to get performance insights into the overall quiz and also get the detailed distribution of the points scored by the students.
 - Simplifying the feedback process for instructors.  
 
----
-
-## Testing Contributions
-
-The entire team worked together on testing to ensure the project runs smoothly. Contributions include:  
-- Writing and testing backend APIs to check their reliability. Diffblue was used to assist with generating tests.
-- Testing frontend features for usability and fixing issues.  
-- Conducting manual tests to find and solve bugs.
-
----
 
 ---
 
