@@ -66,7 +66,19 @@ Ensure you have the following installed:
    ```bash
    cd <repository-folder>
    ```
-3. Install the required packages/dependencies:
+3. Install redis:
+   ```bash
+   brew install redis
+   ```
+4. Install Java:
+   ```bash
+   brew install oracle-jdk --cask
+   ```
+5. Install mysql:
+   ```bash
+   brew install mysql
+   ```
+6. Install the required packages/dependencies:
    ```bash
    npm install
    ```
@@ -113,19 +125,13 @@ Ensure you have the following installed:
 
 ## Configuration
 
-1. **Environment Variables**:  
-   - Create a `.env` file in the project root directory. Add the following configuration:
-     ```env
-     VUE_APP_API_BASE_URL=http://localhost:5000/api
-     ```
-
-2. **State Management**:  
+1. **State Management**:  
    - Use Pinia with persisted state:
      ```bash
      npm install pinia-plugin-persistedstate
      ```
 
-3. **Styling**:  
+2. **Styling**:  
    - TailwindCSS can be optionally installed for advanced styling:
      ```bash
      npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
@@ -155,7 +161,7 @@ Ensure you have the following installed:
   npm install --save pinia
   ```
 
-### Running the Tests
+### Running the Tests (frontend)
 To run the unit tests:
 ```bash
 npx vitest
