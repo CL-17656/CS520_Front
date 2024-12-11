@@ -100,7 +100,18 @@ Ensure you have the following installed:
          ```bash
          npm install axios tough-cookie axios-cookiejar-support
          ```
-
+      - **Java**
+         ```bash
+         brew install oracle-jdk --cask
+         ```
+      - **MySQL**
+         ```bash
+         brew install mysql
+         ```
+      - **Redis**
+         ```bash
+         brew install mysql
+         ```
 
 
 4. Start the development server:
@@ -130,6 +141,12 @@ Ensure you have the following installed:
      ```bash
      npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
      ```
+
+4. **Backend**:
+   - Change database setup in CS520/src/main/resources/application.yml where spring.datasource.url should be the latter one(details in dataset information) created in database and password should be changed to your own root password.
+   - After running the backend, see swagger api file in http://localhost:8898/doc.html.
+
+p.s. the current front end hasn't implemented captcha functionality. If you want to use this, make sure you have redis installed. You could change your redis set up in CS520/src/main/resources/application.yml as well. Use `brew services start redis` to start redis in the backend.
 
 ---
 
@@ -173,6 +190,14 @@ npx vitest --watch
 The system does not use external datasets. All quizzes, questions, and answers are dynamically created and managed by instructors. Quiz data, student responses, and grading are stored in the system's database for real-time retrieval and analytics.
 
 For testing purposes, mock datasets can be added to the backend to simulate quiz and grading data. This will help in understanding the flow of quiz creation, participation, and grading.
+
+Use `sqlcmd -s localhost -d cs520_project -i CS520/cs520.sql`  to create database for the project.
+
+The default admin username and password are "admin" and "123456".
+
+The default instructor username and password are "XXX" and "123456".
+
+The default student username and password are "XXX" and "123456"
 
 ---
 
