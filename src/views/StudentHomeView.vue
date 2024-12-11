@@ -35,16 +35,13 @@ async function logout()
 
 //This function is called when page opens, fetches all data needed for this page
 const initialize = async () => {
-  console.log(store.userId)
   try {
     const pageData = await getAssignmentsStudentTaken(store.userId);
-    console.log(pageData);
     if(pageData.data.count != "") {
       for(let i = 0; i < pageData.data.count; ++i) {
         let assignId = pageData.data.recordList[i].projectId
         const assignmentData = await getAssignmentByProjectId(assignId);
         const instructorAdditionalData = await getInstructorInfo(assignmentData.data.userId);
-        console.log(instructorAdditionalData);
         assignmentList.value.push({
           id:assignId, 
           name: assignmentData.data.name, 
@@ -92,7 +89,6 @@ async function submitCourse() {
 
     //Seach assignmentData
     const assignmentData = await getAssignmentByProjectId(newAssignmentId.value);
-    console.log(assignmentData)
     if(assignmentData.data.endTime != null) {
       let endT = moment(assignmentData.data.endTime).format('YYYY-MM-DD HH:mm:ss');
       let now = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -125,7 +121,6 @@ async function submitCourse() {
   
 }
 function viewAssignments(Id){
-  console.log(Id)
   router.push({ name: 'assignmentpage', params:{quizId: Id} });
 }
 

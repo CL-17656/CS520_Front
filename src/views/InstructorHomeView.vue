@@ -30,7 +30,6 @@ const quizeData = reactive(
 
 //fetch data when page opens
 const initialize = async () => {
-  console.log(store.userId);
   try {
     //currently use 1 only for debugging purpose
     const pageData = await getAssignmentsByInstructorId(store.userId, instructoreHomeStore.pageNumber);

@@ -48,7 +48,6 @@ async function submit()
     // If all fields are valid, proceed with login
     if (errors.shouldSubmit) {
         try {
-            console.log(loginData);
             // Call the login API
             const response = await loginUser(loginData);
 
@@ -57,10 +56,8 @@ async function submit()
                 errors.username.push('Login failed. Please check your credentials.');
             }
             else {
-                console.log(response);
                 //Store userinfo in local storage
                 store.login(response.data.userInfoId, loginData.username, response.data.roleList[0]);
-                console.log(store.userType);
 
                 // Redirect based on account type (Student or Instructor)
                 if (store.userType === 'prof') {

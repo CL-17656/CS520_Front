@@ -66,9 +66,6 @@ function removeChoice(questionIndex, choiceIndex)
 // Submit data to the backend
 async function submit() {
   createdQuestionsData.questionIds = [];
-
-  console.log(assignmentDetail);
-  console.log(assignmentDetail.questions.length)
   try {
     //create questions in backend
     for(let i = 0; i < assignmentDetail.questions.length; ++i) {
@@ -78,7 +75,6 @@ async function submit() {
         "status": assignmentDetail.status,
         "type": assignmentDetail.questions[i].questionType,
       });
-      console.log(addQuestionResponse);
       createdQuestionsData.questionIds.push(addQuestionResponse.data);
     }
 
@@ -107,7 +103,6 @@ async function submit() {
       else {
         let possibAnswer = [];
         let correctAnswer = [];
-        console.log(assignmentDetail.questions[i].choices);
         for(let j = 0; j < assignmentDetail.questions[i].choices.length; ++j) {
           possibAnswer.push(assignmentDetail.questions[i].choices[j].choice);
           if(assignmentDetail.questions[i].choices[j].isCorrect == "true") {
@@ -135,9 +130,7 @@ async function submit() {
           }
         }
       }
-      console.log(answerDat);
       const addAnswerResponse = await createQuestionAnswers(answerDat);
-      console.log(addAnswerResponse);
     }
 
     questionTypes.sort();
@@ -167,7 +160,6 @@ async function submit() {
       "types": JSON.stringify(questionTypes)
     };
     const createAssignRes = await createAssignmentAndAddQuestion(assignmentData);
-    console.log(createAssignRes);
 
     alert("Quiz created successfully!");
     router.push("/instructor"); // Redirect to instructor home
