@@ -143,9 +143,9 @@ p.s. the current front end hasn't implemented captcha functionality. If you want
 
    - The default admin username and password are "admin" and "123456".
 
-   - The default instructor username and password are "XXX" and "123456".
+   - The default instructor username and password are "demo_instructor" and "123456".
 
-   - The default student username and password are "XXX" and "123456"
+   - The default student username and password are "demo_student2" and "1234"
 
 5. **Frontend**:
    - Start the development server:
