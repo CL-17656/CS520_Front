@@ -25,7 +25,7 @@ This project is the result of the collective efforts and dedication of the entir
 Berite worked on the backend systems and database for the project. Key contributions include:  
 - Designing the MySQL database to handle quizzes, accounts, and grading.  
 - Creating APIs for user login, quiz creation, and quiz submissions.  
-- Ensuring the backend is reliable and integrates smoothly with the frontend.  
+- Ensuring the backend is reliable and integrates smoothly with the frontend.
 
 ### Katie
 Katie focused on improving backend functionality and handling quiz workflows. Key contributions include:  
@@ -44,7 +44,8 @@ Chuchen worked on **Account Management** and **Create Assignment** features. Key
 - Designing the user registration and login pages for students and instructors.
 - Design and implement student and instructor home pages
 - Design and implement user profile page
-- Implementing the quiz creation page for instructors to add different question types.  
+- Implementing the quiz creation page for instructors to add different question types.
+
 
 ### Arin
 Arin focused on the **Take Assignment** and **Statistics** features, along with documentation. Key contributions include:  
