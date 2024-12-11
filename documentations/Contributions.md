@@ -48,9 +48,10 @@ Chuchen worked on **Account Management** and **Create Assignment** features. Key
 
 ### Arin
 Arin focused on the **Take Assignment** and **Statistics** features, along with documentation. Key contributions include:  
-- Building the quiz-taking page where students can answer interactively.  
-- Designing the statistics page with visual charts for performance insights.  
-- Writing clear and detailed documentation for the project.
+- Building the quiz-taking page where students can answer interactively.
+- Making the results page for students to learn about their performance and any feedbacks for the instructor.
+- Designing the statistics page for instructors with visual charts for detailed performance insights into each question.  
+- Writing clear and detailed documentations for the project.
 
 ### Isaac
 Isaac contributed to the **Grading** and **Statistics** features. Key contributions include:  
